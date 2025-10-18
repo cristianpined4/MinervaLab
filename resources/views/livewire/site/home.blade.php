@@ -48,7 +48,7 @@
             manera de aprender y enseñar en Minerva Labs.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/auth/register"
+            <a href="register"
                 class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-8 py-3 rounded text-lg flex items-center justify-center gap-2">
                 Comenzar Ahora
                 <!-- ArrowRight icon -->

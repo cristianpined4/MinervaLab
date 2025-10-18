@@ -9,7 +9,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class HomeController extends Component
+class LoginController extends Component
 {
     use WithPagination, WithFileUploads;
 
@@ -26,9 +26,9 @@ class HomeController extends Component
 
     public function render()
     {
-        return view('livewire.site.home')
-            ->extends('layouts.site')
-            ->section('content');
+        return view('livewire.admin.auth.login')
+            ->extends('layouts.loginAndRegister')
+            ->section('content');;
     }
 
 }

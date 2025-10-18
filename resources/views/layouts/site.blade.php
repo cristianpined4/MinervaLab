@@ -51,8 +51,8 @@
           Labs</span>
       </div>
       <div class="flex items-center gap-4">
-        <a href="/auth/login" class="hover:text-blue-400">Iniciar Sesión</a>
-        <a href="/auth/register"
+        <a href="login" class="hover:text-blue-400">Iniciar Sesión</a>
+        <a href="register"
           class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-4 py-2 rounded">Registrarse</a>
       </div>
     </div>
