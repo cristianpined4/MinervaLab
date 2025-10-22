@@ -1,4 +1,5 @@
 @section('title', "Minerva Labs - Laboratorio de Realidad Virtual")
+@section('hide_menu', true)
 
 <main class="relative z-10">
     <!-- modales -->
