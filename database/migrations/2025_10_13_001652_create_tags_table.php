@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_news');
             $table->string('description', 100)->nullable();
             $table->string('color', 20)->nullable();
+            $table->timestamps();
 
             $table->foreign('id_news')->references('id')->on('news')->onDelete('cascade')->onUpdate('cascade');
         });

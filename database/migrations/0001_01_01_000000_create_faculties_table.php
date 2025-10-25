@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('direction', 255)->nullable();
             $table->string('description', 255)->nullable();
             $table->string('code', 50)->nullable();
+            $table->timestamps();
         });
     }
 

@@ -11,7 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_room');
             $table->enum('status', ['ongoing', 'finished'])->default('ongoing');
-            $table->timestamp('date')->useCurrent();
+            $table->timestamp('date')->nullable();
+            $table->timestamps();
 
             $table->foreign('id_room')->references('id')->on('room')->onDelete('cascade')->onUpdate('cascade');
         });

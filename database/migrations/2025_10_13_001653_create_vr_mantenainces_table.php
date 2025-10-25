@@ -11,7 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->integer('count')->default(0);
             $table->enum('status', ['ongoing', 'finished'])->default('ongoing');
-            $table->timestamp('date')->useCurrent();
+            $table->timestamp('date')->nullable();
+            $table->timestamps();
         });
     }
 

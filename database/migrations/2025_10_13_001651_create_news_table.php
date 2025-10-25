@@ -13,7 +13,8 @@ return new class extends Migration {
             $table->string('title', 255)->nullable();
             $table->text('description')->nullable();
             $table->string('path', 255)->nullable();
-            $table->timestamp('date')->useCurrent();
+            $table->timestamp('date')->nullable();
+            $table->timestamps();
         });
     }
 

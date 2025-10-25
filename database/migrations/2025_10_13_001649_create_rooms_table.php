@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->integer('vr_glasses')->default(0);
             $table->integer('max_students')->default(0);
             $table->enum('status', ['available', 'unavailable', 'maintenance'])->default('available');
+            $table->timestamps();
+
         });
     }
 

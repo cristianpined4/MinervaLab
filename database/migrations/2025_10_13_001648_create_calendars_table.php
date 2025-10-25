@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('year');
             $table->integer('month');
+            $table->timestamps();
         });
     }
 

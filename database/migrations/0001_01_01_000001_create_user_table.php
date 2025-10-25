@@ -11,23 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username', 100)->unique();
             $table->string('first_name', 100)->nullable();
             $table->string('last_name', 100)->nullable();
             $table->integer('age')->nullable();
             $table->string('email', 150)->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('password', 255);
             $table->string('user_rol', 50)->nullable();
+            $table->unsignedBigInteger('id_faculty');
             $table->boolean('admin')->default(false);
+            $table->timestamps();
+            $table->foreign('id_faculty')->references('id')->on('faculty')->onDelete('cascade')->onUpdate('cascade');
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
@@ -45,7 +50,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

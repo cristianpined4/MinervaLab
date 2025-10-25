@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->string('description', 255)->nullable();
             $table->decimal('duration', 5, 2)->default(15);
             $table->string('resource_demo', 255)->nullable();
+            $table->timestamps();
             $table->foreign('id_scene_category')->references('id')->on('scene_category')
                 ->onDelete('cascade')->onUpdate('cascade');
         });

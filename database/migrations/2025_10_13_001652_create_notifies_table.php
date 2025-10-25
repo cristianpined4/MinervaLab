@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('url', 255)->nullable();
             $table->timestamp('date')->useCurrent();
 
-            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_reservation');
             $table->unsignedBigInteger('id_scene');
             $table->integer('count_sessions')->default(1);
+            $table->timestamps();
 
             $table->foreign('id_reservation')->references('id')->on('reservation')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_scene')->references('id')->on('scene')->onDelete('cascade')->onUpdate('cascade');

@@ -6,35 +6,33 @@
         <p class="loading-text">Cargando...</p>
     </div>
 
-    <div class="container" style="margin-top: 1rem; margin-bottom: 1rem; max-width: 100%;" id="registerForm">
+    <div class="container" style="margin: 1rem; max-width: 100%;" id="registerForm">
         <div class="header">
             <div class="logo" style="font-size: 1rem">MINERVA LAB</div>
             <h2>Crear Cuenta</h2>
         </div>
         <div class="form-container">
             <form>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;width: 100%;justify-content: space-between;">
-                    <div class="form-group">
-                        <label for="name">Nombre</label>
-                        <input wire:model="fields.name" type="text" placeholder="Nombre" id="name"
-                            class="form-control @error('fields.name') was-validated is-invalid @enderror"
-                            onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-                        <div class="invalid-feedback">@error('fields.name') {{$message}} @enderror</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname">Apellido</label>
-                        <input wire:model="fields.lastname" type="text" placeholder="Apellido" id="lastname"
-                            class="form-control @error('fields.lastname') was-validated is-invalid @enderror"
-                            onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
-                        <div class="invalid-feedback">@error('fields.lastname') {{$message}} @enderror</div>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="username">Nombre de usuario</label>
                     <input wire:model="fields.username" type="text" placeholder="Nombre de usuario" id="username"
                         class="form-control @error('fields.username') was-validated is-invalid @enderror"
                         onkeyup="this.value = this.value.toLowerCase();">
                     <div class="invalid-feedback">@error('fields.username') {{$message}} @enderror</div>
+                </div>
+                <div class="form-group">
+                    <label for="first_name">Nombre</label>
+                    <input wire:model="fields.first_name" type="text" placeholder="Apellido" id="first_name"
+                        class="form-control @error('fields.first_name') was-validated is-invalid @enderror"
+                        onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                    <div class="invalid-feedback">@error('fields.first_name') {{$message}} @enderror</div>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Apellido</label>
+                    <input wire:model="fields.last_name" type="text" placeholder="Apellido" id="last_name"
+                        class="form-control @error('fields.last_name') was-validated is-invalid @enderror"
+                        onkeyup="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');">
+                    <div class="invalid-feedback">@error('fields.last_name') {{$message}} @enderror</div>
                 </div>
                 <div class="form-group">
                     <label for="email">Correo electrónico</label>
@@ -51,10 +49,21 @@
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation">Confirmar Contraseña</label>
-                    <input wire:model="fields.password_confirmation" type="password" placeholder="Confirmar Contraseña"
+                    <input wire:model="other_fields.password_confirmation" type="password" placeholder="Confirmar Contraseña"
                         id="password_confirmation"
-                        class="form-control @error('fields.password_confirmation') was-validated is-invalid @enderror">
-                    <div class="invalid-feedback">@error('fields.password_confirmation') {{$message}} @enderror</div>
+                        class="form-control @error('other_fields.password_confirmation') was-validated is-invalid @enderror">
+                    <div class="invalid-feedback">@error('other_fields.password_confirmation') {{$message}} @enderror</div>
+                </div>
+                <div class="form-group">
+                    <label for="id_faculty">Rol </label>
+                    <select wire:model="fields.id_faculty" id="id_faculty"
+                        class="form-control @error('fields.id_faculty') was-validated is-invalid @enderror">
+                        <option value="">Seleccione</option>
+                        @foreach ($facultys as $row)
+                        <option value="{{ $row->id }}">{{ $row->description }}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback">@error('fields.id_faculty') {{$message}} @enderror</div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Teléfono</label>
@@ -63,28 +72,16 @@
                         onkeyup="return /[0-9]/.test(String.fromCharCode(event.keyCode))">
                     <div class="invalid-feedback">@error('fields.phone') {{$message}} @enderror</div>
                 </div>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;width: 100%;justify-content: space-between;">
-                    <div class="form-group" style="flex: 1;">
-                        <label for="document_type">Tipo de documento</label>
-                        <select wire:model="fields.document_type" id="document_type"
-                            class="form-control @error('fields.document_type') was-validated is-invalid @enderror">
-                            <option value="" disabled>Seleccione una opción</option>
-                            <option value="DUI">DUI</option>
-                            <option value="Carnet Estudiantil">Carnet Estudiantil</option>
-                            <option value="Pasaporte">Pasaporte</option>
-                            <option value="Carnet de extranjería">Carnet de extranjería</option>
-                        </select>
-                        <div class="invalid-feedback">@error('fields.document_type') {{$message}} @enderror</div>
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label for="document_number">Número de documento</label>
-                        <input wire:model="fields.document_number" type="text" placeholder="Número de documento"
-                            id="document_number"
-                            class="form-control @error('fields.document_number') was-validated is-invalid @enderror">
-                        <div class="invalid-feedback">@error('fields.document_number') {{$message}} @enderror</div>
-                    </div>
+                <div class="form-group" style="flex: 1;">
+                    <label for="user_rol">Rol </label>
+                    <select wire:model="fields.user_rol" id="user_rol"
+                        class="form-control @error('fields.user_rol') was-validated is-invalid @enderror">
+                        <option value="1">Estudiante</option>
+                        <option value="2">Docente</option>
+                    </select>
+                    <div class="invalid-feedback">@error('fields.user_rol') {{$message}} @enderror</div>
                 </div>
-                <button type="button" class="btn btn-primary" wire:click="register">Crear Cuenta</button>
+                <button type="button" class="btn btn-primary" wire:click="store">Crear Cuenta</button>
                 <a class="toggle-link" href="{{ route('login') }}">
                     ¿Ya tienes cuenta? Iniciar sesión
                 </a>
@@ -96,24 +93,5 @@
 </main>
 
 <script>
-    document.addEventListener('livewire:initialized', function () {
-        const roleSelect = document.getElementById('role_id');
-        const institutionDiv = document.getElementById('institutionDiv');
 
-        function toggleInstitutionField() {
-            const selectedRole = roleSelect.value;
-            if (selectedRole && selectedRole.toLowerCase() !== 'invitado') {
-                institutionDiv.style.display = 'block';
-            } else {
-                institutionDiv.style.display = 'none';
-                Livewire.dispatch('setFields', { payload: { field: 'institution', value: '' } });
-            }
-        }
-
-        // Inicializar el estado del campo al cargar la página
-        toggleInstitutionField();
-
-        // Escuchar cambios en el select
-        roleSelect.addEventListener('change', toggleInstitutionField);
-    });
 </script>

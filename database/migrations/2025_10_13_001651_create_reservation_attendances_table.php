@@ -11,8 +11,9 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_reservation');
             $table->string('carnet', 50)->nullable();
-            $table->timestamp('date')->useCurrent();
+            $table->timestamp('date')->nullable();
             $table->timestamp('attendance')->nullable();
+            $table->timestamps();
 
             $table->foreign('id_reservation')->references('id')->on('reservation')->onDelete('cascade')->onUpdate('cascade');
         });
