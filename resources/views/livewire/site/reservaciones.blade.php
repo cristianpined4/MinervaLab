@@ -37,10 +37,10 @@
             </div>
         </div>
         <!-- fin modales -->
-        
+
         <div class="flex-1 p-6 md:p-8 lg:p-10">
             <div class="max-w-7xl mx-auto">
-                
+
                 {{-- Header Section con Botón --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
@@ -57,7 +57,7 @@
 
                 {{-- Tabla de Reservaciones --}}
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
-                    
+
                     {{-- Header de la tabla --}}
                     <div class="bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">

@@ -1,73 +1,91 @@
-@section('title', "Dashboard")
+@section('title', 'Inicio')
+@section('hide_header', true)
+@section('hide_footer', true)
 
-<main style="width: 100%;">
-    <div class="loading" wire:loading.attr="show" show="false">
-        <div class="loader"></div>
-        <p class="loading-text">Cargando...</p>
-    </div>
-    <!-- modales -->
-    <div id="modal-home" class="modal" wire:ignore.self>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar usuario' : 'Nuevo usuario' }}</h5>
-                    <button type="button" class="btn-close" aria-label="Cerrar"
-                        onclick="closeModal(this.closest('.modal'))">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">Nombre Completo</label>
-                        <input wire:model="fields.name" type="text" placeholder="Nombre" id="nombre"
-                            class="form-control @error('fields.name') was-validated is-invalid @enderror"
-                            oninput="this.value = this.value.toUpperCase();">
-                        <div class="invalid-feedback">@error('fields.name') {{$message}} @enderror</div>
+<div>
+    @include('layouts.components.header-global')
+
+    <main class="relative z-10 min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <!-- Funciones del sistema -->
+        <section id="noticias" class="bg-gray-50 py-12">
+            <div class="max-w-7xl mx-auto px-4 md:px-6">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Panel de administrador</h2>
+                        <p class="text-gray-600"></p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    @if ($record_id)
-                    <button type="button" class="btn btn-warning" wire:click="update">Actualizar</button>
-                    @else
-                    <button type="button" class="btn btn-primary" wire:click="store">Guardar</button>
-                    @endif
-                    <button type="button" class="btn btn-secondary"
-                        onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @php
+                    $opciones = [
+                        [
+                        'titulo' => 'Calendarios',
+                        'descripcion' => 'Administrar calendarios, dias feriados y disponibilidad de reservas.',
+                        'fecha' => 'Hace 2 horas',
+                        'categoria' => 'Sistema',
+                        'color' => 'blue',
+                        'icono' => 'fa-calendar',
+                        'link' => '#'
+                        ]
+                    ];
+                    @endphp
+                    @foreach($opciones as $option)
+                    <a href="{{ route('admin-calendary') }}"
+                    class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all group">
+                        <div class="flex flex-col sm:flex-row">
+                            <div class="sm:w-1/4 flex items-center justify-center h-48 sm:h-auto bg-gradient-to-br from-{{ $option['color'] }}-400 to-{{ $option['color'] }}-600">
+                                <i class="fa-solid {{ $option['icono'] }} text-white text-3xl"></i>
+                            </div>
+                            <div class="sm:w-3/4 p-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-{{ $option['color'] }}-600 transition-colors">
+                                    {{ $option['titulo'] }}
+                                </h3>
+                                <p class="text-gray-600 text-sm mb-4">
+                                    {{ $option['descripcion'] }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    @endforeach
+
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- fin modales -->
+        </section>
 
-    <!-- Contenido - inicio -->
-    <h3>Dashboard</h3>
-    <!-- Contenido - fin -->
-</main>
 
-<script>
-    document.addEventListener('livewire:initialized', function () {
-            Livewire.on('cerrar-modal', function (modal) {
-                let modalElement = document.getElementById(modal[0].modal);
-                if (modalElement) {
-                    closeModal(modalElement);
-                }
-            });
 
-            Livewire.on('abrir-modal', function (modal) {
-                let modalElement = document.getElementById(modal[0].modal);
-                if (modalElement) {
-                    openModal(modalElement);
-                }
-            });
+    </main>
+    @include('layouts.components.footer-global')
+
+    <script>
+         document.addEventListener('livewire:initialized', function () {
+        Livewire.on('cerrar-modal', function (modal) {
+            let modalElement = document.getElementById(modal[0].modal);
+            if (modalElement) {
+                closeModal(modalElement);
+            }
         });
 
-        const confirmarEliminar = async id => {
-            if (await window.Confirm(
-                'Eliminar',
-                '¿Estas seguro de eliminar este Dashboard?',
-                'warning',
-                'Si, eliminar',
-                'Cancelar'
-            )) {
-                Livewire.dispatch('delete', { id });
+        Livewire.on('abrir-modal', function (modal) {
+            let modalElement = document.getElementById(modal[0].modal);
+            if (modalElement) {
+                openModal(modalElement);
             }
+        });
+    });
+
+    const confirmarEliminar = async id => {
+        if (await window.Confirm(
+            'Eliminar',
+            '¿Estas seguro de eliminar este Home?',
+            'warning',
+            'Si, eliminar',
+            'Cancelar'
+        )) {
+            Livewire.dispatch('delete', { id });
         }
-</script>
+    }
+    </script>
+
+</div>
