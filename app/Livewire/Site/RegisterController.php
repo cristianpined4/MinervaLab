@@ -23,8 +23,8 @@ class RegisterController extends Component
         'email' => null,
         'phone' => null,
         'password' => null,
-        'user_rol' => null,
         'admin' => false,
+        'id_rol' => 5,
         'id_faculty' => null,
     ];
 
@@ -58,7 +58,6 @@ class RegisterController extends Component
 
     public function store()
     {
-        // Validate the input data
         $this->validate([
             'fields.username' => 'required|string|max:50|unique:users,username',
             'fields.first_name' => 'required|string|max:100',
@@ -67,7 +66,6 @@ class RegisterController extends Component
             'fields.email' => 'required|email|unique:users,email',
             'fields.phone' => 'nullable|string|max:15',
             'fields.password' => 'required|min:6|same:other_fields.password_confirmation',
-            'fields.user_rol' => 'nullable|string|max:50',
             'fields.id_faculty' => 'required|exists:faculty,id',
         ], [
             'fields.username.required' => 'El nombre de usuario es obligatorio.',
@@ -84,13 +82,11 @@ class RegisterController extends Component
             'fields.id_faculty.exists' => 'La facultad seleccionada no existe.',
         ]);
 
-        // Hash the password before storing
         $this->fields['password'] = Hash::make($this->fields['password']);
 
         DB::beginTransaction();
 
         try {
-            // Insert the new user and get the inserted ID
             $id_user = User::insertGetId([
                 'username' => $this->fields['username'],
                 'first_name' => $this->fields['first_name'],
@@ -99,19 +95,15 @@ class RegisterController extends Component
                 'email' => $this->fields['email'],
                 'phone' => $this->fields['phone'],
                 'password' => $this->fields['password'],
-                'user_rol' => $this->fields['user_rol'],
+                'id_rol' => $this->fields['id_rol'],
                 'admin' => $this->fields['admin'],
                 'id_faculty' => $this->fields['id_faculty'],
             ]);
 
             DB::commit();
-
-            // Log the user in immediately after successful registration
             Auth::loginUsingId($id_user);
 
             session()->flash('success', 'Usuario creado correctamente.');
-
-            // Reset the form after successful registration
             $this->resetForm();
 
             return redirect()->route('home');

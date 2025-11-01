@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Roles;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,9 @@ class checkUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user() || !$request->user()->admin) {
+        $id_rol = $request->user() ? $request->user()->id_rol : 5; // Asignar 5 (Invitado) si no hay usuario autenticado
+        $rol = Roles::find($id_rol);
+        if ($rol->permissions != 1) {
             abort(403, 'Forbidden');
         }
         return $next($request);

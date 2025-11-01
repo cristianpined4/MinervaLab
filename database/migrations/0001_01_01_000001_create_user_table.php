@@ -21,11 +21,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('password', 255);
-            $table->string('user_rol', 50)->nullable();
+            $table->unsignedBigInteger('id_rol');
             $table->unsignedBigInteger('id_faculty');
             $table->boolean('admin')->default(false);
             $table->timestamps();
             $table->foreign('id_faculty')->references('id')->on('faculty')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_rol')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
 
         });
 

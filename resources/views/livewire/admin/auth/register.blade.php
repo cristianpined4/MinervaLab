@@ -55,7 +55,7 @@
                     <div class="invalid-feedback">@error('other_fields.password_confirmation') {{$message}} @enderror</div>
                 </div>
                 <div class="form-group">
-                    <label for="id_faculty">Rol </label>
+                    <label for="id_faculty">Facultad </label>
                     <select wire:model="fields.id_faculty" id="id_faculty"
                         class="form-control @error('fields.id_faculty') was-validated is-invalid @enderror">
                         <option value="">Seleccione</option>
@@ -71,15 +71,6 @@
                         class="form-control @error('fields.phone') was-validated is-invalid @enderror"
                         onkeyup="return /[0-9]/.test(String.fromCharCode(event.keyCode))">
                     <div class="invalid-feedback">@error('fields.phone') {{$message}} @enderror</div>
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label for="user_rol">Rol </label>
-                    <select wire:model="fields.user_rol" id="user_rol"
-                        class="form-control @error('fields.user_rol') was-validated is-invalid @enderror">
-                        <option value="1">Estudiante</option>
-                        <option value="2">Docente</option>
-                    </select>
-                    <div class="invalid-feedback">@error('fields.user_rol') {{$message}} @enderror</div>
                 </div>
                 <button type="button" class="btn btn-primary" wire:click="store">Crear Cuenta</button>
                 <a class="toggle-link" href="{{ route('login') }}">
