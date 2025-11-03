@@ -408,6 +408,6 @@ PHP;
      */
     private function toSnakeCase($string)
     {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $string));
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $string));
     }
 }
