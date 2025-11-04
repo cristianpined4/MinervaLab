@@ -9,11 +9,10 @@ return new class extends Migration {
     {
         Schema::create('holiday', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_calendar');
-            $table->integer('day');
+            $table->datetime('starts_at');
+            $table->datetime('ends_at');
+            $table->string('description',80);
             $table->timestamps();
-            $table->foreign('id_calendar')->references('id')->on('calendar')
-                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

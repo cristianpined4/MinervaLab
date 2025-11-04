@@ -18,6 +18,9 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-dashboard', App\Livewire\Site\AdminPanelController::class)->name('admin-dashboard');
     Route::get('admin-calendary', App\Livewire\Site\AdminCalendaryController::class)->name('admin-calendary');
+    //Route::get('admin-auth', App\Livewire\Site\AdminAuthController::class)->name('admin-auth');
+    //Route::get('admin-user', App\Livewire\Site\AdminUserController::class)->name('admin-user');
+    //Route::get('admin-maintenance', App\Livewire\Site\AdminMaintenanceController::class)->name('admin-maintenance');
 });
 
 

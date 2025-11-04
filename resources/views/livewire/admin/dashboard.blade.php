@@ -17,21 +17,8 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    @php
-                    $opciones = [
-                        [
-                        'titulo' => 'Calendarios',
-                        'descripcion' => 'Administrar calendarios, dias feriados y disponibilidad de reservas.',
-                        'fecha' => 'Hace 2 horas',
-                        'categoria' => 'Sistema',
-                        'color' => 'blue',
-                        'icono' => 'fa-calendar',
-                        'link' => '#'
-                        ]
-                    ];
-                    @endphp
                     @foreach($opciones as $option)
-                    <a href="{{ route('admin-calendary') }}"
+                    <a href="{{ route($option['link']) }}"
                     class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all group">
                         <div class="flex flex-col sm:flex-row">
                             <div class="sm:w-1/4 flex items-center justify-center h-48 sm:h-auto bg-gradient-to-br from-{{ $option['color'] }}-400 to-{{ $option['color'] }}-600">

@@ -9,6 +9,40 @@ class AdminPanelController extends Component
     public $fields = [];   // inputs normales
     public $file;
 
+    public $opciones = [
+        [
+        'titulo' => 'Calendarios',
+        'descripcion' => 'Administrar calendarios, dias feriados y disponibilidad de reservas.',
+        'color' => 'blue',
+        'icono' => 'fa-calendar',
+        'link' => 'admin-calendary'
+        ],
+        [
+        'titulo' => 'Reservaciones',
+        'descripcion' => 'Administrar reservaciones autorizadas, por autorizar y declinación',
+        'color' => 'green',
+        'icono' => 'fa-lock',
+        'link' => 'admin-calendary',
+        //'link' => 'admin-auth'
+        ],
+        [
+        'titulo' => 'Usuarios',
+        'descripcion' => 'Administrar usuarios, roles, informacion, recuperacion de cuenta y activacion',
+        'color' => 'gray',
+        'icono' => 'fa-user',
+        'link' => 'admin-calendary',
+        //'link' => 'admin-user'
+        ],
+        [
+        'titulo' => 'Mantenimiento y equipos',
+        'descripcion' => 'Mantenimiento de equipos del salon VR y habilitacion',
+        'color' => 'blue',
+        'icono' => 'fa-gear',
+        'link' => 'admin-calendary',
+        //'link' => 'admin-mantenaince'
+        ]
+    ];
+
     //
     public function render()
     {

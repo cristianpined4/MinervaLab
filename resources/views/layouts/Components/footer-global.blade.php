@@ -15,3 +15,4 @@
     ©{{ date('Y') }} Minerva Labs — Laboratorio de Realidad Virtual y Tecnología Educativa.
   </p>
 </footer>
+
