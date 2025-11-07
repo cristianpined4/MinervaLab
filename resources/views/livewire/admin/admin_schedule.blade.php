@@ -1,4 +1,4 @@
-@section('title', 'Administrar exclusiones')
+@section('title', 'Horarios de atencion')
 @section('hide_header', true)
 @section('hide_footer', true)
 
@@ -11,7 +11,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar exclusion' : 'Agregar exclusion' }}</h5>
+                        <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar horario' : 'Agregar horario' }}</h5>
                         <button type="button" class="btn-close" aria-label="Cerrar"
                             onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>
@@ -20,32 +20,41 @@
                         {{-- Selector de fecha mejorado --}}
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Selecciona una fecha de inicio
+                                Selecciona un día de la semana
                             </label>
-                            <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
+                            <select wire:model="fields.day" id="day"
                                 class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                                {{-- <div class="mt-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                                    <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    <p class="text-xs text-amber-800">
-                                        Los días feriados y fines de semana están deshabilitados automáticamente.
-                                    </p>
-                                </div> --}}
+                                <option value="1">Lunes</option>
+                                <option value="2">Martes</option>
+                                <option value="3">Miércoles</option>
+                                <option value="4">Jueves</option>
+                                <option value="5">Viernes</option>
+                                <option value="6">Sábado</option>
+                                <option value="7">Domingo</option>
+                            </select>
+                            @error('fields.day')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                                Selecciona una fecha final
+                                Selecciona una hora de inicio
                             </label>
-                            <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
+                            <input wire:model="fields.starts_at" type="time" id="starts_at"
                                 class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            @error('fields.starts_at')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Descripcion</label>
-                            <input wire:model="fields.description" type="text" placeholder="Descripcion" id="description"
-                                class="form-control @error('fields.description') was-validated is-invalid @enderror"
-                                oninput="this.value = this.value.toUpperCase();">
-                            <div class="invalid-feedback">@error('fields.description') {{$message}} @enderror</div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                Selecciona una hora final
+                            </label>
+                            <input wire:model="fields.ends_at" type="time" id="ends_at"
+                                class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            @error('fields.ends_at')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -68,17 +77,21 @@
                 {{-- Header Section con Botón --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Administrar exclusiones</h1>
-                        <p class="text-gray-600">Gestion de dias festivos, asueto, feriado y eventos no contemplados</p>
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Administrar horario</h1>
+                        <p class="text-gray-600">Gestion de horarios de atención</p>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1">
+                        <a href="{{ route('admin-calendary') }}"
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                            Gestionar exclusiones
+                        </a>
                         <button
                             wire:click="abrirModal"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Agregar Exclusión
+                            Agregar Horario
                         </button>
                     </div>
                 </div>
@@ -87,12 +100,10 @@
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
 
                     {{-- Header de la tabla --}}
-                    <div class="bg-gradient-to-r from-yellow-600 to-yellow-600 px-6 py-4">
+                    <div class="bg-gradient-to-r from-green-600 to-green-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                            </svg>
-                            Lista de Exclusiones
+                            <i class="fas fa-clock mr-3 text-white-300"></i>
+                            Horario
                         </h2>
                     </div>
                     <div class="relative w-full border-b-2">
@@ -108,79 +119,68 @@
                     {{-- Tabla responsive --}}
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-50 border-b-2 border-gray-200">
-                                <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                        Fecha de inicio
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                        Fecha de fin
-                                    </th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                        Descripcion
-                                    </th>
-                                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                        Acciones
-                                    </th>
-                                </tr>
-                            </thead>
                             <tbody class="divide-y divide-gray-200">
                                 {{-- Fila ejemplo 1 --}}
-                                @foreach ($data as $row)
-                                    <tr class="hover:bg-gray-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-2">
-                                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                                </svg>
-                                                <span class="text-sm font-medium text-gray-900">{{ $row->starts_at }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center gap-2">
-                                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                                </svg>
-                                                <span class="text-sm font-medium text-gray-900">{{ $row->ends_at }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="text-sm text-gray-900 font-medium">{{ $row->description }}</div>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <div class="flex items-center justify-center gap-2">
-                                                <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Editar" wire:click="abrirModal({{ $row->id }})">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                    </svg>
-                                                </button>
-                                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                        <tr class="hover:bg-gray-50 transition-colors">
+                                            @foreach ($days as $key => $day)
+                                            <td class="whitespace-nowrap align-top">
+                                                <table class="w-full">
+                                                    <thead class="bg-gray-50 border-b-2 border-gray-200">
+                                                        <tr>
+                                                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                                                {{ $day }}
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-200">
+                                                        @foreach ($data as $row)
+                                                            @if ($row->day == $key)
+                                                            <tr class="hover:bg-gray-50 transition-colors">
+                                                                <td class="px-6 py-4 whitespace-nowrap w-auto text-center align-top">
+                                                                    <div class="flex flex-row items-start gap-2">
+                                                                        <div class="flex flex-col items-center gap-2">
+                                                                            <span class="text-sm font-medium text-gray-900">{{ $row->starts_at }}</span>
+                                                                            <span class="text-sm font-medium text-gray-900">{{ $row->ends_at }}</span>
+                                                                        </div>
+                                                                        <div class="flex flex-col items-center gap-2">
+                                                                            <button class="text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Editar" wire:click="abrirModal({{ $row->id }})">
+                                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                                                                </svg>
+                                                                            </button>
+                                                                            <button class="text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
+                                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            @endif
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            @endforeach
+                                        </tr>
                                 @if (count($data) == 0)
                                     <tr>
-                                        <td colspan="5" class="px-6 py-12 text-center">
+                                        <td colspan="7" class="px-6 py-12 text-center">
                                             <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
-                                            <p class="text-gray-500 text-lg font-medium">No tienes reservaciones aún</p>
-                                            <p class="text-gray-400 text-sm mt-2">Haz clic en "Agregar Reservación" para crear una nueva</p>
+                                            <p class="text-gray-500 text-lg font-medium">No se encontro un horario registrado</p>
+                                            <p class="text-gray-400 text-sm mt-2">Haz clic en "Agregar horario" para añadir</p>
                                         </td>
                                     </tr>
                                 @endif
                             </tbody>
                         </table>
-                    {{ $data->links() }}
                     </div>
 
                     {{-- Footer de la tabla con paginación --}}
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    {{-- <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
                         <div class="text-sm text-gray-600">
                             Mostrando <span class="font-semibold text-gray-900">1-3</span> de <span class="font-semibold text-gray-900">3</span> exclusiones
                         </div>
@@ -192,7 +192,7 @@
                                 Siguiente
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -217,12 +217,12 @@
                 let modalElement = document.getElementById(modal[0].modal);
                 if (modalElement) {
                     openModal(modalElement);
+                    let day = document.getElementById('day');
                     let starts_at = document.getElementById('starts_at');
                     let ends_at = document.getElementById('ends_at');
-                    let description = document.getElementById('description');
+                    day.value = modal[0].fields.day
                     starts_at.value = modal[0].fields.starts_at
                     ends_at.value = modal[0].fields.ends_at
-                    description.value = modal[0].fields.description
                 }
             });
 

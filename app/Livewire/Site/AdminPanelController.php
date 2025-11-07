@@ -11,11 +11,11 @@ class AdminPanelController extends Component
 
     public $opciones = [
         [
-        'titulo' => 'Calendarios',
-        'descripcion' => 'Administrar calendarios, dias feriados y disponibilidad de reservas.',
+        'titulo' => 'Horarios',
+        'descripcion' => 'Administrar horarios, dias feriados y disponibilidad de reservas.',
         'color' => 'blue',
         'icono' => 'fa-calendar',
-        'link' => 'admin-calendary'
+        'link' => 'admin-schedule'
         ],
         [
         'titulo' => 'Reservaciones',
