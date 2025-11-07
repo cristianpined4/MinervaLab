@@ -23,7 +23,7 @@ class RegisterController extends Component
         'email' => null,
         'phone' => null,
         'password' => null,
-        'admin' => false,
+        'active' => false,
         'id_rol' => 5,
         'id_faculty' => null,
     ];
@@ -96,7 +96,7 @@ class RegisterController extends Component
                 'phone' => $this->fields['phone'],
                 'password' => $this->fields['password'],
                 'id_rol' => $this->fields['id_rol'],
-                'admin' => $this->fields['admin'],
+                'active' => $this->fields['active'],
                 'id_faculty' => $this->fields['id_faculty'],
             ]);
 

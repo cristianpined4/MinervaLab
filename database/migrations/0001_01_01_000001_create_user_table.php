@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('password', 255);
             $table->unsignedBigInteger('id_rol');
             $table->unsignedBigInteger('id_faculty');
-            $table->boolean('admin')->default(false);
+            $table->boolean('active')->default(false);
             $table->timestamps();
             $table->foreign('id_faculty')->references('id')->on('faculty')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_rol')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');

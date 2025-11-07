@@ -50,7 +50,7 @@
                 <a href="{{ route('dashboard') ?? '#' }}" class="block px-4 py-2 text-white hover:bg-slate-700/80">
                     <i class="fa-solid fa-gear mr-2 text-cyan-400"></i> Ajustes
                 </a>
-                <form method="POST" action="{{ route('dashboard') ?? '#' }}">
+                <form method="POST" action="{{ route('logout') ?? '#' }}">
                     @csrf
                     <button type="submit" class="w-full text-left px-4 py-2 text-red-400 hover:bg-red-600/20">
                         <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión

@@ -27,12 +27,12 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="rememberMe" class="form-check-label">
                     <input wire:model="remember_me" type="checkbox" id="rememberMe" class="form-check-input">
                     Recordarme
                 </label>
-            </div>
+            </div> --}}
             @if ($loginError)
                 <div class="alert alert-danger">{{ $loginError }}</div>
             @endif

@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Site;
 
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -34,10 +36,23 @@ class LoginController extends Component
         ]);
 
         if (Auth::attempt(['username' => $this->username, 'password' => $this->password], $this->remember_me)) {
-            session()->flash('success', 'Inicio de sesión exitoso');
-            return redirect()->route('home');
+            if(User::find(Auth::id())->active){
+                session()->flash('success', 'Inicio de sesión exitoso');
+                return redirect()->route('home');
+            }else{
+                $this->loginError = 'El usuario no esta disponible. Contacta al administrador.';
+            }
         } else {
             $this->loginError = 'Credenciales incorrectas. Intenta nuevamente.';
         }
     }
+    public function destroy(Request $request)
+{
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/');
+}
 }

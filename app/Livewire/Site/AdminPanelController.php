@@ -30,8 +30,7 @@ class AdminPanelController extends Component
         'descripcion' => 'Administrar usuarios, roles, informacion, recuperacion de cuenta y activacion',
         'color' => 'gray',
         'icono' => 'fa-user',
-        'link' => 'admin-calendary',
-        //'link' => 'admin-user'
+        'link' => 'admin-user'
         ],
         [
         'titulo' => 'Mantenimiento y equipos',
