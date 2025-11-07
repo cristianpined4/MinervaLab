@@ -20,7 +20,7 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Categoría</label>
-                            <select wire:model="fields.id_scene_category" class="form-control">
+                            <select wire:model="fields.id_scene_category" class="form-control" id="id_scene_category">
                                 <option value="">Seleccione una categoría</option>
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->description }}</option>
@@ -75,6 +75,23 @@
                         @endif
                         <button type="button" class="btn btn-secondary"
                             onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="modal-video" class="modal" wire:ignore.self>
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-b border-gray-700 text-white">
+                        <h2 class="text-xl font-bold text-black flex items-center gap-2" id="video_title">Vista previa</h2>
+                        <button type="button" class="btn btn-close text-black text-3xl" aria-label="Cerrar"
+                            onclick="closeModal(this.closest('.modal'))">&times;</button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <video id="video_player" class="w-full h-auto" controls>
+                            <source id="video_source" src="" type="video/mp4">
+                            Tu navegador no soporta reproducción de video.
+                        </video>
                     </div>
                 </div>
             </div>
@@ -173,6 +190,16 @@
                                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
                                                 </button>
+                                                <button class="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                                    title="Ver video" wire:click="verVideo({{ $row->id }})">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M14.752 11.168l-5.197-2.6A1 1 0 008 9.47v5.06a1 1 0 001.555.832l5.197-2.6a1 1 0 000-1.664z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                </button>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -200,7 +227,12 @@
             Livewire.on('cerrar-modal', modal => closeModal(document.getElementById(modal[0].modal)));
             Livewire.on('abrir-modal', modal => {
                 let el = document.getElementById(modal[0].modal);
-                if (el) openModal(el);
+                if(el) {
+                    openModal(el);
+                    document.getElementById('id_scene_category').value = modal[0].fields.id_scene_category;
+                    document.getElementById('description').value = modal[0].fields.description;
+                    document.getElementById('duration').value = modal[0].fields.duration;
+                };
             });
             Livewire.on('confirmar-eliminar', data => {
                 Swal.fire({
@@ -218,13 +250,34 @@
                 Swal.fire({
                     toast: true,
                     position: 'top-end',
-                    icon: 'success',
+                    icon: e[0].icon || 'success',
                     title: e[0].message,
                     showConfirmButton: false,
                     timer: 2000,
                     timerProgressBar: true,
                 });
             });
+            Livewire.on('abrir-video', data => {
+                const modalId = data[0].modal;
+                const videoUrl = data[0].videoUrl;
+                setTimeout(() => {
+                    const modal = document.getElementById(modalId);
+                    const video = document.getElementById('video_player');
+                    const source = document.getElementById('video_source');
+                    const title = document.getElementById('video_title');
+                    if (modal && video && source) {
+                        source.src = videoUrl;
+                        title.textContent = data[0].description || 'Vista previa';
+                        video.load();
+                        openModal(modal);
+                    } else {
+                        console.warn('No se encontró el modal o los elementos del video.');
+                    }
+                }, 200);
+            });
+
+
+
         });
     </script>
 </div>

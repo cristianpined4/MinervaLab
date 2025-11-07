@@ -44,6 +44,24 @@ class AdminSceneController extends Component
             ->extends('layouts.site')
             ->section('content');
     }
+    public function verVideo($id)
+    {
+        $scene = Scene::find($id);
+
+        if ($scene && $scene->resource_demo) {
+            $videoUrl = asset( 'storage/videos/' . $scene->resource_demo);
+            $this->dispatch('abrir-video', [
+                'modal' => 'modal-video',
+                'videoUrl' => $videoUrl,
+                'description' => $scene->description,
+            ]);
+        } else {
+            $this->dispatch('swal:notify', [
+                'message' => 'No se encontró el video para esta escena',
+                'icon' => 'error'
+            ]);
+        }
+    }
 
     public function abrirModal($id = null)
     {
@@ -118,28 +136,43 @@ class AdminSceneController extends Component
                 'duration' => $this->fields['duration'],
             ];
 
-            if ($this->fields['resource_demo']) {
-                $path = $this->fields['resource_demo']->store('videos', 'public');
-                $data['resource_demo'] = 'storage/' . $path;
+            if (!empty($this->fields['resource_demo'])) {
+                $file = $this->fields['resource_demo'];
+                if ($file) {
+                    $filename = time() . '.' . $file->getClientOriginalExtension();
+                } else {
+                    throw new \Exception('No file was uploaded.');
+                }
+                $file->storeAs('videos', $filename, 'public');
+                $data['resource_demo'] = $filename;
             }
 
             if ($this->record_id) {
                 $scene = Scene::find($this->record_id);
+
                 if (isset($data['resource_demo']) && $scene->resource_demo) {
-                    Storage::disk('public')->delete(str_replace('storage/', '', $scene->resource_demo));
+                    Storage::disk('public')->delete(str_replace('storage/videos', '', $scene->resource_demo));
                 }
+
                 $scene->update($data);
-                $this->dispatch('swal:notify', ['message' => 'Escena actualizada correctamente']);
+                $this->dispatch('swal:notify', [
+                    'message' => 'Escena actualizada correctamente'
+                ]);
             } else {
                 Scene::create($data);
-                $this->dispatch('swal:notify', ['message' => 'Escena creada correctamente']);
+                $this->dispatch('swal:notify', [
+                    'message' => 'Escena creada correctamente'
+                ]);
             }
 
             DB::commit();
             $this->dispatch('cerrar-modal', ['modal' => 'modal-home']);
         } catch (\Throwable $th) {
             DB::rollBack();
-            $this->dispatch('swal:notify', ['message' => 'Error al guardar la escena']);
+            $this->dispatch('swal:notify', [
+                'message' => 'Error al guardar la escena',
+                'icon' => 'error'
+            ]);
         }
     }
 }
