@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('scene_category', function (Blueprint $table) {
             $table->id();
             $table->string('description', 255)->nullable();
+            $table->string('color', 255)->nullable();
             $table->timestamps();
         });
     }

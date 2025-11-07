@@ -24,28 +24,26 @@
                             </label>
                             <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
                                 class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                                {{-- <div class="mt-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                                    <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                    <p class="text-xs text-amber-800">
-                                        Los días feriados y fines de semana están deshabilitados automáticamente.
-                                    </p>
-                                </div> --}}
-                        </div>
+                            @error('fields.starts_at')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror                        </div>
                         <div class="form-group">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 Selecciona una fecha final
                             </label>
                             <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
                                 class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                        </div>
+                            @error('fields.ends_at')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror                        </div>
                         <div class="form-group">
                             <label class="form-label">Descripcion</label>
                             <input wire:model="fields.description" type="text" placeholder="Descripcion" id="description"
                                 class="form-control @error('fields.description') was-validated is-invalid @enderror"
                                 oninput="this.value = this.value.toUpperCase();">
-                            <div class="invalid-feedback">@error('fields.description') {{$message}} @enderror</div>
+                            @error('fields.description')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror                            <div class="invalid-feedback">@error('fields.description') {{$message}} @enderror</div>
                         </div>
                     </div>
                     <div class="modal-footer">

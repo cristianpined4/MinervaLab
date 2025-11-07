@@ -39,6 +39,13 @@ class AdminPanelController extends Component
         'icono' => 'fa-gear',
         'link' => 'admin-calendary',
         //'link' => 'admin-mantenaince'
+        ],
+        [
+        'titulo' => 'Escenas VR',
+        'descripcion' => 'Gestion de recursos multimedia y escenas VR disponibles',
+        'color' => 'purple',
+        'icono' => 'fa-play',
+        'link' => 'admin-scene',
         ]
     ];
 
