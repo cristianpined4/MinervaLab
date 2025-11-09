@@ -9,11 +9,11 @@ return new class extends Migration {
     {
         Schema::create('room_mantenaince', function (Blueprint $table) {
             $table->id();
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->unsignedBigInteger('id_room');
-            $table->enum('status', ['ongoing', 'finished'])->default('ongoing');
-            $table->timestamp('date')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
-
             $table->foreign('id_room')->references('id')->on('room')->onDelete('cascade')->onUpdate('cascade');
         });
     }

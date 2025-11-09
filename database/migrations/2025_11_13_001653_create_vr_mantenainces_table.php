@@ -9,9 +9,11 @@ return new class extends Migration {
     {
         Schema::create('vr_mantenaince', function (Blueprint $table) {
             $table->id();
-            $table->integer('count')->default(0);
-            $table->enum('status', ['ongoing', 'finished'])->default('ongoing');
-            $table->timestamp('date')->nullable();
+            $table->timestamp('starts_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
+            $table->string('description')->nullable();
+            $table->unsignedBigInteger('id_vr');
+            $table->foreign('id')->references('id')->on('vr_glasses')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

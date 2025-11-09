@@ -23,7 +23,6 @@ class AdminPanelController extends Component
         'color' => 'green',
         'icono' => 'fa-lock',
         'link' => 'admin-calendary',
-        //'link' => 'admin-auth'
         ],
         [
         'titulo' => 'Usuarios',
@@ -33,19 +32,25 @@ class AdminPanelController extends Component
         'link' => 'admin-user'
         ],
         [
-        'titulo' => 'Mantenimiento y equipos',
-        'descripcion' => 'Mantenimiento de equipos del salon VR y habilitacion',
-        'color' => 'blue',
-        'icono' => 'fa-gear',
-        'link' => 'admin-calendary',
-        //'link' => 'admin-mantenaince'
-        ],
-        [
         'titulo' => 'Escenas VR',
         'descripcion' => 'Gestion de recursos multimedia y escenas VR disponibles',
         'color' => 'purple',
         'icono' => 'fa-play',
         'link' => 'admin-scene',
+        ],
+        [
+        'titulo' => 'Salas y equipos',
+        'descripcion' => 'Administrar informacion de las salas y equipos de Realidad Virtual',
+        'color' => 'cyan',
+        'icono' => 'fa-vr-cardboard',
+        'link' => 'admin-room',
+        ],
+        [
+        'titulo' => 'Mantenimiento y equipos',
+        'descripcion' => 'Administracion de Salones, equipos de Realidad Virtual y mantenimiento',
+        'color' => 'blue',
+        'icono' => 'fa-gear',
+        'link' => 'admin-mantenaince'
         ]
     ];
 

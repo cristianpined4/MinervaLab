@@ -10,11 +10,9 @@ return new class extends Migration {
         Schema::create('room', function (Blueprint $table) {
             $table->id();
             $table->string('description', 255)->nullable();
-            $table->integer('vr_glasses')->default(0);
             $table->integer('max_students')->default(0);
-            $table->enum('status', ['available', 'unavailable', 'maintenance'])->default('available');
+            $table->boolean('status', )->default(true);
             $table->timestamps();
-
         });
     }
 
