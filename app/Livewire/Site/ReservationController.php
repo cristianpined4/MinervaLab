@@ -8,7 +8,9 @@ use App\Models\RoomMantenaince;
 use App\Models\Schedule;
 use App\Models\Scene;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
 use App\Models\VrGlasses;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ReservationController extends Component
@@ -375,16 +377,35 @@ class ReservationController extends Component
             }
         }
 
-        Reservation::create([
-            'id_user' => auth()->id(),
-            'id_room' => $this->room_id,
-            'date' => $this->fecha,
-            'starts_at' => $start->format('H:i:s'),
-            'ends_at' => $start->copy()->addMinutes($this->total_time)->format('H:i:s'),
-            'time' => $this->total_time,
-            'students' => $this->numeroEstudiantes,
-            'status' => 0,
-        ]);
+        try {
+            DB::beginTransaction();
+            Reservation::create([
+                'id_user' => auth()->id(),
+                'id_room' => $this->room_id,
+                'date' => $this->fecha,
+                'starts_at' => $start->format('H:i:s'),
+                'ends_at' => $start->copy()->addMinutes($this->total_time)->format('H:i:s'),
+                'time' => $this->total_time,
+                'students' => $this->numeroEstudiantes,
+                'status' => 0,
+            ]);
+            $reservation_id = DB::getPdo()->lastInsertId();
+            foreach ($this->selected_scenes as $scene_id) {
+                ReservationDetail::create([
+                    'id_reservation' => $reservation_id,
+                    'id_scene' => $scene_id,
+                ]);
+                if (!$scene_id) {
+                    DB::rollBack();
+                    throw new \Exception("ID de escena inválido");
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            //throw $th;
+        }
 
         $this->dispatch('swal:success', [
             'message' => 'Reservación creada en estado PENDIENTE. Pronto recibirá confirmación.'
