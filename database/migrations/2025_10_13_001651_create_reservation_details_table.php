@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_reservation');
             $table->unsignedBigInteger('id_scene');
-            $table->integer('count_sessions')->default(1);
             $table->timestamps();
 
             $table->foreign('id_reservation')->references('id')->on('reservation')->onDelete('cascade')->onUpdate('cascade');

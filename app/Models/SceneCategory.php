@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class SceneCategory extends Model
 {
     protected $table = 'scene_category';
-    protected $fillable = ['description', 'color'];
+    protected $fillable = ['description', 'color', 'icon'];
 }

@@ -32,9 +32,9 @@
                 <i class="fas fa-calendar-check mr-3 text-blue-300"></i> Mis Reservaciones
             </a>
 
-            <a href="{{ route('escena') }}"
+            <a href="{{ route('reservation') }}"
                 class="flex items-center px-5 py-2.5 text-sm font-medium hover:bg-blue-700/40 transition {{ request()->routeIs('multimedia') ? 'bg-blue-700/60' : '' }}">
-                <i class="fas fa-photo-video mr-3 text-blue-300"></i> Escena / Multimedia
+                <i class="fas fa-photo-video mr-3 text-blue-300"></i> Reservar escenas
             </a>
             @can('admin')
                 <a href="{{ route('admin-dashboard') }}"

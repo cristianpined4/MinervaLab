@@ -9,13 +9,12 @@ class Reservation extends Model
     protected $table = 'reservation';
     protected $fillable = [
         'id_user',
-        'id_calendar',
         'id_room',
-        'day',
-        'hour',
+        'date',
+        'starts_at',
+        'ends_at',
         'time',
-        'count',
-        'status',
-        'date'
+        'students',
+        'status'
     ];
 }

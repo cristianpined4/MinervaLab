@@ -12,7 +12,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('home', App\Livewire\Site\HomeSiteController::class)->name('home');
-    Route::get('escena', App\Livewire\Site\EscenaController::class)->name('escena');
+    Route::get('reservation', App\Livewire\Site\ReservationController::class)->name('reservation');
     Route::get('dashboard', App\Livewire\Site\DashboardController::class)->name('dashboard');
     Route::get('reservaciones', App\Livewire\Site\ReservacionesController::class)->name('reservaciones');
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('usefull_years');
             $table->timestamp('deleted_at')->nullable();
             $table->unsignedBigInteger('id_room');
-            $table->foreign('id')->references('id')->on('room')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_room')->references('id')->on('room')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
