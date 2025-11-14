@@ -14,9 +14,6 @@
     content="@yield('meta_description', 'Laboratorio de Realidad Virtual - El Futuro de la Educación. Descubre experiencias educativas inmersivas con tecnología de realidad virtual de vanguardia. Transforma la manera de aprender y enseñar en Minerva Labs.')" />
   <meta name="author" content="Minerva Labs" />
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
   @livewireStyles
   @vite(['resources/css/app.css', 'resources/css/app-site.css', 'resources/js/app.js', 'resources/js/app-site.js'])
 </head>

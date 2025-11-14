@@ -16,12 +16,11 @@ class LoginController extends Component
     public $remember_me = false;
     public $loginError = null;
 
-    public function render()
-    {
-        return view('livewire.admin.auth.login')
-            ->extends('layouts.loginAndRegister')
-            ->section('content');
-    }
+ public function render()
+{
+    return view('livewire.admin.auth.login')
+        ->layout('layouts.loginAndRegister');
+}
 
     public function login()
     {
