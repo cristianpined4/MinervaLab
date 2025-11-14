@@ -3,9 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -44,6 +44,20 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        /* crear usuario admin */
+        DB::table('users')->insert([
+            'username' => 'admin',
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'a@b.c',
+            'password' => bcrypt('admin123'),
+            'id_rol' => 1,
+            'id_faculty' => 1,
+            'active' => true,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 
     /**
