@@ -8,9 +8,7 @@
 @section('hide_footer', true)
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center px-4 relative">
-
-    {{-- Overlay de carga Livewire --}}
+<div  class="min-h-screen flex items-center justify-center px-4 relative" id="loginForm">    {{-- Overlay de carga Livewire --}}
     <div wire:loading.flex wire:target="login"
          class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm items-center justify-center">
         <div class="flex flex-col items-center gap-3 rounded-2xl bg-slate-900/90 border border-sky-500/40 px-6 py-5 shadow-2xl">
@@ -105,10 +103,10 @@
                                       text-sm text-black placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('username') border-red-500/70 @enderror">
-                        @error('username')
+                @error('username')
                             <p class="text-xs text-red-400 mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                @enderror
+            </div>
 
                     {{-- Password --}}
                     <div>
@@ -119,10 +117,10 @@
                                       text-sm text-black placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('password') border-red-500/70 @enderror">
-                        @error('password')
+                @error('password')
                             <p class="text-xs text-red-400 mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                @enderror
+            </div>
 
                     {{-- Remember + Olvidé contraseña --}}
                     <div class="flex items-center justify-between text-xs text-slate-400">
@@ -131,7 +129,7 @@
                                    class="h-3.5 w-3.5 rounded border-slate-600 bg-slate-900 text-sky-500
                                           focus:ring-sky-500/60">
                             <span>Recuérdame</span>
-                        </label>
+                </label>
 
                         <a href="#" class="text-sky-400 hover:text-sky-300">
                             ¿Olvidaste tu contraseña?
@@ -139,7 +137,7 @@
                     </div>
 
                     {{-- BOTÓN --}}
-            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
 
 
                     {{-- Volver al sitio --}}
@@ -178,5 +176,3 @@
             </div>
         </div>
     </div>
-</div>
-@endsection

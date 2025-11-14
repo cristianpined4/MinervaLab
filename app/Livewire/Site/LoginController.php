@@ -19,7 +19,8 @@ class LoginController extends Component
  public function render()
 {
     return view('livewire.admin.auth.login')
-        ->layout('layouts.loginAndRegister');
+        ->extends('layouts.loginAndRegister')
+        ->section('content');
 }
 
     public function login()
