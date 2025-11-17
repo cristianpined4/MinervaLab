@@ -109,7 +109,7 @@
                     <div class="relative w-full border-b-2">
                         <input wire:model.live="search"
                             type="text"
-                            placeholder="Buscar exclusión..."
+                            placeholder="Buscar horario..."
                             class="w-full rounded-lg bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
                         <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

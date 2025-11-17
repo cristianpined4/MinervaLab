@@ -6,38 +6,38 @@
     @include('layouts.components.header-global')
 
     <main class="relative z-10 min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-            <!-- modales -->
-    <div id="modal-home" class="modal" wire:ignore.self>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar usuario' : 'Nuevo usuario' }}</h5>
-                    <button type="button" class="btn-close" aria-label="Cerrar"
-                        onclick="closeModal(this.closest('.modal'))">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-label">Nombre Completo</label>
-                        <input wire:model="fields.name" type="text" placeholder="Nombre" id="nombre"
-                            class="form-control @error('fields.name') was-validated is-invalid @enderror"
-                            oninput="this.value = this.value.toUpperCase();">
-                        <div class="invalid-feedback">@error('fields.name') {{$message}} @enderror</div>
+        <!-- modales -->
+        <div id="modal-home" class="modal" wire:ignore.self>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar usuario' : 'Nuevo usuario' }}</h5>
+                        <button type="button" class="btn-close" aria-label="Cerrar"
+                            onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    @if ($record_id)
-                    <button type="button" class="btn btn-warning" wire:click="update">Actualizar</button>
-                    @else
-                    <button type="button" class="btn btn-primary" wire:click="store">Guardar</button>
-                    @endif
-                    <button type="button" class="btn btn-secondary"
-                        onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">Nombre Completo</label>
+                            <input wire:model="fields.name" type="text" placeholder="Nombre" id="nombre"
+                                class="form-control @error('fields.name') was-validated is-invalid @enderror"
+                                oninput="this.value = this.value.toUpperCase();">
+                            <div class="invalid-feedback">@error('fields.name') {{$message}} @enderror</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @if ($record_id)
+                        <button type="button" class="btn btn-warning" wire:click="update">Actualizar</button>
+                        @else
+                        <button type="button" class="btn btn-primary" wire:click="store">Guardar</button>
+                        @endif
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- fin modales -->
-     
+        <!-- fin modales -->
+
         <!--  Bienvenida -->
         <section class="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600">
             <div class="absolute inset-0 bg-black/10"></div>
@@ -45,7 +45,7 @@
                 <div class="flex flex-col md:flex-row items-center justify-between gap-8">
                     <div class="text-white">
                         <h1 class="text-3xl md:text-4xl font-bold mb-3">
-                            ¡Hola, {{ Auth::user()->name ?? 'Usuario' }}!
+                            ¡Hola, {{ auth()->user()?->name ?? 'Usuario' }}!
                         </h1>
                         <p class="text-lg text-blue-100 mb-4">
                             Bienvenido al Sistema de Información MinervaLab
@@ -58,9 +58,6 @@
                     <div class="flex gap-3">
                         <a href="#eventos" class="bg-white text-blue-600 px-6 py-3 rounded-xl font-semibold hover:bg-blue-50 transition-colors shadow-lg">
                             <i class="fas fa-calendar-alt mr-2"></i> Ver Eventos
-                        </a>
-                        <a href="#noticias" class="bg-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-400 transition-colors">
-                            <i class="fas fa-newspaper mr-2"></i> Noticias
                         </a>
                     </div>
                 </div>
@@ -163,84 +160,7 @@
             </div>
         </section>
 
-        <!-- Noticias Recientes -->
-        <section id="noticias" class="bg-gray-50 py-12">
-            <div class="max-w-7xl mx-auto px-4 md:px-6">
-                <div class="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Últimas Noticias</h2>
-                        <p class="text-gray-600">Mantente informado con las novedades</p>
-                    </div>
-                    <a href="{{ route('dashboard') }}" class="text-blue-600 font-semibold hover:underline">
-                        Ver todas <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    @php
-                    $noticias = [
-                    [
-                    'titulo' => 'Actualización del Sistema de Gestión',
-                    'descripcion' => 'Estamos emocionados de anunciar nuevas funcionalidades que mejorarán tu experiencia en la plataforma.',
-                    'fecha' => 'Hace 2 horas',
-                    'categoria' => 'Sistema',
-                    'color' => 'blue',
-                    'imagen' => 'sistema.jpg'
-                    ],
-                    [
-                    'titulo' => 'Nuevos Cursos Disponibles',
-                    'descripcion' => 'Descubre nuestra nueva oferta de cursos y talleres para el próximo trimestre.',
-                    'fecha' => 'Hace 5 horas',
-                    'categoria' => 'Educación',
-                    'color' => 'green',
-                    'imagen' => 'cursos.jpg'
-                    ],
-                    [
-                    'titulo' => 'Mantenimiento Programado',
-                    'descripcion' => 'El sistema estará en mantenimiento este sábado de 2:00 AM a 6:00 AM.',
-                    'fecha' => 'Hace 1 día',
-                    'categoria' => 'Avisos',
-                    'color' => 'orange',
-                    'imagen' => 'mantenimiento.jpg'
-                    ],
-                    [
-                    'titulo' => 'Resultados de la Encuesta',
-                    'descripcion' => 'Agradecemos tu participación. Los resultados ya están disponibles.',
-                    'fecha' => 'Hace 2 días',
-                    'categoria' => 'Resultados',
-                    'color' => 'purple',
-                    'imagen' => 'encuesta.jpg'
-                    ],
-                    ];
-                    @endphp
-
-                    @foreach($noticias as $noticia)
-                    <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all group">
-                        <div class="flex flex-col sm:flex-row">
-                            <div class="sm:w-1/3 h-48 sm:h-auto bg-gradient-to-br from-{{ $noticia['color'] }}-400 to-{{ $noticia['color'] }}-600"></div>
-                            <div class="sm:w-2/3 p-6">
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="bg-{{ $noticia['color'] }}-100 text-{{ $noticia['color'] }}-700 px-3 py-1 rounded-full text-xs font-semibold">
-                                        {{ $noticia['categoria'] }}
-                                    </span>
-                                    <span class="text-xs text-gray-400">• {{ $noticia['fecha'] }}</span>
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-{{ $noticia['color'] }}-600 transition-colors">
-                                    {{ $noticia['titulo'] }}
-                                </h3>
-                                <p class="text-gray-600 text-sm mb-4">
-                                    {{ $noticia['descripcion'] }}
-                                </p>
-                                <a href="#" class="text-{{ $noticia['color'] }}-600 font-semibold text-sm hover:underline inline-flex items-center">
-                                    Leer más <i class="fas fa-arrow-right ml-1 text-xs"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
 
         <!-- Documentos y Recursos -->
         <section class="max-w-7xl mx-auto px-4 md:px-6 py-12">
@@ -318,9 +238,6 @@
                     Nuestro equipo de soporte está disponible para ayudarte con cualquier duda o consulta
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-colors inline-flex items-center justify-center">
-                        <i class="fas fa-comments mr-2"></i> Chat en Vivo
-                    </a>
                     <a href="#" class="bg-blue-400 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-300 transition-colors inline-flex items-center justify-center">
                         <i class="fas fa-envelope mr-2"></i> Enviar Correo
                     </a>
@@ -331,33 +248,35 @@
     @include('layouts.components.footer-global')
 
     <script>
-         document.addEventListener('livewire:initialized', function () {
-        Livewire.on('cerrar-modal', function (modal) {
-            let modalElement = document.getElementById(modal[0].modal);
-            if (modalElement) {
-                closeModal(modalElement);
-            }
+        document.addEventListener('livewire:initialized', function() {
+            Livewire.on('cerrar-modal', function(modal) {
+                let modalElement = document.getElementById(modal[0].modal);
+                if (modalElement) {
+                    closeModal(modalElement);
+                }
+            });
+
+            Livewire.on('abrir-modal', function(modal) {
+                let modalElement = document.getElementById(modal[0].modal);
+                if (modalElement) {
+                    openModal(modalElement);
+                }
+            });
         });
 
-        Livewire.on('abrir-modal', function (modal) {
-            let modalElement = document.getElementById(modal[0].modal);
-            if (modalElement) {
-                openModal(modalElement);
+        const confirmarEliminar = async id => {
+            if (await window.Confirm(
+                    'Eliminar',
+                    '¿Estas seguro de eliminar este Home?',
+                    'warning',
+                    'Si, eliminar',
+                    'Cancelar'
+                )) {
+                Livewire.dispatch('delete', {
+                    id
+                });
             }
-        });
-    });
-
-    const confirmarEliminar = async id => {
-        if (await window.Confirm(
-            'Eliminar',
-            '¿Estas seguro de eliminar este Home?',
-            'warning',
-            'Si, eliminar',
-            'Cancelar'
-        )) {
-            Livewire.dispatch('delete', { id });
         }
-    }
     </script>
 
 </div>
