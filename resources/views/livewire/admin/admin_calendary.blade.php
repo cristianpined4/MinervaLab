@@ -208,6 +208,9 @@
                 if (modalElement) {
                     closeModal(modalElement);
                 }
+                setTimeout(() => {
+                    location.reload(); // recarga toda la página
+                }, 500); // delay de 500ms
             });
 
             Livewire.on('abrir-modal', function (modal) {
@@ -231,6 +234,7 @@
                     text: e.message,
                 });
             });
+
             Livewire.on('confirmar-eliminar', data => {
                 //alert(JSON.stringify(data))
                 Swal.fire({
@@ -258,7 +262,12 @@
                 });
             });
 
-        });
 
+        });
+        window.addEventListener('reload-delay', () => {
+            setTimeout(() => {
+                location.reload(); // recarga toda la página
+            }, 500); // delay de 500ms
+        });
     </script>
 </div>
