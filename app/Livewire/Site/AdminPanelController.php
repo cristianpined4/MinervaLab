@@ -22,7 +22,7 @@ class AdminPanelController extends Component
         'descripcion' => 'Administrar reservaciones autorizadas, por autorizar y declinación',
         'color' => 'green',
         'icono' => 'fa-lock',
-        'link' => 'admin-calendary',
+        'link' => 'admin-reservation',
         ],
         [
         'titulo' => 'Usuarios',

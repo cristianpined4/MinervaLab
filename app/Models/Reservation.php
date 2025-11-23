@@ -17,4 +17,13 @@ class Reservation extends Model
         'students',
         'status'
     ];
+
+    public function HasUser()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+    public function HasRoom()
+    {
+        return $this->belongsTo(Room::class, 'id_room');
+    }
 }

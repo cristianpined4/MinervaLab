@@ -27,7 +27,7 @@
                 <i class="fas fa-home mr-3 text-blue-300"></i> Home
             </a>
 
-            <a href="{{ route('reservaciones') }}"
+            <a href="{{ route('my-reservations') }}"
                 class="flex items-center px-5 py-2.5 text-sm font-medium hover:bg-blue-700/40 transition {{ request()->routeIs('reservaciones') ? 'bg-blue-700/60' : '' }}">
                 <i class="fas fa-calendar-check mr-3 text-blue-300"></i> Mis Reservaciones
             </a>
