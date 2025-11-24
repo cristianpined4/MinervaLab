@@ -27,5 +27,9 @@ class AuthServiceProvider extends ServiceProvider
             $role = Roles::find($user->id_rol);
             return $role && $role->permissions == 1;
         });
+        Gate::define('teacher', function ($user) {
+            $role = Roles::find($user->id_rol);
+            return $role && $role->permissions == 3;
+        });
     }
 }

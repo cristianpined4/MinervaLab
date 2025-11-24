@@ -50,7 +50,7 @@ class AttendanceValidateController extends Component
         ReservationAttendance::create([
             'id_reservation' => $this->reservation->id,
             'carnet'         => $this->carnet,
-            'date'           => now()->format('Y-m-d'),
+            'date'           => now(),
             'attendance'     => now()->format('H:i:s'),
         ]);
 

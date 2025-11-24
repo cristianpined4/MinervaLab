@@ -6,6 +6,57 @@
     @include('layouts.components.header-global')
 
     <main class="flex flex-col md:flex-row bg-gradient-to-br from-green-50 via-white to-emerald-50 min-h-screen">
+        <div id="modal-asistencia" class="modal" wire:ignore.self>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Asistencia registrada</h5>
+                        <button type="button" class="btn-close" onclick="closeModal(this.closest('.modal'))">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Carnet</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Fecha</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Asistencia</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                @foreach ($attendance_list as $item)
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">{{ $item->carnet }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">{{ $item->date }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">{{ $item->attendance ? 'Asistió' : 'No asistió' }}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
             <div class="max-w-7xl mx-auto">
@@ -137,6 +188,20 @@
                                                         <i class="fas fa-times mr-3"></i>
                                                 </button>
                                             @endif
+                                            @if ($row->status == 1)
+                                                @can('admin')
+                                                    <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                            title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
+                                                            <i class="fas fa-user mr-3"></i>
+                                                    </button>
+                                                @endcan
+                                                @can('teacher')
+                                                    <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                            title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
+                                                            <i class="fas fa-user mr-3"></i>
+                                                    </button>
+                                                @endcan
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -185,38 +250,17 @@
 
     <script>
         document.addEventListener('livewire:initialized', function () {
-            Livewire.on('cerrar-modal', function (modal) {
-                let modalElement = document.getElementById(modal[0].modal);
-                if (modalElement) {
-                    closeModal(modalElement);
-                }
-                setTimeout(() => {
-                    location.reload(); // recarga toda la página
-                }, 500); // delay de 500ms
-            });
 
             Livewire.on('abrir-modal', function (modal) {
                 let modalElement = document.getElementById(modal[0].modal);
-                if (modalElement) {
-                    openModal(modalElement);
-                    let starts_at = document.getElementById('starts_at');
-                    let ends_at = document.getElementById('ends_at');
-                    let id_user = document.getElementById('id_user');
-                    let id_room = document.getElementById('id_room');
-                    let date = document.getElementById('date');
-                    let time = document.getElementById('time');
-                    let students = document.getElementById('students');
-                    let status = document.getElementById('status');
+                if (modalElement) openModal(modalElement);
+            });
 
-                    starts_at.value = modal[0].fields.starts_at
-                    ends_at.value = modal[0].fields.ends_at
-                    id_user.value = modal[0].fields.id_user
-                    id_room.value = modal[0].fields.id_room
-                    date.value = modal[0].fields.date
-                    time.value = modal[0].fields.time
-                    students.value = modal[0].fields.students
-                    status.value = modal[0].fields.status
-                }
+            Livewire.on('cerrar-modal', function(modal) {
+                let modalElement = document.getElementById(modal[0].modal);
+                if (modalElement) closeModal(modalElement);
+
+                setTimeout(() => location.reload(), 500);
             });
 
             Livewire.on('swal:success', e => {

@@ -2,12 +2,14 @@
 namespace App\Livewire\Site;
 
 use App\Models\Reservation;
+use App\Models\ReservationAttendance;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
 class MyReservationController extends Component
 {
     public $record_id;
+    public $attendance_list = [];
     public $fields = [
         'id_user' => null,
         'id_room' => null,
@@ -177,4 +179,17 @@ class MyReservationController extends Component
             return json_encode(['status' => 'error', 'message' => 'Ocurrió un error al guardar la reservación']);
         }
     }
+    public function mostrarAsistencia($id)
+    {
+        $this->resetErrorBag();
+
+        // Obtener lista de asistencia vinculada a la reservación
+        $this->attendance_list = ReservationAttendance::where('id_reservation', $id)->get();
+
+        // Lanzar el modal
+        $this->dispatch('abrir-modal', [
+            'modal' => 'modal-asistencia',
+        ]);
+    }
+
 }
