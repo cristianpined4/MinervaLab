@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_reservation');
             $table->string('carnet', 50)->nullable();
             $table->timestamp('date')->nullable();
-            $table->timestamp('attendance')->nullable();
+            $table->time('attendance')->nullable();
             $table->timestamps();
 
             $table->foreign('id_reservation')->references('id')->on('reservation')->onDelete('cascade')->onUpdate('cascade');

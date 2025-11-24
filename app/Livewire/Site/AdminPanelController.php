@@ -2,11 +2,15 @@
 namespace App\Livewire\Site;
 
 use Livewire\Component;
+use App\Models\AdminAttendance;
+use Illuminate\Support\Facades\DB;
 
 class AdminPanelController extends Component
 {
     public $record_id;
-    public $fields = [];   // inputs normales
+    public $fields = [
+        'key' => '',
+    ];   // inputs normales
     public $file;
 
     public $opciones = [
@@ -27,7 +31,7 @@ class AdminPanelController extends Component
         [
         'titulo' => 'Usuarios',
         'descripcion' => 'Administrar usuarios, roles, informacion, recuperacion de cuenta y activacion',
-        'color' => 'gray',
+        'color' => 'orange',
         'icono' => 'fa-user',
         'link' => 'admin-user'
         ],
@@ -60,5 +64,40 @@ class AdminPanelController extends Component
         return view('livewire.admin.dashboard')
         ->extends('layouts.site')
         ->section('content');
+    }
+    //Modales
+    public function abrirModal()
+    {
+        $this->resetErrorBag();
+
+        $registro = AdminAttendance::get(['id','key'])->first();
+        $this->fields['key'] = $registro->key;
+        $this->record_id = $registro->id;
+        $this->dispatch('abrir-modal', [
+            'modal' => 'modal-home',
+            'fields' => $this->fields
+        ]);
+    }
+
+    public function store_update()
+    {
+        $this->validate([
+            'fields.key' => 'required|min:10',
+        ],
+        [
+            'fields.key.required' => 'Ingrese una clave valida',
+            'fields.key.min' => 'La clave debe tener al menos 10 caracteres',
+        ]
+        );
+        try {
+            DB::beginTransaction();
+            AdminAttendance::find($this->record_id)->update($this->fields);
+            $this->dispatch('swal:notify', ['message' => 'Clave actualizada']);
+            DB::commit();
+            $this->dispatch('cerrar-modal', ['modal' => 'modal-home']);
+            //$this->dispatchBrowserEvent('reload-delay');
+        } catch (\Throwable $th) {
+            return json_encode(['status' => 'error', 'message' => 'Ocurrio un error al guardar el registro' . $th->getMessage()]);
+        }
     }
 }
