@@ -190,17 +190,25 @@
                                             @endif
                                             @if ($row->status == 1)
                                                 @can('admin')
-                                                    <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    <button type="button" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
                                                             <i class="fas fa-user mr-3"></i>
                                                     </button>
                                                 @endcan
                                                 @can('teacher')
-                                                    <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                    <button type="button" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
                                                             <i class="fas fa-user mr-3"></i>
                                                     </button>
                                                 @endcan
+                                            @endif
+                                            @if ($row->status == 1 || $row->status == 4)
+                                                <button type="button"
+                                                    class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                    title="Pdf" wire:click="pdfAttendance({{ $row->id }})">
+                                                    <i class="fas fa-file mr-3"></i>
+                                                </button>
+
                                             @endif
                                         </div>
                                     </td>

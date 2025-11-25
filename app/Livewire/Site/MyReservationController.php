@@ -5,7 +5,7 @@ use App\Models\Reservation;
 use App\Models\ReservationAttendance;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
-
+use App\Services\FPDFF;
 class MyReservationController extends Component
 {
     public $record_id;
@@ -191,5 +191,33 @@ class MyReservationController extends Component
             'modal' => 'modal-asistencia',
         ]);
     }
+    public function pdfAttendance($id)
+    {
+
+        $data = ReservationAttendance::where('id_reservation', $id)->get()->toArray();
+
+        $pdf = (new FPDFF())
+            ->setTitle('Reporte de Asistencia')
+            ->setSubTitle('Listado de reservacion #' . $id)
+            ->setDate(now()->format('Y-m-d'))
+            ->setModelColumns(['carnet', 'date', 'attendance'])
+            ->setColumnLabels([
+                'carnet'     => 'Carnet del Estudiante',
+                'date'     => 'Fecha',
+                'attendance' => 'Hora de llegada',
+            ])
+            ->setColumnWidths([65,65,55])
+            ->build($data);
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf;
+        }, 'asistencia_' . $id . '.pdf', [
+            'Content-Type' => 'application/pdf',
+        ]);
+    }
+
+
+
+
 
 }

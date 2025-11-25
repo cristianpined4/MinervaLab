@@ -34,6 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-room', App\Livewire\Site\AdminRoomController::class)->name('admin-room');
     Route::get('admin-reservation', App\Livewire\Site\AdminReservationController::class)->name('admin-reservation');
     Route::get( 'admin-vr-glasses', App\Livewire\Site\AdminVrController::class)->name('admin-vr-glasses');
+    Route::get( 'admin-report', App\Livewire\Site\ReportController::class)->name('admin-report');
 });
 
 

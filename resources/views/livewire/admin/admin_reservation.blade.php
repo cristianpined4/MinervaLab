@@ -62,6 +62,9 @@
                                     Hora
                                 </th>
                                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    Duracion
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
                                     Sala
                                 </th>
                                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
@@ -92,7 +95,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">{{ $row->time }}</span>
+                                            <span class="text-sm font-medium text-gray-900">{{ $row->starts_at }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm font-medium text-gray-900">{{ $row->time }} min</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">

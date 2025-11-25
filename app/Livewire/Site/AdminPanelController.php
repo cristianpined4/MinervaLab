@@ -55,6 +55,13 @@ class AdminPanelController extends Component
         'color' => 'blue',
         'icono' => 'fa-gear',
         'link' => 'admin-mantenaince'
+        ],
+        [
+        'titulo' => 'Reports',
+        'descripcion' => 'Generacion de reportes',
+        'color' => 'blue',
+        'icono' => 'fa-file',
+        'link' => 'admin-report'
         ]
     ];
 
