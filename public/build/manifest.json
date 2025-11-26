@@ -1,0 +1,46 @@
+{
+  "resources/css/app-admin.css": {
+    "file": "assets/app-admin-D5puFNC_.css",
+    "src": "resources/css/app-admin.css",
+    "isEntry": true,
+    "names": [
+      "app-admin.css"
+    ]
+  },
+  "resources/css/app-site.css": {
+    "file": "assets/app-C7rjve62.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css",
+      "app-site.css"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-C7rjve62.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css",
+      "app-site.css"
+    ]
+  },
+  "resources/js/app-admin.js": {
+    "file": "assets/app-admin-l0sNRNKZ.js",
+    "name": "app-admin",
+    "src": "resources/js/app-admin.js",
+    "isEntry": true
+  },
+  "resources/js/app-site.js": {
+    "file": "assets/app-site-l0sNRNKZ.js",
+    "name": "app-site",
+    "src": "resources/js/app-site.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DBXA_vsr.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
