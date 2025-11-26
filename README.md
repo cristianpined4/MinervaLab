@@ -1,226 +1,169 @@
-# Proyecto Laravel + Livewire con Admin y Site
+# 🧩 Minerva Lab VR — Sistema de Reservación de Equipos y Salones Virtuales
 
-Este proyecto está estructurado para manejar **sitio web público (Site)** y **panel de administración (Admin)** usando **Laravel 10** + **Livewire** + **Bootstrap/JS para alerts y modales**.
-Incluye comandos Artisan personalizados para generar **componentes Livewire**, **controladores CRUD** y vistas automáticamente.
-
----
-
-## Estructura principal
-
-```
-app/
-├── Http/
-│   └── Controllers/
-│       ├── Admin/
-│       └── Site/
-├── Livewire/
-│   ├── Admin/
-│   └── Site/
-resources/
-├── views/
-│   ├── admin/
-│   └── site/
-```
-
--   **Admin**: panel de administración con layout `layouts.admin`.
--   **Site**: sitio público con layout `layouts.site`.
--   **Vistas y controladores** se generan automáticamente según la sección (`admin` o `site`).
+**Minerva Lab VR** es una plataforma web desarrollada en **Laravel** con **Livewire** y **Tailwind CSS**, compatible con **PostgreSQL**.  
+Su propósito es **centralizar la gestión y reservación de equipos de realidad virtual y salones virtuales**, automatizar el proceso de registro y control de uso, y ofrecer un sistema eficiente para la administración de recursos tecnológicos en laboratorios académicos.
 
 ---
 
-## Comandos personalizados
+## 🎯 Objetivo general
 
-### 1. Crear componente Livewire genérico con CRUD y subida de archivos
-
-```
-php artisan make:admin-livewire NombreComponente
-php artisan make:site-livewire NombreComponente
-```
-
-**Opciones:**
-
--   `NombreComponente`: nombre del componente, se usa también para la vista y el controlador Livewire.
--   Genera:
-
-    -   Clase Livewire (`App\Livewire\Admin\NombreComponente.php` o `App\Livewire\Site\NombreComponente.php`)
-    -   Vista Blade (`resources/views/livewire/admin/nombre_componente.blade.php`)
-    -   Funciones básicas: `render`, `store`, `update`, `edit`, `destroy`, `resetUI`
-    -   Soporte para **subida de archivos** con `file_path`
-    -   Búsqueda dinámica en todos los campos `$fillable` del modelo
+Diseñar e implementar el sistema Minerva Lab VR para centralizar la gestión y reservación de equipos de realidad virtual y salones virtuales, facilitando el registro, control de uso, generación de reportes y acceso seguro para estudiantes, docentes y administradores.
 
 ---
 
-### 2. Crear un controlador CRUD básico (Admin)
+## 🚀 Funcionalidades principales
 
-```
-php artisan make:admin-controller Nombre
-```
-
-Genera:
-
-```
-App\Http\Controllers\Admin\NombreController.php
-```
-
-Con métodos:
-
--   `index()`: listar registros
--   `create()`: formulario de creación
--   `store(Request $request)`: guardar registro (con subida de archivos)
--   `edit($id)`: formulario de edición
--   `update(Request $request, $id)`: actualizar registro (con subida de archivos)
--   `destroy($id)`: eliminar registro (con eliminación de archivos)
--   Mensajes flash `with('success')` / `with('error')`
--   Uso de transacciones DB
+-   🗓️ **Reservación de equipos VR:** registro y gestión de préstamos de gafas, accesorios y dispositivos de realidad virtual.
+-   🏢 **Reservación de salones virtuales:** administración de espacios, horarios y disponibilidad para actividades académicas.
+-   👥 **Gestión de usuarios:** roles definidos (administrador, docente, estudiante) con autenticación segura mediante **Laravel Web Auth**.
+-   📊 **Reportes y métricas:** generación automática de reportes de uso, asistencia y disponibilidad en PDF.
+-   🔔 **Notificaciones:** alertas automáticas por correo sobre reservas, recordatorios y confirmaciones.
+-   🔐 **Panel administrativo:** control centralizado de usuarios, recursos y registros de reservación.
 
 ---
 
-### 3. Crear un controlador CRUD básico (Site)
+## 🧩 Secciones del sitio
 
-```
-php artisan make:site-controller Nombre
-```
-
--   Igual que el controlador Admin pero apuntando a vistas de `site`.
--   Puede integrarse con **Livewire si se desea**.
+-   🏠 **Inicio:** información general, recursos destacados y enlaces rápidos.
+-   🗓️ **Reservaciones:** gestión de equipos y salones virtuales.
+-   📊 **Reportes:** acceso a estadísticas y reportes de uso.
 
 ---
 
-## Uso de los componentes Livewire
+## 🛠️ Tecnologías empleadas
 
-1. **Agregar en la ruta**
+| Componente                | Herramienta                                |
+| ------------------------- | ------------------------------------------ |
+| **Lenguaje principal**    | PHP 8.2                                    |
+| **Framework**             | Laravel 12                                 |
+| **Interactividad**        | Livewire                                   |
+| **Estilos**               | Tailwind CSS                               |
+| **Base de datos**         | PostgreSQL / MySQL (compatibles)           |
+| **Autenticación**         | Laravel Web (login, registro y roles RBAC) |
+| **Entorno de desarrollo** | Visual Studio Code                         |
+| **Gestión de tareas**     | Jira (metodología ágil SCRUM)              |
 
-```
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin/usuarios', \App\Livewire\Admin\UsuariosController::class)->name('admin.usuarios');
-});
-```
+---
 
-2. **Mostrar componente en Blade**
+## 🧠 Metodología de desarrollo
 
-```
-<livewire:admin.usuarios-controller />
-```
+El proyecto fue desarrollado bajo la **metodología ágil SCRUM**, utilizando sprints iterativos que permitieron la entrega continua de módulos funcionales, la validación con usuarios reales y la mejora progresiva del sistema.  
+Cada iteración incluyó planificación, desarrollo, pruebas y revisión, asegurando calidad, trazabilidad y adaptabilidad a las necesidades del laboratorio y la comunidad académica.
 
-3. **Eventos de JS y modales** ya vienen integrados:
+---
 
-```js
-document.addEventListener("livewire:initialized", function () {
-    Livewire.on("cerrar-modal", function () {
-        $(".modal").modal("hide");
-    });
-    Livewire.on("abrir-modal", function () {
-        $(".modal").modal("show");
-    });
-    Livewire.on("refresh", function () {
-        window.location.reload();
-    });
-});
+## 📦 Requisitos de instalación
 
-const confirmarEliminar = async (id) => {
-    if (
-        await window.Confirm(
-            "Eliminar",
-            "¿Estas seguro de eliminar este registro?",
-            "warning",
-            "Si, eliminar",
-            "Cancelar"
-        )
-    ) {
-        Livewire.dispatch("delete", { id });
-    }
-};
-```
+### 🔧 Requisitos previos
 
-> Nota: `window.Confirm` se puede definir usando **SweetAlert2**:
+-   PHP >= 8.2
+-   Composer
+-   Node.js y NPM
+-   PostgreSQL o MySQL
+-   Extensiones de PHP (OpenSSL, PDO, Mbstring, Tokenizer, XML, JSON, Ctype, ZIP)
 
-```js
-import Swal from "sweetalert2";
+### ⚙️ Pasos de instalación
 
-window.Confirm = function (
-    title,
-    text,
-    icon,
-    confirmButtonText,
-    cancelButtonText
-) {
-    return Swal.fire({
-        title,
-        text,
-        icon,
-        showCancelButton: true,
-        confirmButtonText,
-        cancelButtonText,
-    }).then((result) => result.isConfirmed);
-};
+```bash
+# Clonar el repositorio
+git clone https://github.com/cristianpined4/MinervaLab.git
+
+# Entrar al directorio del proyecto
+cd MinervaLab
+
+# Instalar dependencias de PHP
+composer install
+
+# Instalar dependencias de Node
+npm install && npm run dev
+
+# Copiar y configurar el entorno
+cp .env.example .env
+
+# Editar el archivo .env con tus credenciales
+# DB_CONNECTION=pgsql
+# DB_HOST=127.0.0.1
+# DB_PORT=5432
+# DB_DATABASE=minervalab
+# DB_USERNAME=tu_usuario
+# DB_PASSWORD=tu_contraseña
+
+# Generar clave de la aplicación
+php artisan key:generate
+
+# Ejecutar migraciones
+php artisan migrate --seed
+
+# Iniciar el servidor local
+php artisan serve
 ```
 
 ---
 
-## Recomendaciones
+## 🔐 Seguridad y cumplimiento
 
-1. Ejecutar el enlace simbólico de storage para subir archivos:
+El sistema implementa **RBAC (Role-Based Access Control)** para la gestión de roles y permisos, asegurando trazabilidad y control de accesos.
+Cumple con las normativas de:
 
-```
-php artisan storage:link
-```
-
-2. Asegurarse de que los modelos tengan `$fillable` correctamente definidos para que Livewire valide automáticamente los campos.
-
-3. Puedes personalizar las **reglas de validación** en cada componente Livewire generado editando `store()` y `update()`.
-
-4. Los layouts (`layouts.admin` y `layouts.site`) deben tener:
-
-```
-@stack('scripts')
-```
-
-para que funcionen los scripts de Livewire y los modales.
+-   **Ley de Acceso a la Información Pública (LAIP)**
+-   **Ley de Protección de Datos Personales**
+-   **Normas ISO/IEC 27001 y 25010**
+-   **Pautas WCAG 2.1** para accesibilidad web
+-   **Buenas prácticas OWASP Top 10** para seguridad en desarrollo Laravel.
 
 ---
 
-## Flujo típico para crear un módulo
+## 💾 Infraestructura y alojamiento
 
-1. Crear modelo:
+El sistema puede alojarse en un **servidor institucional o dedicado**, con:
 
-```
-php artisan make:model Producto -m
-```
-
-2. Crear componente Livewire Admin:
-
-```
-php artisan make:admin-livewire Producto
-```
-
-3. Crear controlador Admin (opcional si necesitas control clásico):
-
-```
-php artisan make:admin-controller Producto
-```
-
-4. Crear vistas Blade (si no quieres usar el stub Livewire generado) en:
-
-```
-resources/views/admin/producto/index.blade.php
-resources/views/admin/producto/create.blade.php
-resources/views/admin/producto/edit.blade.php
-```
-
-5. Agregar ruta y permisos:
-
-```
-Route::get('admin/productos', \App\Livewire\Admin\ProductoController::class)->name('admin.productos');
-```
-
-6. Listo para usar CRUD con Livewire, modales y subida de archivos.
+-   Certificado SSL (HTTPS)
+-   Copias de seguridad automáticas
+-   Panel de administración remoto
+-   Disponibilidad 24/7 para consultas, reservaciones y descarga de documentos.
 
 ---
 
-## Notas finales
+## 🤝 Contribuciones
 
--   Livewire maneja automáticamente **eventos y validaciones**.
--   Puedes usar los mismos patrones para **Site** cambiando la carpeta y layout.
--   Los comandos personalizados te permiten **generar módulos completos en segundos** sin repetir código.
+Las contribuciones al proyecto son bienvenidas.
+Realiza un _fork_, crea una rama con tus cambios y envía un _pull request_.
 
 ---
+
+## 👥 Equipo de desarrollo
+
+Proyecto desarrollado por estudiantes de **Ingeniería de Sistemas Informáticos** de la **Facultad Multidisciplinaria Oriental — Universidad de El Salvador**, como parte de la materia _Administración de Proyectos Informáticos_, bajo la asesoría del **Ing. César Misael Rodríguez Franco**.
+
+### 👨‍💻 Colaboradores
+
+-   **López Medrano, Gerardo Alexander** — LM20003
+-   **Pineda Blanco, Cristian Alberto** — PB20002
+-   **Viera Lazo, Edras Ariel** — VL20011
+-   **Vásquez Vásquez, Andrés Isaí** — VV18009
+-   **Álvarez Pérez, Carlos Vicente** — AP20007
+-   **Santos Díaz, Eliseo Santos** — SD20007
+-   **Bonilla Cortez, Oscar Alejandro** — BC18010
+-   **Conde Salgado, Nelson Numan** — CS21027
+-   **García Rivera, Billy Alexander** — GR20036
+-   **Parada Barrero, Luis Andrés** — PB19022
+
+---
+
+## 🪪 Licencia
+
+Este proyecto se distribuye bajo la licencia **MIT**.
+Consulta el archivo [LICENSE](LICENSE) para más información.
+
+---
+
+## 🏛️ Institución
+
+**Sección de Ingeniería de Sistemas Informáticos — FMO UES**
+**Universidad de El Salvador**
+📧 Contacto: [correo@ues.edu.sv](mailto:correo@ues.edu.sv)
+📍 San Miguel Centro, San Miguel, El Salvador
+
+---
+
+## ⭐ Si este proyecto te fue útil o te inspiró, no olvides dejar una estrella en el repositorio.
