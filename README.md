@@ -34,7 +34,7 @@ Diseñar e implementar el sistema Minerva Lab VR para centralizar la gestión y 
 
 | Componente                | Herramienta                                |
 | ------------------------- | ------------------------------------------ |
-| **Lenguaje principal**    | PHP 8.2                                    |
+| **Lenguaje principal**    | PHP 8.3                                    |
 | **Framework**             | Laravel 12                                 |
 | **Interactividad**        | Livewire                                   |
 | **Estilos**               | Tailwind CSS                               |
@@ -56,7 +56,7 @@ Cada iteración incluyó planificación, desarrollo, pruebas y revisión, asegur
 
 ### 🔧 Requisitos previos
 
--   PHP >= 8.2
+-   PHP >= 8.3
 -   Composer
 -   Node.js y NPM
 -   PostgreSQL o MySQL
