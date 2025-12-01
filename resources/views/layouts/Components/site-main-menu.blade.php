@@ -42,12 +42,17 @@
                 <i class="fas fa-lock mr-3 text-blue-300"></i> Panel Admin
             </a>
             @endcan
-            @can('teacher')
+            @php
+            use App\Models\Roles;
+            $role = Roles::find(Auth::user()->id_rol);
+            $permissions = $role ? intval($role->permissions) : null;
+            @endphp
+            @if ($permissions && $permissions == 3)
             <a href="{{ route('admin-report') }}"
                 class="flex items-center px-5 py-2.5 text-sm font-medium hover:bg-blue-700/40 transition {{ request()->routeIs('multimedia') ? 'bg-blue-700/60' : '' }}">
                 <i class="fas fa-lock mr-3 text-blue-300"></i> Reportes de uso
             </a>
-            @endcan
+            @endif
         </nav>
     </div>
 </aside>
