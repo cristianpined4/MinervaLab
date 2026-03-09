@@ -67,7 +67,7 @@
                             @enderror
                         </div>
 
-                        {{-- Archivo (imagen o video) —solo si no es artículo —}}
+                        {{-- Archivo (imagen o video) - solo si no es artículo --}}
                         @if ($fields['resource_type'] !== 'article')
                             <div class="form-group mb-3">
                                 <label class="form-label">

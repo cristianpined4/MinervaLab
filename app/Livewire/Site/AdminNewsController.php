@@ -33,6 +33,11 @@ class AdminNewsController extends Component
     return 'vendor.livewire.tailwind';
   }
 
+  public function updatingSearch(): void
+  {
+    $this->resetPage();
+  }
+
   public function render()
   {
     $query = News::query();
