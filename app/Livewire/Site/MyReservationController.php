@@ -4,10 +4,13 @@ namespace App\Livewire\Site;
 use App\Models\Reservation;
 use App\Models\ReservationAttendance;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use App\Services\FPDFF;
+
 class MyReservationController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $attendance_list = [];
     public $fields = [
@@ -24,6 +27,11 @@ class MyReservationController extends Component
     public $search = '';
     public $paginate = 10;
 
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         $query = Reservation::query();
@@ -35,7 +43,7 @@ class MyReservationController extends Component
                 }
             })->orWhere('id_user', auth()->id());
         } else {
-            $query->where('id_user',auth()->id() );
+            $query->where('id_user', auth()->id());
         }
 
         $data = $query->orderBy('id', 'desc')->paginate($this->paginate);
@@ -202,11 +210,11 @@ class MyReservationController extends Component
             ->setDate(now()->format('Y-m-d'))
             ->setModelColumns(['carnet', 'date', 'attendance'])
             ->setColumnLabels([
-                'carnet'     => 'Carnet del Estudiante',
-                'date'     => 'Fecha',
+                'carnet' => 'Carnet del Estudiante',
+                'date' => 'Fecha',
                 'attendance' => 'Hora de llegada',
             ])
-            ->setColumnWidths([65,65,55])
+            ->setColumnWidths([65, 65, 55])
             ->build($data);
 
         return response()->streamDownload(function () use ($pdf) {

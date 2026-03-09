@@ -72,7 +72,7 @@
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Administrar equipos</h1>
-                        <p class="text-gray-600">Gestión de gafas VR para: {{ $room->description }}</p>
+                        <p class="text-gray-600">Gestión de gafas VR para: {{ $room?->description ?? 'Sala no especificada' }}</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button
@@ -156,7 +156,20 @@
                                 @endif
                             </tbody>
                         </table>
-                        {{ $data->links() }}
+                    </div>
+
+                    {{-- Footer de la tabla con paginación --}}
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="text-sm text-gray-600">
+                            @if($data->total() > 0)
+                                Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
+                                &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>
+                                de <span class="font-semibold text-gray-900">{{ $data->total() }}</span> lentes
+                            @else
+                                Sin lentes registrados
+                            @endif
+                        </div>
+                        <div>{{ $data->links() }}</div>
                     </div>
                 </div>
 

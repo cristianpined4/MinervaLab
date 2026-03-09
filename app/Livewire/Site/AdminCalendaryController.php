@@ -3,11 +3,12 @@ namespace App\Livewire\Site;
 
 use App\Models\Holiday;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminCalendaryController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'starts_at' => null,
@@ -18,6 +19,11 @@ class AdminCalendaryController extends Component
     public $search = '';
     public $paginate = 10;
 
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -84,25 +90,26 @@ class AdminCalendaryController extends Component
 
     public function store_update()
     {
-        $this->validate([
-            'fields.starts_at' => 'required',
-            'fields.ends_at' => 'required',
-            'fields.description' => 'required|string|max:80',
-        ],
-        [
-            'fields.starts_at.required' => 'Seleccione una fecha valida',
-            'fields.ends_at.required' => 'Seleccione una fecha valida',
-            'fields.description.required' => 'Ingrese una descripcion',
-            'fields.description.max' => 'La longitud maxima es de 80',
-        ]
+        $this->validate(
+            [
+                'fields.starts_at' => 'required',
+                'fields.ends_at' => 'required',
+                'fields.description' => 'required|string|max:80',
+            ],
+            [
+                'fields.starts_at.required' => 'Seleccione una fecha valida',
+                'fields.ends_at.required' => 'Seleccione una fecha valida',
+                'fields.description.required' => 'Ingrese una descripcion',
+                'fields.description.max' => 'La longitud maxima es de 80',
+            ]
         );
         try {
             DB::beginTransaction();
-            if($this->record_id != null){
+            if ($this->record_id != null) {
                 Holiday::find($this->record_id)->update($this->fields);
                 $this->dispatch('swal:notify', ['message' => 'Registro actualizado correctamente']);
                 DB::commit();
-            }else{
+            } else {
                 Holiday::create($this->fields);
                 DB::commit();
                 $this->dispatch('swal:notify', ['message' => 'Registro creado correctamente']);

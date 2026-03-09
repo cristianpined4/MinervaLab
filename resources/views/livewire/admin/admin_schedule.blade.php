@@ -180,19 +180,18 @@
                     </div>
 
                     {{-- Footer de la tabla con paginación --}}
-                    {{-- <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div class="text-sm text-gray-600">
-                            Mostrando <span class="font-semibold text-gray-900">1-3</span> de <span class="font-semibold text-gray-900">3</span> exclusiones
+                            @if($data->total() > 0)
+                                Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
+                                &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>
+                                de <span class="font-semibold text-gray-900">{{ $data->total() }}</span> horarios
+                            @else
+                                Sin horarios registrados
+                            @endif
                         </div>
-                        <div class="flex gap-2">
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                                Anterior
-                            </button>
-                            <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                                Siguiente
-                            </button>
-                        </div>
-                    </div> --}}
+                        <div>{{ $data->links() }}</div>
+                    </div>
 
                 </div>
 

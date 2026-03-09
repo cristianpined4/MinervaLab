@@ -3,11 +3,12 @@ namespace App\Livewire\Site;
 
 use App\Models\Schedule;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminScheduleController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'day' => null,
@@ -27,6 +28,11 @@ class AdminScheduleController extends Component
     public $search = '';
     public $paginate = 50;
 
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -91,7 +97,8 @@ class AdminScheduleController extends Component
     public function store_update()
     {
         //dd($this->fields);
-        $this->validate([
+        $this->validate(
+            [
                 'fields.day' => 'required',
                 'fields.starts_at' => 'required',
                 'fields.ends_at' => 'required',
@@ -104,11 +111,11 @@ class AdminScheduleController extends Component
         );
         try {
             DB::beginTransaction();
-            if($this->record_id != null){
+            if ($this->record_id != null) {
                 Schedule::find($this->record_id)->update($this->fields);
                 $this->dispatch('swal:notify', ['message' => 'Registro actualizado correctamente']);
                 DB::commit();
-            }else{
+            } else {
                 Schedule::create($this->fields);
                 DB::commit();
                 $this->dispatch('swal:notify', ['message' => 'Registro creado correctamente']);

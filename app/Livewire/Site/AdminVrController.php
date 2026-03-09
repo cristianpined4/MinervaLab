@@ -5,10 +5,12 @@ namespace App\Livewire\Site;
 use App\Models\VrGlasses;
 use App\Models\Room;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminVrController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $id_room;
     public $room;
@@ -25,7 +27,16 @@ class AdminVrController extends Component
     public function mount()
     {
         $this->id_room = request()->get('id');
-        $this->room = Room::find($this->id_room);
+        $this->room = $this->id_room ? Room::find($this->id_room) : null;
+
+        if (!$this->room) {
+            $this->redirectRoute('admin-room', navigate: true);
+        }
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function render()

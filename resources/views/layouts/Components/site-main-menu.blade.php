@@ -12,13 +12,13 @@
 
 <div x-data="{ sidebarOpen: false }">
 
-    {{-- Botón hamburguesa (solo móvil) --}}
+    {{-- Botón hamburguesa / cerrar (solo móvil) --}}
     <button
-        @click="sidebarOpen = true"
+        @click="sidebarOpen = !sidebarOpen"
         class="lg:hidden fixed bottom-4 right-4 z-50 w-13 h-13 bg-blue-700/80 backdrop-blur rounded-lg flex items-center justify-center text-white shadow-lg"
         style="border-radius: 50%;"
-        aria-label="Abrir menú">
-        <i class="fas fa-bars text-sm"></i>
+        :aria-label="sidebarOpen ? 'Cerrar menú' : 'Abrir menú'">
+        <i class="fas text-sm" :class="sidebarOpen ? 'fa-xmark' : 'fa-bars'"></i>
     </button>
 
     {{-- Overlay oscuro (solo móvil cuando abierto) --}}
@@ -148,14 +148,6 @@
                        {{ request()->routeIs('admin-room') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                 <i class="fas fa-door-open w-4 text-center {{ request()->routeIs('admin-room') ? 'text-cyan-300' : 'text-blue-300' }}"></i>
                 Salas
-            </a>
-
-            {{-- Lentes VR --}}
-            <a href="{{ route('admin-vr-glasses') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
-                       {{ request()->routeIs('admin-vr-glasses') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
-                <i class="fas fa-glasses w-4 text-center {{ request()->routeIs('admin-vr-glasses') ? 'text-cyan-300' : 'text-blue-300' }}"></i>
-                Lentes VR
             </a>
 
             {{-- Mantenimiento Salas --}}

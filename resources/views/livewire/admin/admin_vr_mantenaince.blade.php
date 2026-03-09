@@ -176,9 +176,23 @@
                                 @endif
                             </tbody>
                         </table>
-                        {{ $data->links() }}
+                    </div>
+
+                    {{-- Footer de la tabla con paginación --}}
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="text-sm text-gray-600">
+                            @if($data->total() > 0)
+                                Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
+                                &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>
+                                de <span class="font-semibold text-gray-900">{{ $data->total() }}</span> registros
+                            @else
+                                Sin mantenimientos registrados
+                            @endif
+                        </div>
+                        <div>{{ $data->links() }}</div>
                     </div>
                 </div>
+
             </div>
         </div>
     </main>

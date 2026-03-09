@@ -5,12 +5,13 @@ use App\Models\Faculty;
 use App\Models\Roles;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\DB;
 
 class AdminUserController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'username' => null,
@@ -29,6 +30,11 @@ class AdminUserController extends Component
     public $paginate = 10;
     public $faculties = [];
     public $id_roles = [];
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -115,74 +121,76 @@ class AdminUserController extends Component
     public function store_update()
     {
 
-        if($this->record_id != null){
-            $this->validate([
-                'fields.username' => 'required|string|max:50|unique:users,username,' . $this->record_id,
-                'fields.first_name' => 'required|string|max:100',
-                'fields.last_name' => 'required|string|max:100',
-                'fields.age' => 'nullable|numeric|min:0',
-                'fields.email' => 'required|email|unique:users,email,' . $this->record_id,
-                'fields.phone' => 'nullable|string|max:15',
-                'fields.password' => 'required|min:6',
-                'fields.id_rol' => 'required',
-                'fields.id_faculty' => 'required'
-            ],
-            [
-                'fields.username.required' => 'El nombre de usuario es obligatorio.',
-                'fields.username.unique' => 'Este nombre de usuario ya está en uso.',
-                'fields.first_name.required' => 'El primer nombre es obligatorio.',
-                'fields.last_name.required' => 'El apellido es obligatorio.',
-                'fields.email.required' => 'El correo electrónico es obligatorio.',
-                'fields.email.email' => 'El correo electrónico debe ser válido.',
-                'fields.email.unique' => 'Este correo electrónico ya está registrado.',
-                'fields.password.required' => 'La contraseña es obligatoria.',
-                'fields.password.min' => 'La contraseña debe tener al menos 6 caracteres.',
-                'fields.password.same' => 'Las contraseñas no coinciden.',
-                'fields.id_faculty.required' => 'La facultad es obligatoria.',
-                'fields.id_faculty.exists' => 'La facultad seleccionada no existe.',
-                'fields.id_rol.required' => 'Seleccione el rol del usuario'
-            ]
+        if ($this->record_id != null) {
+            $this->validate(
+                [
+                    'fields.username' => 'required|string|max:50|unique:users,username,' . $this->record_id,
+                    'fields.first_name' => 'required|string|max:100',
+                    'fields.last_name' => 'required|string|max:100',
+                    'fields.age' => 'nullable|numeric|min:0',
+                    'fields.email' => 'required|email|unique:users,email,' . $this->record_id,
+                    'fields.phone' => 'nullable|string|max:15',
+                    'fields.password' => 'required|min:6',
+                    'fields.id_rol' => 'required',
+                    'fields.id_faculty' => 'required'
+                ],
+                [
+                    'fields.username.required' => 'El nombre de usuario es obligatorio.',
+                    'fields.username.unique' => 'Este nombre de usuario ya está en uso.',
+                    'fields.first_name.required' => 'El primer nombre es obligatorio.',
+                    'fields.last_name.required' => 'El apellido es obligatorio.',
+                    'fields.email.required' => 'El correo electrónico es obligatorio.',
+                    'fields.email.email' => 'El correo electrónico debe ser válido.',
+                    'fields.email.unique' => 'Este correo electrónico ya está registrado.',
+                    'fields.password.required' => 'La contraseña es obligatoria.',
+                    'fields.password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+                    'fields.password.same' => 'Las contraseñas no coinciden.',
+                    'fields.id_faculty.required' => 'La facultad es obligatoria.',
+                    'fields.id_faculty.exists' => 'La facultad seleccionada no existe.',
+                    'fields.id_rol.required' => 'Seleccione el rol del usuario'
+                ]
             );
 
-        }else{
-            $this->validate([
-                'fields.username' => 'required|string|max:50|unique:users,username',
-                'fields.first_name' => 'required|string|max:100',
-                'fields.last_name' => 'required|string|max:100',
-                'fields.age' => 'nullable|numeric|min:0',
-                'fields.email' => 'required|email|unique:users,email',
-                'fields.phone' => 'nullable|string|max:15',
-                'fields.password' => 'required|min:6',
-                'fields.id_rol' => 'required',
-                'fields.id_faculty' => 'required'
-            ],
-            [
-                'fields.username.required' => 'El nombre de usuario es obligatorio.',
-                'fields.username.unique' => 'Este nombre de usuario ya está en uso.',
-                'fields.first_name.required' => 'El primer nombre es obligatorio.',
-                'fields.last_name.required' => 'El apellido es obligatorio.',
-                'fields.email.required' => 'El correo electrónico es obligatorio.',
-                'fields.email.email' => 'El correo electrónico debe ser válido.',
-                'fields.email.unique' => 'Este correo electrónico ya está registrado.',
-                'fields.password.required' => 'La contraseña es obligatoria.',
-                'fields.password.min' => 'La contraseña debe tener al menos 6 caracteres.',
-                'fields.password.same' => 'Las contraseñas no coinciden.',
-                'fields.id_faculty.required' => 'La facultad es obligatoria.',
-                'fields.id_faculty.exists' => 'La facultad seleccionada no existe.',
-                'fields.id_rol.required' => 'Seleccione el rol del usuario'
-            ]
+        } else {
+            $this->validate(
+                [
+                    'fields.username' => 'required|string|max:50|unique:users,username',
+                    'fields.first_name' => 'required|string|max:100',
+                    'fields.last_name' => 'required|string|max:100',
+                    'fields.age' => 'nullable|numeric|min:0',
+                    'fields.email' => 'required|email|unique:users,email',
+                    'fields.phone' => 'nullable|string|max:15',
+                    'fields.password' => 'required|min:6',
+                    'fields.id_rol' => 'required',
+                    'fields.id_faculty' => 'required'
+                ],
+                [
+                    'fields.username.required' => 'El nombre de usuario es obligatorio.',
+                    'fields.username.unique' => 'Este nombre de usuario ya está en uso.',
+                    'fields.first_name.required' => 'El primer nombre es obligatorio.',
+                    'fields.last_name.required' => 'El apellido es obligatorio.',
+                    'fields.email.required' => 'El correo electrónico es obligatorio.',
+                    'fields.email.email' => 'El correo electrónico debe ser válido.',
+                    'fields.email.unique' => 'Este correo electrónico ya está registrado.',
+                    'fields.password.required' => 'La contraseña es obligatoria.',
+                    'fields.password.min' => 'La contraseña debe tener al menos 6 caracteres.',
+                    'fields.password.same' => 'Las contraseñas no coinciden.',
+                    'fields.id_faculty.required' => 'La facultad es obligatoria.',
+                    'fields.id_faculty.exists' => 'La facultad seleccionada no existe.',
+                    'fields.id_rol.required' => 'Seleccione el rol del usuario'
+                ]
             );
         }
         try {
             DB::beginTransaction();
-            if($this->record_id != null){
-                if(User::find($this->record_id)->pluck('password')->first() != Hash::make($this->fields['password'])){
+            if ($this->record_id != null) {
+                if (User::find($this->record_id)->pluck('password')->first() != Hash::make($this->fields['password'])) {
                     $this->fields['password'] = Hash::make($this->fields['password']);
                 }
                 User::find($this->record_id)->update($this->fields);
                 $this->dispatch('swal:notify', ['message' => 'Registro actualizado correctamente']);
                 DB::commit();
-            }else{
+            } else {
                 $this->fields['password'] = Hash::make($this->fields['password']);
                 User::create($this->fields);
                 DB::commit();

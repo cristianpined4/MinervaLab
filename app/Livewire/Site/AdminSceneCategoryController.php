@@ -3,10 +3,12 @@ namespace App\Livewire\Site;
 
 use App\Models\SceneCategory;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminSceneCategoryController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'description' => null,
@@ -17,6 +19,11 @@ class AdminSceneCategoryController extends Component
     public $paginate = 10;
 
     protected $listeners = ['erase' => 'erase'];
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {

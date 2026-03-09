@@ -6,10 +6,12 @@ use App\Models\Room;
 use App\Models\VrMantenaince;
 use App\Models\VrGlasses;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminVrMantenainceController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'starts_at' => null,
@@ -29,6 +31,11 @@ class AdminVrMantenainceController extends Component
         $this->vr_glasses = VrGlasses::all();
         $this->rooms = Room::all();
         $this->room = $this->rooms[0]->id;
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
     }
 
     public function render()

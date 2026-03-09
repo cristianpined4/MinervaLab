@@ -3,10 +3,12 @@ namespace App\Livewire\Site;
 
 use App\Models\Room;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
 class AdminRoomController extends Component
 {
+    use WithPagination;
     public $record_id;
     public $fields = [
         'description' => null,
@@ -17,6 +19,11 @@ class AdminRoomController extends Component
     protected $listeners = ['erase' => 'erase'];
     public $search = '';
     public $paginate = 10;
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
