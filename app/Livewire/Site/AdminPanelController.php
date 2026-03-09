@@ -15,53 +15,60 @@ class AdminPanelController extends Component
 
     public $opciones = [
         [
-        'titulo' => 'Horarios',
-        'descripcion' => 'Administrar horarios, dias feriados y disponibilidad de reservas.',
-        'color' => 'blue',
-        'icono' => 'fa-calendar',
-        'link' => 'admin-schedule'
+            'titulo' => 'Horarios',
+            'descripcion' => 'Administrar horarios, dias feriados y disponibilidad de reservas.',
+            'color' => 'blue',
+            'icono' => 'fa-calendar',
+            'link' => 'admin-schedule'
         ],
         [
-        'titulo' => 'Reservaciones',
-        'descripcion' => 'Administrar reservaciones autorizadas, por autorizar y declinación',
-        'color' => 'green',
-        'icono' => 'fa-lock',
-        'link' => 'admin-reservation',
+            'titulo' => 'Reservaciones',
+            'descripcion' => 'Administrar reservaciones autorizadas, por autorizar y declinación',
+            'color' => 'green',
+            'icono' => 'fa-lock',
+            'link' => 'admin-reservation',
         ],
         [
-        'titulo' => 'Usuarios',
-        'descripcion' => 'Administrar usuarios, roles, informacion, recuperacion de cuenta y activacion',
-        'color' => 'orange',
-        'icono' => 'fa-user',
-        'link' => 'admin-user'
+            'titulo' => 'Usuarios',
+            'descripcion' => 'Administrar usuarios, roles, informacion, recuperacion de cuenta y activacion',
+            'color' => 'orange',
+            'icono' => 'fa-user',
+            'link' => 'admin-user'
         ],
         [
-        'titulo' => 'Escenas VR',
-        'descripcion' => 'Gestion de recursos multimedia y escenas VR disponibles',
-        'color' => 'purple',
-        'icono' => 'fa-play',
-        'link' => 'admin-scene',
+            'titulo' => 'Escenas VR',
+            'descripcion' => 'Gestion de recursos multimedia y escenas VR disponibles',
+            'color' => 'purple',
+            'icono' => 'fa-play',
+            'link' => 'admin-scene',
         ],
         [
-        'titulo' => 'Salas y equipos',
-        'descripcion' => 'Administrar informacion de las salas y equipos de Realidad Virtual',
-        'color' => 'cyan',
-        'icono' => 'fa-vr-cardboard',
-        'link' => 'admin-room',
+            'titulo' => 'Salas y equipos',
+            'descripcion' => 'Administrar informacion de las salas y equipos de Realidad Virtual',
+            'color' => 'cyan',
+            'icono' => 'fa-vr-cardboard',
+            'link' => 'admin-room',
         ],
         [
-        'titulo' => 'Mantenimiento y equipos',
-        'descripcion' => 'Administracion de Salones, equipos de Realidad Virtual y mantenimiento',
-        'color' => 'blue',
-        'icono' => 'fa-gear',
-        'link' => 'admin-mantenaince'
+            'titulo' => 'Mantenimiento y equipos',
+            'descripcion' => 'Administracion de Salones, equipos de Realidad Virtual y mantenimiento',
+            'color' => 'blue',
+            'icono' => 'fa-gear',
+            'link' => 'admin-mantenaince'
         ],
         [
-        'titulo' => 'Reports',
-        'descripcion' => 'Generacion de reportes',
-        'color' => 'blue',
-        'icono' => 'fa-file',
-        'link' => 'admin-report'
+            'titulo' => 'Reports',
+            'descripcion' => 'Generacion de reportes',
+            'color' => 'blue',
+            'icono' => 'fa-file',
+            'link' => 'admin-report'
+        ],
+        [
+            'titulo' => 'Noticias',
+            'descripcion' => 'Gestionar noticias, imágenes y videos del sitio principal',
+            'color' => 'indigo',
+            'icono' => 'fa-newspaper',
+            'link' => 'admin-news'
         ]
     ];
 
@@ -69,15 +76,15 @@ class AdminPanelController extends Component
     public function render()
     {
         return view('livewire.admin.dashboard')
-        ->extends('layouts.site')
-        ->section('content');
+            ->extends('layouts.site')
+            ->section('content');
     }
     //Modales
     public function abrirModal()
     {
         $this->resetErrorBag();
 
-        $registro = AdminAttendance::get(['id','key'])->first();
+        $registro = AdminAttendance::get(['id', 'key'])->first();
         $this->fields['key'] = $registro->key;
         $this->record_id = $registro->id;
         $this->dispatch('abrir-modal', [
@@ -88,13 +95,14 @@ class AdminPanelController extends Component
 
     public function store_update()
     {
-        $this->validate([
-            'fields.key' => 'required|min:10',
-        ],
-        [
-            'fields.key.required' => 'Ingrese una clave valida',
-            'fields.key.min' => 'La clave debe tener al menos 10 caracteres',
-        ]
+        $this->validate(
+            [
+                'fields.key' => 'required|min:10',
+            ],
+            [
+                'fields.key.required' => 'Ingrese una clave valida',
+                'fields.key.min' => 'La clave debe tener al menos 10 caracteres',
+            ]
         );
         try {
             DB::beginTransaction();

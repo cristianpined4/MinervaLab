@@ -33,8 +33,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin-mantenaince-vr', App\Livewire\Site\AdminVrMantenainceController::class)->name('admin-mantenaince-vr');
     Route::get('admin-room', App\Livewire\Site\AdminRoomController::class)->name('admin-room');
     Route::get('admin-reservation', App\Livewire\Site\AdminReservationController::class)->name('admin-reservation');
-    Route::get( 'admin-vr-glasses', App\Livewire\Site\AdminVrController::class)->name('admin-vr-glasses');
-    Route::get( 'admin-report', App\Livewire\Site\ReportController::class)->name('admin-report');
+    Route::get('admin-vr-glasses', App\Livewire\Site\AdminVrController::class)->name('admin-vr-glasses');
+    Route::get('admin-report', App\Livewire\Site\ReportController::class)->name('admin-report');
+    Route::get('admin-news', App\Livewire\Site\AdminNewsController::class)->name('admin-news');
 });
 
 

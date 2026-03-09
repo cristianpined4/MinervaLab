@@ -26,7 +26,7 @@
   @endif
 
   {{-- Contenedor principal (ajusta margen si hay menú o no) --}}
-  <div class="@if(!View::hasSection('hide_menu')) ml-64 @endif flex-1 relative">
+  <div class="@if(!View::hasSection('hide_menu')) lg:ml-64 @endif flex-1 relative">
 
     <!-- Fondo decorativo -->
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/50 to-slate-900"></div>
