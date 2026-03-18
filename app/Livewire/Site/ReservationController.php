@@ -509,11 +509,12 @@ class ReservationController extends Component
             $horaInicio = formatTime($start->format('H:i:s'));
             $horaFin = formatTime($start->copy()->addMinutes($this->total_time)->format('H:i:s'));
             $salaName = $room ? $room->name : 'Sala';
+            $nombreUsuario = $usuario->first_name . ' ' . $usuario->last_name . ' - ' . $usuario->username;
 
             $this->notificationService->notifyByRolePermissions(
                 [1, 2],
                 'Nueva reservación pendiente',
-                'El usuario ' . $usuario->name . ' ha registrado una reservación en ' . $salaName . ' para el ' . $fechaFormato . ' de ' . $horaInicio . ' a ' . $horaFin . ' con ' . $this->numeroEstudiantes . ' estudiantes.',
+                'El usuario ' . $nombreUsuario . ' ha registrado una reservación en ' . $salaName . ' para el ' . $fechaFormato . ' de ' . $horaInicio . ' a ' . $horaFin . ' con ' . $this->numeroEstudiantes . ' estudiantes.',
                 route('admin-reservation')
             );
         } catch (\Throwable $th) {
