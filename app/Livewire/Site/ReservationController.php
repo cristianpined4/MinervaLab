@@ -43,6 +43,23 @@ class ReservationController extends Component
         $this->notificationService = $notificationService;
     }
 
+    public function updatedFecha(): void
+    {
+        if ($this->fecha) {
+            // Validar que no sea una fecha pasada
+            if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
+                $this->dispatch('swal:notify', [
+                    'message' => 'No puedes seleccionar una fecha pasada',
+                    'icon' => 'error'
+                ]);
+                $this->fecha = null;
+                $this->disponibilidad = [];
+                return;
+            }
+            $this->getDispose();
+        }
+    }
+
     public function render()
     {
         $rooms = Room::all();
@@ -155,6 +172,21 @@ class ReservationController extends Component
             return;
         }
 
+        // Validar que el horario exacto no esté ya reservado
+        $existingReservation = Reservation::where('id_room', $this->room_id)
+            ->whereDate('date', $this->fecha)
+            ->whereIn('status', [0, 1, 'pendiente', 'confirmada', 'confirmed'])
+            ->where('starts_at', '=', $slotStart->format('H:i:s'))
+            ->first();
+
+        if ($existingReservation) {
+            $this->dispatch('swal:notify', [
+                'message' => 'Este horario ya está reservado. Selecciona otro.',
+                'icon' => 'warning'
+            ]);
+            return;
+        }
+
         $starts_at = $slotStart->format('H:i:s');
         $ends_at = $slotStart->copy()->addMinutes($this->total_time)->format('H:i:s');
 
@@ -181,6 +213,11 @@ class ReservationController extends Component
             return;
         }
 
+        // Validar que la fecha no sea pasada
+        if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
+            return;
+        }
+
         $room = Room::find($this->room_id);
         $vrCount = VrGlasses::where('id_room', $this->room_id)->count();
         $maxStudents = $room->max_students ?? ($vrCount * 2);
@@ -197,7 +234,7 @@ class ReservationController extends Component
 
         $reservas = Reservation::where('id_room', $this->room_id)
             ->whereDate('date', $this->fecha)
-            ->whereIn('status', ['pending', 'pendiente', 'confirmed', 'confirmada'])
+            ->whereIn('status', [0, 1, 'pending', 'pendiente', 'confirmed', 'confirmada'])
             ->get();
 
         $slots = [];
@@ -342,13 +379,47 @@ class ReservationController extends Component
             return;
         }
 
+        // Validar que la fecha no sea pasada
+        if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
+            $this->dispatch('swal:notify', [
+                'message' => 'No puedes hacer una reservación en una fecha pasada',
+                'icon' => 'error'
+            ]);
+            return;
+        }
+
         $room = Room::find($this->room_id);
         $vrCount = VrGlasses::where('id_room', $this->room_id)->count();
         $maxStudents = $room->max_students ?? ($vrCount * 2);
 
-        if ($this->numeroEstudiantes > $maxStudents || $this->numeroEstudiantes > ($vrCount * 2)) {
+        // Validación de estudiantes mejorada
+        if ($this->numeroEstudiantes < 1) {
             $this->dispatch('swal:notify', [
-                'message' => 'La sala no tiene capacidad para ese número de estudiantes',
+                'message' => 'Debes especificar al menos 1 estudiante',
+                'icon' => 'warning'
+            ]);
+            return;
+        }
+
+        if ($this->numeroEstudiantes > $maxStudents) {
+            $this->dispatch('swal:notify', [
+                'message' => "La sala solo tiene capacidad para {$maxStudents} estudiantes. Equipos VR disponibles: {$vrCount}",
+                'icon' => 'warning'
+            ]);
+            return;
+        }
+
+        // Validar que haya equipos disponibles sin exclusiones (mantenimiento)
+        $equiposConMantenimiento = RoomMantenaince::where('id_room', $this->room_id)
+            ->where(function ($query) {
+                $query->whereDate('starts_at', '<=', $this->fecha)
+                    ->whereDate('ends_at', '>=', $this->fecha);
+            })
+            ->count();
+
+        if ($vrCount <= $equiposConMantenimiento) {
+            $this->dispatch('swal:notify', [
+                'message' => 'No hay equipos disponibles en esta sala (todos en mantenimiento)',
                 'icon' => 'warning'
             ]);
             return;
