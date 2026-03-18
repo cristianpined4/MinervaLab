@@ -134,14 +134,6 @@
                 Escenas VR
             </a>
 
-            {{-- Categorías de escenas --}}
-            <a href="{{ route('admin-scene-category') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
-                       {{ request()->routeIs('admin-scene-category') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
-                <i class="fas fa-tags w-4 text-center {{ request()->routeIs('admin-scene-category') ? 'text-cyan-300' : 'text-blue-300' }}"></i>
-                Categorías
-            </a>
-
             {{-- Salas --}}
             <a href="{{ route('admin-room') }}"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
