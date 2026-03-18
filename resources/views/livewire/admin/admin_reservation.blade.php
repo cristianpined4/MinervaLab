@@ -17,7 +17,7 @@
                         <p class="text-gray-600">Gestión de reservaciones de salas</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('admin-calendary') }}"
+                        <a href="{{ route('reservation') }}"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
                             Agregar Reservación
                         </a>

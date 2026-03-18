@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use Codedge\Fpdf\Facades\Fpdf;
+use Codedge\Fpdf\Fpdf;
 
 class FPDFF
 {
+    protected $fpdf;
     protected $title;
     protected $titleFont = ['Arial', 'B', 16];
 
@@ -22,7 +23,8 @@ class FPDFF
 
     public function __construct()
     {
-        Fpdf::AddPage();
+        $this->fpdf = app('fpdf') ?? new Fpdf();
+        $this->fpdf->AddPage();
     }
 
     private function enc($text)
@@ -90,32 +92,32 @@ class FPDFF
         $this->printTableHeader();
         $this->printTableRows($data);
 
-        return Fpdf::Output('S');
+        return $this->fpdf->Output('S');
     }
 
     private function printHeader()
     {
         if ($this->title) {
-            Fpdf::SetFont(...$this->titleFont);
-            Fpdf::Cell(0, 10, $this->enc($this->title), 0, 1, 'C');
+            $this->fpdf->SetFont(...$this->titleFont);
+            $this->fpdf->Cell(0, 10, $this->enc($this->title), 0, 1, 'C');
         }
 
         if ($this->subTitle) {
-            Fpdf::SetFont(...$this->subTitleFont);
-            Fpdf::Cell(0, 8, $this->enc($this->subTitle), 0, 1, 'C');
+            $this->fpdf->SetFont(...$this->subTitleFont);
+            $this->fpdf->Cell(0, 8, $this->enc($this->subTitle), 0, 1, 'C');
         }
 
         if ($this->date) {
-            Fpdf::SetFont(...$this->dateFont);
-            Fpdf::Cell(0, 6, $this->enc("Fecha: " . $this->date), 0, 1, 'R');
+            $this->fpdf->SetFont(...$this->dateFont);
+            $this->fpdf->Cell(0, 6, $this->enc("Fecha: " . $this->date), 0, 1, 'R');
         }
 
-        Fpdf::Ln(5);
+        $this->fpdf->Ln(5);
     }
 
     private function printTableHeader()
     {
-        Fpdf::SetFont('Arial', 'B', 11);
+        $this->fpdf->SetFont('Arial', 'B', 11);
 
         foreach ($this->columns as $i => $colName) {
 
@@ -123,15 +125,15 @@ class FPDFF
 
             $width = $this->columnWidths[$i] ?? 30;
 
-            Fpdf::Cell($width, 8, $this->enc($label), 1, 0, 'C');
+            $this->fpdf->Cell($width, 8, $this->enc($label), 1, 0, 'C');
         }
 
-        Fpdf::Ln();
+        $this->fpdf->Ln();
     }
 
     private function printTableRows(array $rows)
     {
-        Fpdf::SetFont('Arial', '', 10);
+        $this->fpdf->SetFont('Arial', '', 10);
 
         foreach ($rows as $row) {
             foreach ($this->columns as $i => $key) {
@@ -139,9 +141,9 @@ class FPDFF
                 $width = $this->columnWidths[$i] ?? 30;
                 $value = $row[$key] ?? '';
 
-                Fpdf::Cell($width, 7, $this->enc($value), 1, 0);
+                $this->fpdf->Cell($width, 7, $this->enc($value), 1, 0);
             }
-            Fpdf::Ln();
+            $this->fpdf->Ln();
         }
     }
 }

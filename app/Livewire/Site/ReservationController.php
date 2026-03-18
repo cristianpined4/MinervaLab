@@ -112,7 +112,7 @@ class ReservationController extends Component
     {
         $scene = Scene::find($id);
         if ($scene && $scene->resource_demo) {
-            $videoUrl = asset('storage/videos/' . $scene->resource_demo);
+            $videoUrl = asset('videos/scenes/' . $scene->resource_demo);
             $this->dispatch('abrir-video', [
                 'modal' => 'modal-video',
                 'videoUrl' => $videoUrl,
