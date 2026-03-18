@@ -158,14 +158,6 @@
                 Mantenimiento
             </a>
 
-            {{-- Mantenimiento VR --}}
-            <a href="{{ route('admin-mantenaince-vr') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
-                       {{ request()->routeIs('admin-mantenaince-vr') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
-                <i class="fas fa-headset w-4 text-center {{ request()->routeIs('admin-mantenaince-vr') ? 'text-cyan-300' : 'text-blue-300' }}"></i>
-                Mantenimiento VR
-            </a>
-
             {{-- Horarios --}}
             <a href="{{ route('admin-schedule') }}"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
@@ -201,7 +193,7 @@
 
         {{-- ─── Asistencia (admin y docentes) ─────────────────────── --}}
         @if ($isAdmin || $isTeacher)
-            <a href="{{ route('set-attendance') }}"
+            <a href="{{ route('set-attendance') }}" target="_blank"
                 class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                        {{ request()->routeIs('set-attendance') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                 <i class="fas fa-qrcode w-4 text-center {{ request()->routeIs('set-attendance') ? 'text-cyan-300' : 'text-blue-300' }}"></i>

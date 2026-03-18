@@ -28,9 +28,47 @@ class AdminVrMantenainceController extends Component
 
     public function mount()
     {
-        $this->vr_glasses = VrGlasses::all();
         $this->rooms = Room::all();
-        $this->room = $this->rooms[0]->id;
+        $this->room = !empty($this->rooms) ? $this->rooms[0]->id : null;
+        $this->loadVrGlassesOptions();
+    }
+
+    public function updatedRoom($value): void
+    {
+        $this->room = is_numeric($value) ? (int) $value : null;
+        $this->loadVrGlassesOptions();
+    }
+
+    private function loadVrGlassesOptions(): void
+    {
+        if (!$this->room) {
+            $this->vr_glasses = collect();
+            $this->fields['id_vr'] = null;
+            return;
+        }
+
+        $usedVrIds = VrMantenaince::query()
+            ->when($this->record_id, fn($q) => $q->where('id', '!=', $this->record_id))
+            ->pluck('id_vr')
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
+
+        $this->vr_glasses = VrGlasses::query()
+            ->where('id_room', $this->room)
+            ->when(!empty($usedVrIds), fn($q) => $q->whereNotIn('id', $usedVrIds))
+            ->orderBy('code')
+            ->get()
+            ->unique('id')
+            ->values()
+            ->all();
+
+        $availableIds = collect($this->vr_glasses)->pluck('id');
+
+        if (empty($this->fields['id_vr']) || !$availableIds->contains((int) $this->fields['id_vr'])) {
+            $this->fields['id_vr'] = collect($this->vr_glasses)->first()->id ?? null;
+        }
     }
 
     public function updatingSearch(): void
@@ -72,6 +110,7 @@ class AdminVrMantenainceController extends Component
             $this->fields['ends_at'] = $registro->ends_at;
             $this->fields['description'] = $registro->description;
             $this->fields['id_vr'] = $registro->id_vr;
+            $this->room = $registro->vrGlasses?->id_room ?? $this->room;
         } else {
             $this->record_id = null;
             $this->fields = [
@@ -80,11 +119,15 @@ class AdminVrMantenainceController extends Component
                 'description' => null,
                 'id_vr' => null,
             ];
+            $this->room = !empty($this->rooms) ? $this->rooms[0]->id : null;
         }
+
+        $this->loadVrGlassesOptions();
 
         $this->dispatch('abrir-modal', [
             'modal' => 'modal-home',
-            'fields' => $this->fields
+            'fields' => $this->fields,
+            'room' => $this->room,
         ]);
     }
 

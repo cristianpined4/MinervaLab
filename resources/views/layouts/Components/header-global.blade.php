@@ -8,6 +8,7 @@
         Request::is('escena*') => 'Escena / Multimedia',
         default => 'MinervaLab',
     };
+
 @endphp
 
 <div class="sticky top-0 z-50 bg-slate-900 border-b border-slate-800 shadow-sm">
@@ -22,12 +23,7 @@
     <div class="flex items-center gap-6" x-data="{ openMenu: false }">
 
         {{-- Campanita de notificaciones --}}
-        <button class="relative text-white hover:text-yellow-400 transition focus:outline-none">
-            <i class="fa-solid fa-bell text-xl"></i>
-            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                3
-            </span>
-        </button>
+        @include('layouts.components.header-notifications')
 
         {{-- Menú de usuario (icono circular azul) --}}
         <div class="relative">

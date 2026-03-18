@@ -42,31 +42,22 @@
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Sala</label>
-                            <select wire:model="room" id="room"
+                            <select wire:model.live="room" id="room" wire:key="room-select-{{ $record_id ?? 'new' }}"
                                 class="form-control @error('room') was-validated is-invalid @enderror">
-                                @foreach ($rooms as $key => $r)
-                                    <option value="{{ $r->id }}"
-                                    @if ($key == 0)
-                                        selected
-                                    @endif
-                                    >{{ $r->description }}</option>
+                                @foreach ($rooms as $r)
+                                    <option value="{{ $r->id }}">{{ $r->description }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Equipo (Código)</label>
-                            <select wire:model="fields.id_vr" id="id_vr"
+                            <select wire:model.live="fields.id_vr" id="id_vr" wire:key="vr-select-room-{{ $room ?? 'none' }}-record-{{ $record_id ?? 'new' }}"
                                 class="form-control @error('fields.id_vr') was-validated is-invalid @enderror">
-                                @foreach ($vr_glasses as $key => $vr)
-                                    @if ($vr->id_room != $room)
-                                        @continue
-                                    @endif
-                                    <option value="{{ $vr->id }}"
-                                    @if ($key == 0)
-                                        selected
-                                    @endif
-                                    >{{ $vr->code }}</option>
-                                @endforeach
+                                @forelse ($vr_glasses as $vr)
+                                    <option value="{{ $vr->id }}">{{ $vr->code }}</option>
+                                @empty
+                                    <option value="">No hay equipos disponibles para esta sala</option>
+                                @endforelse
                             </select>
                             @error('fields.id_vr')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -213,10 +204,12 @@
                     let starts_at = document.getElementById('starts_at');
                     let ends_at = document.getElementById('ends_at');
                     let description = document.getElementById('description');
+                    let room = document.getElementById('room');
                     let id_vr = document.getElementById('id_vr');
                     starts_at.value = modal[0].fields.starts_at;
                     ends_at.value = modal[0].fields.ends_at;
                     description.value = modal[0].fields.description;
+                    if (room && modal[0].room !== undefined) room.value = modal[0].room;
                     id_vr.value = modal[0].fields.id_vr;
                 }
             });

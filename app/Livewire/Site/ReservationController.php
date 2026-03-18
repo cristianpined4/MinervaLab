@@ -10,11 +10,14 @@ use App\Models\Scene;
 use App\Models\Reservation;
 use App\Models\ReservationDetail;
 use App\Models\VrGlasses;
+use App\Services\NotificationService;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ReservationController extends Component
 {
+    protected NotificationService $notificationService;
+
     public $record_id;
     public $fields = [];
     public $file;
@@ -34,6 +37,11 @@ class ReservationController extends Component
     public $sessions = 1;
     public $vrCount = 0;
     public $maxStudents = 0;
+
+    public function boot(NotificationService $notificationService): void
+    {
+        $this->notificationService = $notificationService;
+    }
 
     public function render()
     {
@@ -64,7 +72,7 @@ class ReservationController extends Component
     public function calcTime()
     {
         $room = Room::find($this->room_id);
-        if( $room != null){
+        if ($room != null) {
             $vrCount = VrGlasses::where('id_room', $this->room_id)->count();
             $this->vrCount = $vrCount;
             $this->maxStudents = $room->max_students ?? ($vrCount * 2);
@@ -78,14 +86,14 @@ class ReservationController extends Component
 
         $this->total_time = (int) Scene::whereIn('id', $this->selected_scenes)->sum('duration');
         $this->warnings = [];
-        if( Room::find($this->room_id) != null){
-            if($this->numeroEstudiantes > $this->vrCount) {
+        if (Room::find($this->room_id) != null) {
+            if ($this->numeroEstudiantes > $this->vrCount) {
                 $this->total_time *= 2;
                 $this->sessions = 2;
-            }else{
+            } else {
                 $this->sessions = 1;
             }
-        }else{
+        } else {
             $this->sessions = 1;
         }
 
@@ -183,7 +191,7 @@ class ReservationController extends Component
         $mantenimientos = RoomMantenaince::where('id_room', $this->room_id)
             ->where(function ($query) {
                 $query->whereDate('starts_at', '<=', $this->fecha)
-                      ->whereDate('ends_at', '>=', $this->fecha);
+                    ->whereDate('ends_at', '>=', $this->fecha);
             })
             ->get();
 
@@ -402,6 +410,13 @@ class ReservationController extends Component
             }
 
             DB::commit();
+
+            $this->notificationService->notifyByRolePermissions(
+                [1, 2],
+                'Nueva reservación pendiente',
+                'Se registró una nueva reservación pendiente para el día ' . $this->fecha . '.',
+                route('admin-reservation')
+            );
         } catch (\Throwable $th) {
             DB::rollBack();
             //throw $th;

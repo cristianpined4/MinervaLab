@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Livewire\Site\LoginController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reservation', App\Livewire\Site\ReservationController::class)->name('reservation');
     Route::get('dashboard', App\Livewire\Site\DashboardController::class)->name('dashboard');
     Route::get('my-reservations', App\Livewire\Site\MyReservationController::class)->name('my-reservations');
+    Route::get('notifications/feed', [NotificationController::class, 'feed'])->name('notifications.feed');
+    Route::post('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::post('notifications/read-all-json', [NotificationController::class, 'markAllAsReadJson'])->name('notifications.read-all-json');
+    Route::get('notifications/{notification}', [NotificationController::class, 'open'])->name('notifications.open');
 
 });
 

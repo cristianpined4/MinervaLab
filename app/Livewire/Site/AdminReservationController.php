@@ -2,6 +2,7 @@
 namespace App\Livewire\Site;
 
 use App\Models\Reservation;
+use App\Services\NotificationService;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AdminReservationController extends Component
 {
     use WithPagination;
+    protected NotificationService $notificationService;
     public $record_id;
     public $fields = [
         'id_user' => null,
@@ -27,6 +29,11 @@ class AdminReservationController extends Component
     public function updatingSearch(): void
     {
         $this->resetPage();
+    }
+
+    public function boot(NotificationService $notificationService): void
+    {
+        $this->notificationService = $notificationService;
     }
 
     public function render()
@@ -120,25 +127,61 @@ class AdminReservationController extends Component
 
     public function reject($id)
     {
-        Reservation::find($id)->update(
-            ['status' => 2]
+        $reservation = Reservation::find($id);
+
+        if (!$reservation) {
+            return;
+        }
+
+        $reservation->update(['status' => 2]);
+
+        $this->notificationService->notifyUser(
+            (int) $reservation->id_user,
+            'Reservación rechazada',
+            'Tu reservación para el ' . $reservation->date . ' fue rechazada por administración.',
+            route('my-reservations')
         );
+
         $this->dispatch('swal:notify', ['message' => 'Reservación rechazada']);
         $this->dispatch('reload-delay');
     }
     public function accept($id)
     {
-        Reservation::find($id)->update(
-            ['status' => 1]
+        $reservation = Reservation::find($id);
+
+        if (!$reservation) {
+            return;
+        }
+
+        $reservation->update(['status' => 1]);
+
+        $this->notificationService->notifyUser(
+            (int) $reservation->id_user,
+            'Reservación autorizada',
+            'Tu reservación para el ' . $reservation->date . ' fue autorizada.',
+            route('my-reservations')
         );
+
         $this->dispatch('swal:notify', ['message' => 'Reservación autorizada']);
         $this->dispatch('reload-delay');
     }
     public function cancel($id)
     {
-        Reservation::find($id)->update(
-            ['status' => 3]
+        $reservation = Reservation::find($id);
+
+        if (!$reservation) {
+            return;
+        }
+
+        $reservation->update(['status' => 3]);
+
+        $this->notificationService->notifyUser(
+            (int) $reservation->id_user,
+            'Reservación cancelada',
+            'Tu reservación para el ' . $reservation->date . ' fue cancelada por administración.',
+            route('my-reservations')
         );
+
         $this->dispatch('swal:notify', ['message' => 'Reservación cancelada']);
         $this->dispatch('reload-delay');
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -60,5 +61,10 @@ class User extends Authenticatable
     public function Faculty()
     {
         return $this->belongsTo(Faculty::class, 'id');
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notify::class, 'id_user');
     }
 }
