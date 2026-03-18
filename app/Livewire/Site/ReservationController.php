@@ -3,7 +3,6 @@
 namespace App\Livewire\Site;
 
 use Livewire\Component;
-use Livewire\Attributes\Computed;
 use App\Models\Room;
 use App\Models\RoomMantenaince;
 use App\Models\Schedule;
@@ -44,7 +43,6 @@ class ReservationController extends Component
         $this->notificationService = $notificationService;
     }
 
-    #[Computed]
     public function getMinDateProperty()
     {
         return Carbon::today()->format('Y-m-d');
@@ -85,7 +83,8 @@ class ReservationController extends Component
     {
         $rooms = Room::all();
         $scenes = Scene::where('description', 'like', "%{$this->search}%")->get();
-        return view('livewire.site.reservation', compact('scenes', 'rooms'))
+        $minDate = $this->getMinDateProperty();
+        return view('livewire.site.reservation', compact('scenes', 'rooms', 'minDate'))
             ->extends('layouts.site')->section('content');
     }
 

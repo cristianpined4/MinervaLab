@@ -170,7 +170,7 @@
                                 Selecciona una fecha
                             </label>
                             <input wire:model="fecha" wire:change='getDispose' type="date"
-                                min="{{ $getMinDateProperty }}"
+                                min="{{ $minDate }}"
                                 @if(!$room_id) disabled @endif
                                 placeholder="DD/MM/YYYY"
                                 class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-gray-100 cursor-not-allowed opacity-60 @endif">
