@@ -502,10 +502,18 @@ class ReservationController extends Component
 
             DB::commit();
 
+            // Obtener información adicional para la notificación
+            $room = Room::find($this->room_id);
+            $usuario = auth()->user();
+            $fechaFormato = formatDate($this->fecha);
+            $horaInicio = formatTime($start->format('H:i:s'));
+            $horaFin = formatTime($start->copy()->addMinutes($this->total_time)->format('H:i:s'));
+            $salaName = $room ? $room->name : 'Sala';
+
             $this->notificationService->notifyByRolePermissions(
                 [1, 2],
                 'Nueva reservación pendiente',
-                'Se registró una nueva reservación pendiente para el día ' . $this->fecha . '.',
+                'El usuario ' . $usuario->name . ' ha registrado una reservación en ' . $salaName . ' para el ' . $fechaFormato . ' de ' . $horaInicio . ' a ' . $horaFin . ' con ' . $this->numeroEstudiantes . ' estudiantes.',
                 route('admin-reservation')
             );
         } catch (\Throwable $th) {
