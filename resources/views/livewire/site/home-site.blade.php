@@ -81,10 +81,10 @@
                                 </p>
                                 <p class="text-blue-200/60 text-sm">
                                     <i class="fas fa-calendar text-xs mr-1"></i>
-                                    {{ \Carbon\Carbon::parse($res->date)->format('d M Y') }}
+                                    {{ formatDate($res->date) }}
                                     &nbsp;·&nbsp;
                                     <i class="fas fa-clock text-xs mr-1"></i>
-                                    {{ substr($res->starts_at, 0, 5) }} – {{ substr($res->ends_at, 0, 5) }}
+                                    {{ formatTime($res->starts_at) }} – {{ formatTime($res->ends_at) }}
                                 </p>
                                 <p class="text-blue-200/50 text-xs mt-1">
                                     <i class="fas fa-users text-xs mr-1"></i>
@@ -168,7 +168,7 @@
                                 <div class="p-5 flex flex-col flex-1">
                                     <p class="text-blue-300/60 text-xs mb-2">
                                         <i class="fas fa-calendar text-[10px] mr-1"></i>
-                                        {{ $item->date ? \Carbon\Carbon::parse($item->date)->locale('es')->isoFormat('D [de] MMMM, YYYY') : '' }}
+                                        {{ $item->date ? formatDate($item->date) : '' }}
                                     </p>
                                     <h3 class="text-white font-bold text-base mb-2 leading-snug group-hover:text-cyan-300 transition-colors">
                                         {{ $item->title }}

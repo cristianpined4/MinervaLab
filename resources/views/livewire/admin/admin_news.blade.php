@@ -231,7 +231,7 @@
                                         {{-- Fecha --}}
                                         <td class="px-4 py-3 hidden sm:table-cell">
                                             <span class="text-xs text-gray-600">
-                                                {{ $item->date ? \Carbon\Carbon::parse($item->date)->format('d/m/Y') : '—' }}
+                                                {{ $item->date ? formatDate($item->date) : '—' }}
                                             </span>
                                         </td>
 

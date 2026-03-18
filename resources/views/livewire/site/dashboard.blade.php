@@ -146,10 +146,10 @@
                             </p>
                             <p class="text-blue-200/60 text-sm">
                                 <i class="fas fa-calendar text-xs mr-1"></i>
-                                {{ \Carbon\Carbon::parse($res->date)->format('d M Y') }}
+                                {{ formatDate($res->date) }}
                                 &nbsp;·&nbsp;
                                 <i class="fas fa-clock text-xs mr-1"></i>
-                                {{ substr($res->starts_at, 0, 5) }} – {{ substr($res->ends_at, 0, 5) }}
+                                {{ formatTime($res->starts_at) }} – {{ formatTime($res->ends_at) }}
                             </p>
                             <p class="text-blue-200/50 text-xs mt-1">
                                 <i class="fas fa-users text-xs mr-1"></i> {{ $res->students }} estudiante(s)

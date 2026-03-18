@@ -43,6 +43,25 @@ class ReservationController extends Component
         $this->notificationService = $notificationService;
     }
 
+    public function getMinDateProperty()
+    {
+        return Carbon::today()->format('Y-m-d');
+    }
+
+    public function formatDate($date)
+    {
+        if (!$date)
+            return '--/--/----';
+        return Carbon::parse($date)->format('d/m/Y');
+    }
+
+    public function formatTime($time)
+    {
+        if (!$time)
+            return '--:-- AM';
+        return Carbon::parse($time)->format('h:i A');
+    }
+
     public function updatedFecha(): void
     {
         if ($this->fecha) {

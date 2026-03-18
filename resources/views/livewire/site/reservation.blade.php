@@ -170,7 +170,13 @@
                                 Selecciona una fecha
                             </label>
                             <input wire:model="fecha" wire:change='getDispose' type="date"
-                                class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                min="{{ $getMinDateProperty }}"
+                                @if(!$room_id) disabled @endif
+                                placeholder="DD/MM/YYYY"
+                                class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-gray-100 cursor-not-allowed opacity-60 @endif">
+                            @if (!$room_id)
+                                <p class="text-xs text-gray-500 mt-1">Selecciona una sala primero</p>
+                            @endif
                         </div>
 
                         <div class="mb-6">
@@ -199,7 +205,9 @@
                                                 @endif
                                             </div>
                                             <div>
-                                                <span class="font-semibold text-gray-800 block">{{ $horario['hora'] }}</span>
+                                                <span class="font-semibold text-gray-800 block">
+                                                    @timeFormat($horario['starts_at']) - @timeFormat($horario['ends_at'])
+                                                </span>
                                                 @if($horario['disponible'])
                                                     <span class="text-xs text-green-600 font-medium">
                                                         {{ $horario['restantes'] }} {{ $horario['restantes'] == 1 ? 'espacio' : 'espacios' }} disponible{{ $horario['restantes'] == 1 ? '' : 's' }}
@@ -231,7 +239,7 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Fecha:</span>
-                                    <span class="font-semibold text-gray-800">{{ $fecha ?? '--/--/----' }}</span>
+                                    <span class="font-semibold text-gray-800">{{ $fecha ? formatDate($fecha) : '--/--/----' }}</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Tiempo total:</span>
@@ -245,10 +253,9 @@
                                     <span class="text-gray-600">Horario:</span>
                                     <span class="font-semibold text-gray-800">
                                         @if($horarioSeleccionado)
-                                            {{ $horarioSeleccionado['label'] ?? '--:--' }}
-                                            ( {{ $horarioSeleccionado['starts_at'] }} - {{ $horarioSeleccionado['ends_at'] }} )
+                                            @timeFormat($horarioSeleccionado['starts_at']) - @timeFormat($horarioSeleccionado['ends_at'])
                                         @else
-                                            --:-- -- - --:-- --
+                                            --:-- AM - --:-- AM
                                         @endif
                                     </span>
                                 </div>

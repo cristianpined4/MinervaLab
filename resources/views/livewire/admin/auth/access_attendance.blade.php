@@ -49,7 +49,7 @@
                     <div class="mb-6 rounded-2xl border border-sky-500/40 bg-sky-500/10 px-4 py-3">
                         <p class="text-sm text-sky-200 font-semibold mb-1">Reservación detectada</p>
                         <p class="text-xs text-slate-300">Laboratorio: <span class="text-white">{{ $reservation->id_room }}</span></p>
-                        <p class="text-xs text-slate-300">Fecha: <span class="text-white">{{ $reservation->date }}</span></p>
+                        <p class="text-xs text-slate-300">Fecha: <span class="text-white">@dateFormat($reservation->date)</span></p>
                         <p class="text-xs text-slate-300">
                             Horario:
                             <span class="text-white">{{ $reservation->starts_at }}</span> -
