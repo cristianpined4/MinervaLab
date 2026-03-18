@@ -214,8 +214,10 @@ class AdminReservationController extends Component
                 Reservation::find($this->record_id)->update($this->fields);
                 $this->dispatch('swal:notify', ['message' => 'Reservación actualizada correctamente']);
             } else {
+                // Auto-aprobar reserva creada por admin
+                $this->fields['status'] = 1;
                 Reservation::create($this->fields);
-                $this->dispatch('swal:notify', ['message' => 'Reservación creada correctamente']);
+                $this->dispatch('swal:notify', ['message' => 'Reservación creada y aprobada correctamente']);
             }
             DB::commit();
             $this->dispatch('cerrar-modal', ['modal' => 'modal-reservation']);
