@@ -8,21 +8,19 @@
     ]
   },
   "resources/css/app-site.css": {
-    "file": "assets/app-BlbOPZMz.css",
-    "src": "resources/css/app.css",
+    "file": "assets/app-site-BlbOPZMz.css",
+    "src": "resources/css/app-site.css",
     "isEntry": true,
     "names": [
-      "app.css",
       "app-site.css"
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-BlbOPZMz.css",
+    "file": "assets/app-vD8Txc_3.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
-      "app.css",
-      "app-site.css"
+      "app.css"
     ]
   },
   "resources/js/app-admin.js": {
@@ -38,7 +36,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DBXA_vsr.js",
+    "file": "assets/app-ChMy9Pw8.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

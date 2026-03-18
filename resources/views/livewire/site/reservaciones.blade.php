@@ -26,9 +26,15 @@
                     </div>
                     <div class="modal-footer">
                         @if ($record_id)
-                        <button type="button" class="btn btn-warning" wire:click="update">Actualizar</button>
+                        <button type="button" class="btn btn-warning" wire:click="update" wire:loading.attr="disabled" wire:target="update">
+                            <span wire:loading.remove wire:target="update">Actualizar</span>
+                            <span wire:loading wire:target="update"><i class="fas fa-spinner fa-spin"></i> Cargando...</span>
+                        </button>
                         @else
-                        <button type="button" class="btn btn-primary" wire:click="store">Guardar</button>
+                        <button type="button" class="btn btn-primary" wire:click="store" wire:loading.attr="disabled" wire:target="store">
+                            <span wire:loading.remove wire:target="store">Guardar</span>
+                            <span wire:loading wire:target="store"><i class="fas fa-spinner fa-spin"></i> Cargando...</span>
+                        </button>
                         @endif
                         <button type="button" class="btn btn-secondary"
                             onclick="closeModal(this.closest('.modal'))">Cerrar</button>

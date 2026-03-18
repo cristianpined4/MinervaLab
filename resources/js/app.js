@@ -6,7 +6,7 @@ import moment from "moment";
 window.moment = moment;
 window.months =
     "_Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
-        "_"
+        "_",
     );
 
 const Alert = (title, text, icon) => {
@@ -25,7 +25,7 @@ const Confirm = async (
     text,
     icon,
     confirmButtonText,
-    cancelButtonText
+    cancelButtonText,
 ) => {
     const result = await Swal.fire({
         title: title,
@@ -77,7 +77,7 @@ function generarGraficoBarras(selector, etiquetas, datos) {
                     label: "Total",
                     data: datos,
                     backgroundColor: coloresAleatorios.map((color) =>
-                        color.replace("1)", "0.3)")
+                        color.replace("1)", "0.3)"),
                     ),
                     borderColor: coloresAleatorios,
                     borderWidth: 1,
@@ -160,6 +160,52 @@ const hideError = (input) => {
 
 window.hideError = hideError;
 
+const waitingButtons = new Set();
+
+const markButtonWaiting = (btn) => {
+    if (!btn || btn.dataset.noWait === "1") return;
+    if (btn.dataset.wasDisabled === "1") return;
+
+    btn.dataset.wasDisabled = btn.disabled ? "1" : "0";
+    btn.disabled = true;
+    btn.classList.add("is-waiting");
+    waitingButtons.add(btn);
+};
+
+const releaseWaitingButtons = () => {
+    waitingButtons.forEach((btn) => {
+        if (!btn) return;
+        if (btn.dataset.wasDisabled !== "1") {
+            btn.disabled = false;
+        }
+        btn.classList.remove("is-waiting");
+        delete btn.dataset.wasDisabled;
+    });
+    waitingButtons.clear();
+};
+
+document.addEventListener(
+    "click",
+    (event) => {
+        const btn = event.target.closest("button[wire\\:click]");
+        if (!btn) return;
+        markButtonWaiting(btn);
+    },
+    true,
+);
+
+const setupLivewireWaitingHooks = () => {
+    if (!window.Livewire || typeof window.Livewire.hook !== "function") return;
+
+    window.Livewire.hook("request", ({ succeed, fail }) => {
+        succeed(() => releaseWaitingButtons());
+        fail(() => releaseWaitingButtons());
+    });
+};
+
+document.addEventListener("livewire:initialized", setupLivewireWaitingHooks);
+document.addEventListener("Livewire:initialized", setupLivewireWaitingHooks);
+
 document.addEventListener("Livewire:initialized", () => {
     // Abrir modal
     const modalButtons = document.querySelectorAll("[data-modal-target]");
@@ -171,7 +217,7 @@ document.addEventListener("Livewire:initialized", () => {
 
     // Cerrar modal
     const closeButtons = document.querySelectorAll(
-        ".modal .btn-close, .modal .btn-secondary"
+        ".modal .btn-close, .modal .btn-secondary",
     );
 
     closeButtons.forEach((btn) => {
@@ -179,11 +225,5 @@ document.addEventListener("Livewire:initialized", () => {
         btn.addEventListener("click", () => closeModal(modal));
     });
 
-    // Cerrar al hacer clic fuera
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach((modal) => {
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) closeModal(modal);
-        });
-    });
+    // No cerrar al hacer clic fuera del modal
 });

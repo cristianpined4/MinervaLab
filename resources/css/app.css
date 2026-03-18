@@ -110,6 +110,16 @@
   font-size: 1rem;
 }
 
+.btn[disabled],
+button[disabled],
+.btn.is-waiting,
+button.is-waiting {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.2);
+}
+
 .btn-primary {
   background-color: #007bff;
   color: #fff;
