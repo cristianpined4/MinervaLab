@@ -3,6 +3,7 @@
 namespace App\Livewire\Site;
 
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 use App\Models\Room;
 use App\Models\RoomMantenaince;
 use App\Models\Schedule;
@@ -43,6 +44,7 @@ class ReservationController extends Component
         $this->notificationService = $notificationService;
     }
 
+    #[Computed]
     public function getMinDateProperty()
     {
         return Carbon::today()->format('Y-m-d');
