@@ -204,6 +204,63 @@ button.is-waiting {
   font-size: 1rem;
 }
 
+input[type="file"],
+.form-control[type="file"] {
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  color: #111827;
+  font-size: 0.95rem;
+  padding: 0.35rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+input[type="file"]:focus,
+.form-control[type="file"]:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  background: #fff;
+}
+
+input[type="file"]::file-selector-button,
+.form-control[type="file"]::file-selector-button {
+  border: 0;
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.8rem;
+  margin-right: 0.65rem;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+input[type="file"]:hover::file-selector-button,
+.form-control[type="file"]:hover::file-selector-button {
+  filter: brightness(1.05);
+}
+
+input[type="file"]:active::file-selector-button,
+.form-control[type="file"]:active::file-selector-button {
+  transform: translateY(1px);
+}
+
+input[type="file"]:disabled,
+.form-control[type="file"]:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background: #f1f5f9;
+}
+
+input[type="file"]:disabled::file-selector-button,
+.form-control[type="file"]:disabled::file-selector-button {
+  cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+
 .form-label {
   font-size: 0.8rem;
   font-weight: 500;

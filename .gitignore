@@ -15,8 +15,10 @@
 /node_modules
 /public/hot
 /public/storage
+/public/videos/*
 /storage/*.key
 /storage/pail
+/storage/app/public/videos/*
 /vendor
 Homestead.json
 Homestead.yaml

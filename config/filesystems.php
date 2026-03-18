@@ -41,7 +41,16 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'videos-scenes' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/videos/scenes'),
+            'url' => env('APP_URL') . '/videos/scenes',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
@@ -74,7 +83,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('videos/scenes') => storage_path('app/public/videos/scenes'),
     ],
 
 ];

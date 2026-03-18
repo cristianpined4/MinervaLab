@@ -54,14 +54,24 @@
 
                         <div class="form-group">
                             <label class="form-label">Video de demostración</label>
-                            <input wire:model="fields.resource_demo" type="file" accept="video/*"
-                                class="form-control @error('fields.resource_demo') was-validated is-invalid @enderror">
-                            @error('fields.resource_demo')
+                            <input wire:model="resource_demo" type="file" accept="video/*"
+                                class="form-control @error('resource_demo') was-validated is-invalid @enderror">
+                            @error('resource_demo')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
-                            @if ($record_id && isset($fields['resource_demo']) && $fields['resource_demo'])
+
+                            <div wire:loading wire:target="resource_demo" class="mt-2 inline-flex items-center gap-2 text-sm text-blue-600">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Subiendo video, por favor espera...
+                            </div>
+
+                            @if (!empty($resource_demo_preview_url))
                                 <video controls class="mt-3 rounded-lg w-full">
-                                    <source src="{{ asset($fields['resource_demo']) }}" type="video/mp4">
+                                    <source src="{{ $resource_demo_preview_url }}" type="video/mp4">
+                                </video>
+                            @elseif (!empty($current_video_url))
+                                <video controls class="mt-3 rounded-lg w-full">
+                                    <source src="{{ $current_video_url }}" type="video/mp4">
                                 </video>
                             @endif
                         </div>
@@ -69,14 +79,16 @@
 
                     <div class="modal-footer">
                         @if ($record_id)
-                            <button type="button" class="btn btn-warning" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update">
-                                <span wire:loading.remove wire:target="store_update">Actualizar</span>
-                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Cargando...</span>
+                            <button type="button" class="btn btn-warning" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                                <span wire:loading.remove wire:target="store_update,resource_demo">Actualizar</span>
+                                <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
+                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @else
-                            <button type="button" class="btn btn-primary" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update">
-                                <span wire:loading.remove wire:target="store_update">Guardar</span>
-                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Cargando...</span>
+                            <button type="button" class="btn btn-primary" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                                <span wire:loading.remove wire:target="store_update,resource_demo">Guardar</span>
+                                <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
+                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @endif
                         <button type="button" class="btn btn-secondary"
