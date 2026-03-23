@@ -1,4 +1,4 @@
-@section('title', 'Administrar exclusiones')
+@section('title', 'Administrar usuarios')
 @section('hide_header', true)
 @section('hide_footer', true)
 
@@ -11,7 +11,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar exclusion' : 'Agregar exclusion' }}</h5>
+                        <h5 class="modal-title" id="userLabel">{{ $record_id ? 'Editar Usuario' : 'Agregar Usuario' }}</h5>
                         <button type="button" class="btn-close" aria-label="Cerrar"
                             onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>                    <div class="modal-body">
@@ -171,7 +171,7 @@
                     <div class="relative w-full border-b-2">
                         <input wire:model.live="search"
                             type="text"
-                            placeholder="Buscar exclusión..."
+                            placeholder="Buscar usuario..."
                             class="w-full rounded-lg bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
                         <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -229,6 +229,9 @@
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center justify-center gap-2">
+                                            @if ($row->id == auth()->user()->id)
+                                                <span class="text-sm font-medium text-gray-900 bg-gray-200 p-3">Tu Cuenta</span>
+                                            @else
                                                 @if ($row->active == 0)
                                                     <button class="p-1 m-1 btn btn-danger" title="Editar" wire:click="estado({{ $row->id }})">
                                                         Inactivo
@@ -237,6 +240,7 @@
                                                     <button class="p-1 m-1 btn btn-success" title="Editar" wire:click="estado({{ $row->id }})">
                                                         Activo
                                                     </button>
+                                                @endif
                                                 @endif
                                             </div>
                                         </td>
@@ -247,11 +251,13 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                     </svg>
                                                 </button>
+                                                @if ($row->id != auth()->user()->id)
                                                 <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                     </svg>
                                                 </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
