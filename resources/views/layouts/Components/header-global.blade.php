@@ -12,7 +12,7 @@
 @endphp
 
 <div class="sticky top-0 z-50 bg-slate-900 border-b border-slate-800 shadow-sm">
-  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+  <div class="max-w-7xl px-6 py-3 flex items-center justify-between">
 
     {{-- Título dinámico --}}
     <h1 class="text-xl md:text-2xl font-bold text-white tracking-wide select-none">
@@ -41,15 +41,15 @@
                 class="absolute right-0 mt-3 w-48 bg-slate-800/95 border border-slate-700 rounded-xl shadow-xl overflow-hidden"
             >
                 <a href="{{ route('dashboard') ?? '#' }}" class="block px-4 py-2 text-white hover:bg-slate-700/80">
-                    <i class="fa-solid fa-user-circle mr-2 text-blue-400"></i> Perfil
+                    <i class="fa-solid fa-user-circle text-blue-400"></i> Perfil
                 </a>
                 <a href="{{ route('dashboard') ?? '#' }}" class="block px-4 py-2 text-white hover:bg-slate-700/80">
-                    <i class="fa-solid fa-gear mr-2 text-cyan-400"></i> Ajustes
+                    <i class="fa-solid fa-gear text-cyan-400"></i> Ajustes
                 </a>
                 <form method="POST" action="{{ route('logout') ?? '#' }}">
                     @csrf
                     <button type="submit" class="w-full text-left px-4 py-2 text-red-400 hover:bg-red-600/20">
-                        <i class="fa-solid fa-right-from-bracket mr-2"></i> Cerrar Sesión
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
                     </button>
                 </form>
             </div>

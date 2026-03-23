@@ -4,11 +4,11 @@
 <div>
     <!-- Hero -->
     <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <div class="container mx-auto px-4 py-24 lg:py-32 text-center">
+        <div class="container px-4 py-24 lg:py-32 text-center">
             <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
                 <span class="bg-blue-600 hover:bg-blue-700 text-white">Contactos</span> Institucionales
             </h1>
-            <p class="text-lg text-white/60 max-w-2xl mx-auto mt-4 leading-relaxed">
+            <p class="text-lg text-white/60 max-w-2xl mt-4 leading-relaxed">
                 Encuentra la información de contacto de las principales áreas académicas, administrativas y de apoyo.
             </p>
         </div>
@@ -16,7 +16,7 @@
 
     <!-- Directorio -->
     <section class="py-20 bg-white/5">
-        <div class="container mx-auto px-8 max-w-7xl">
+        <div class="container px-8 max-w-7xl">
             <h2 class="text-3xl font-bold text-center mb-14">
                 <span class="bg-blue-600 hover:bg-blue-700 text-white">Directorio</span> de Dependencias Universitarias
             </h2>
@@ -34,7 +34,7 @@
                                 </span>
                                 <div class="flex items-center text-white/60">
                                     <!-- Ícono de teléfono -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 bg-blue-600 hover:bg-blue-700 text-white" fill="none"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 bg-blue-600 hover:bg-blue-700 text-white" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                               d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 8.81 19.79 19.79 0 0 1 0 0.18 2 2 0 0 1 2.18 0h3a2 2 0 0 1 2 1.72c.13 1.21.44 2.38.93 3.49a2 2 0 0 1-.45 2.11L6.09 9.91a16 16 0 0 0 8 8l2.59-1.54a2 2 0 0 1 2.11-.45c1.11.49 2.28.8 3.49.93a2 2 0 0 1 1.72 2z"/>
@@ -58,7 +58,7 @@
                             <a href="mailto:{{ $contact['email'] }}" 
                                class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold hover:underline">
                                 Leer más
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M17 8l4 4m0 0l-4 4m4-4H3" />

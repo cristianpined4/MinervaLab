@@ -40,11 +40,11 @@
     <!-- fin modales -->
 
     <div class="bg-gradient-to-br from-gray-100 via-gray-50 to-white py-20 px-4">
-        <div class="max-w-7xl mx-auto text-center">
+        <div class="max-w-7xl text-center">
             <h1 class="text-5xl md:text-6xl font-bold text-balance mb-4">
                 Documentos <span class="text-blue-500">Importantes</span>
             </h1>
-            <p class="text-white/60 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            <p class="text-white/60 text-lg md:text-xl max-w-3xl leading-relaxed">
                 Accede a manuales, guías y documentos esenciales de la carrera de Ingeniería en Sistemas Informáticos.
             </p>
         </div>
@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- Contador -->
-                <div class="w-full lg:w-auto text-center lg:text-right ml-auto">
+                <div class="w-full lg:w-auto text-center lg:text-right">
                     <p class="text-sm text-white leading-5 dark:text-white/40">
                         <span>Mostrando</span>
                         <span class="font-medium">{{ $records->firstItem() ?? 0 }}</span>
@@ -106,7 +106,7 @@
         </div>
 
         @if (count($records) > 0)
-        <div class="mt-12 mx-auto w-4/5 max-w-7xl">
+        <div class="mt-12 w-4/5 max-w-7xl">
             <!-- Paginación centrada -->
             {{ $records->links() }}
         </div>

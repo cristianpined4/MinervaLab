@@ -98,7 +98,7 @@
 
                                 {{-- Indicador de carga Livewire --}}
                                 <div wire:loading wire:target="upload" class="mt-1 text-sm text-blue-500">
-                                    <i class="fas fa-spinner fa-spin mr-1"></i> Subiendo archivo...
+                                    <i class="fas fa-spinner fa-spin"></i> Subiendo archivo...
                                 </div>
                             </div>
                         @endif
@@ -134,7 +134,7 @@
         ============================================================ --}}
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
 
                 {{-- Cabecera --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -241,7 +241,7 @@
                                                 @if ($item->resource_type === 'image')
                                                     <img src="{{ asset('storage/' . $item->path) }}"
                                                         alt="{{ $item->title }}"
-                                                        class="h-10 w-16 object-cover rounded-lg mx-auto shadow">
+                                                        class="h-10 w-16 object-cover rounded-lg shadow">
                                                 @elseif ($item->resource_type === 'video')
                                                     <span class="inline-flex items-center gap-1 text-xs bg-red-600 hover:bg-red-700 text-white font-semibold">
                                                         <i class="fas fa-film"></i> Video

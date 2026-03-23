@@ -42,7 +42,7 @@
 
     <main class="relative z-10 min-h-screen">
 
-        <div class="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <div class="max-w-7xl px-4 md:px-6 py-8">
 
             {{-- ── Encabezado ──────────────────────────────────────────── --}}
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">

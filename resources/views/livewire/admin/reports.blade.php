@@ -8,7 +8,7 @@
     <main class="relative z-10 min-h-screen bg-white/5">
         <!-- Funciones del sistema -->
         <section id="noticias" class="bg-white/5 py-12">
-            <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="max-w-7xl px-4 md:px-6">
                 <div class="flex items-center justify-between mb-8">
                     <div>
                         <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Generacion de reportes</h2>

@@ -117,7 +117,7 @@
         <!-- Fin Modal -->
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-6xl mx-auto">
+            <div class="max-w-6xl">
 
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>

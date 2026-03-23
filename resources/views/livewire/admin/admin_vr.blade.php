@@ -74,7 +74,7 @@
         <!-- fin modales -->
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Administrar equipos</h1>
@@ -98,7 +98,7 @@
                     {{-- Header de la tabla --}}
                     <div class="bg-gradient-to-r from-yellow-600 to-yellow-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-vr-cardboard mr-3"></i>
+                            <i class="fas fa-vr-cardboard"></i>
                             Lista de lentes VR
                         </h2>
                     </div>

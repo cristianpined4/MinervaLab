@@ -41,7 +41,7 @@
     <!-- fin modales -->
 
     <!-- Contenido - inicio -->
-    <section class="py-20 px-4 text-center max-w-7xl mx-auto">
+    <section class="py-20 px-4 text-center max-w-7xl">
         <span
             class="mb-6 inline-block bg-white/50/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full text-sm">Laboratorio
             de Realidad Virtual</span>
@@ -49,7 +49,7 @@
             class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
             El Futuro de la Educación
         </h1>
-        <p class="text-xl text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p class="text-xl text-white/70 mb-8 max-w-3xl leading-relaxed">
             Descubre experiencias educativas inmersivas con tecnología de realidad virtual de vanguardia. Transforma
             la
             manera de aprender y enseñar en Minerva Labs.
@@ -75,7 +75,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 px-4 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+    <section class="py-20 px-4 max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
 
         <!-- Card 1 -->
         <div
@@ -141,7 +141,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 px-4 text-center max-w-4xl mx-auto">
+    <section class="py-20 px-4 text-center max-w-4xl">
         <h2 class="text-4xl font-bold mb-6">¿Listo para Transformar tu Experiencia Educativa?</h2>
         <p class="text-xl text-white/70 mb-8">Únete a Minerva Labs y descubre el poder de la realidad virtual en la
             educación</p>

@@ -28,11 +28,11 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
 
                 <span>
                     @if ($paginator->hasMorePages())
-                        <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" wire:loading.attr="disabled" dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white bg-white/5 border border-white/20 leading-5 rounded-md hover:text-white/50 focus:outline-none focus:ring ring-blue-300 focus:border-blue-300 active:bg-white/5 active:text-white transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-white/40 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-white/40">
+                        <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" wire:loading.attr="disabled" dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/5 border border-white/20 leading-5 rounded-md hover:text-white/50 focus:outline-none focus:ring ring-blue-300 focus:border-blue-300 active:bg-white/5 active:text-white transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-white/40 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-white/40">
                             {!! __('pagination.next') !!}
                         </button>
                     @else
-                        <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white/50 bg-white/5 border border-white/20 cursor-default leading-5 rounded-md dark:text-white/60 dark:bg-gray-800 dark:border-gray-600">
+                        <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white/50 bg-white/5 border border-white/20 cursor-default leading-5 rounded-md dark:text-white/60 dark:bg-gray-800 dark:border-gray-600">
                             {!! __('pagination.next') !!}
                         </span>
                     @endif

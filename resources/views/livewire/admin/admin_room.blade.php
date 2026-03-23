@@ -74,7 +74,7 @@
         <!-- fin modales -->
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
 
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
@@ -96,7 +96,7 @@
                 <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
                     <div class="bg-gradient-to-r from-cyan-600 to-cyan-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-vr-cardboard mr-3"></i>
+                            <i class="fas fa-vr-cardboard"></i>
                             Lista de Salones
                         </h2>
                     </div>
@@ -164,7 +164,7 @@
                                                     </svg>
                                                 </button>
                                                 <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors" wire:click="abrirEquiposVr({{ $row->id }})" title="Equipos">
-                                                    <i class="fas fa-vr-cardboard mr-3"></i>
+                                                    <i class="fas fa-vr-cardboard"></i>
                                                 </button>
                                             </div>
                                         </td>

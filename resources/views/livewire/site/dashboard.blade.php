@@ -11,11 +11,11 @@
         |  BIENVENIDA
         ============================================================ --}}
         <section class="relative overflow-hidden border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14">
+            <div class="max-w-7xl px-4 md:px-6 py-10 md:py-14">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
                         <p class="text-xs font-semibold text-cyan-400 uppercase tracking-widest mb-2">
-                            <i class="fas fa-vr-cardboard mr-1"></i> Minerva Labs · Dashboard
+                            <i class="fas fa-vr-cardboard"></i> Minerva Labs · Dashboard
                         </p>
                         <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
                             ¡Hola, {{ auth()->user()?->first_name ?? auth()->user()?->name ?? 'Usuario' }}!
@@ -25,11 +25,11 @@
                         </p>
                         <div class="flex items-center gap-4 text-sm text-blue-300/60">
                             <span>
-                                <i class="fas fa-calendar mr-1"></i>
+                                <i class="fas fa-calendar"></i>
                                 {{ now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}
                             </span>
                             <span>
-                                <i class="fas fa-clock mr-1"></i>
+                                <i class="fas fa-clock"></i>
                                 {{ now()->format('h:i A') }}
                             </span>
                         </div>
@@ -48,7 +48,7 @@
             </div>
         </section>
 
-        <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 space-y-8">
+        <div class="max-w-7xl px-4 md:px-6 py-8 space-y-8">
 
             {{-- ============================================================
             |  ESTADÍSTICAS REALES
@@ -127,7 +127,7 @@
                     </h2>
                     <a href="{{ route('my-reservations') }}"
                         class="text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
-                        Ver todas <i class="fas fa-arrow-right ml-1"></i>
+                        Ver todas <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -145,14 +145,14 @@
                                 {{ $res->HasRoom?->description ?? 'Sala' }}
                             </p>
                             <p class="text-blue-200/60 text-sm">
-                                <i class="fas fa-calendar text-xs mr-1"></i>
+                                <i class="fas fa-calendar text-xs"></i>
                                 {{ formatDate($res->date) }}
                                 &nbsp;·&nbsp;
-                                <i class="fas fa-clock text-xs mr-1"></i>
+                                <i class="fas fa-clock text-xs"></i>
                                 {{ formatTime($res->starts_at) }} – {{ formatTime($res->ends_at) }}
                             </p>
                             <p class="text-blue-200/50 text-xs mt-1">
-                                <i class="fas fa-users text-xs mr-1"></i> {{ $res->students }} estudiante(s)
+                                <i class="fas fa-users text-xs"></i> {{ $res->students }} estudiante(s)
                             </p>
                         </div>
                     @endforeach
@@ -171,7 +171,7 @@
                     </h2>
                     <a href="{{ route('my-reservations') }}"
                         class="text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors">
-                        Ver todo <i class="fas fa-arrow-right ml-1"></i>
+                        Ver todo <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 

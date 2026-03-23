@@ -90,7 +90,7 @@
         <!-- fin modales -->
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
                 {{-- Header Section --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
@@ -101,13 +101,13 @@
                         <button
                             wire:click="equipos"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                            <i class="fas fa-vr-cardboard mr-3"></i>
+                            <i class="fas fa-vr-cardboard"></i>
                             Equipos
                         </button>
                         <button
                             wire:click="abrirModal"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                            <i class="fas fa-plus mr-3"></i>
+                            <i class="fas fa-plus"></i>
                             Agregar Mantenimiento
                         </button>
                     </div>
@@ -117,7 +117,7 @@
                 <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
                     <div class="bg-gradient-to-r from-blue-600 to-blue-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-tools mr-3"></i>
+                            <i class="fas fa-tools"></i>
                             Lista de Mantenimientos
                         </h2>
                     </div>

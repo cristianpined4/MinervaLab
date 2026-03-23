@@ -59,7 +59,7 @@
         </div>
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
 
                 {{-- Header Section con Botón --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -185,20 +185,20 @@
                                             @if ($row->status == 0)
                                                 <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                         title="Cancelar" wire:click="confirmarCancelar({{ $row->id }})">
-                                                        <i class="fas fa-times mr-3"></i>
+                                                        <i class="fas fa-times"></i>
                                                 </button>
                                             @endif
                                             @if ($row->status == 1)
                                                 @can('admin')
                                                     <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
-                                                            <i class="fas fa-user mr-3"></i>
+                                                            <i class="fas fa-user"></i>
                                                     </button>
                                                 @endcan
                                                 @can('teacher')
                                                     <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
-                                                            <i class="fas fa-user mr-3"></i>
+                                                            <i class="fas fa-user"></i>
                                                     </button>
                                                 @endcan
                                             @endif
@@ -206,7 +206,7 @@
                                                 <button type="button"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Pdf" wire:click="pdfAttendance({{ $row->id }})">
-                                                    <i class="fas fa-file mr-3"></i>
+                                                    <i class="fas fa-file"></i>
                                                 </button>
 
                                             @endif
@@ -217,7 +217,7 @@
                             @if (count($data) == 0)
                                 <tr>
                                     <td colspan="7" class="px-6 py-12 text-center">
-                                        <svg class="w-16 h-16 text-white/40 mx-auto mb-4" fill="none" stroke="currentColor"
+                                        <svg class="w-16 h-16 text-white/40 mb-4" fill="none" stroke="currentColor"
                                              viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>

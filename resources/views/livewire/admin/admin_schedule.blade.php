@@ -78,7 +78,7 @@
         <!-- fin modales -->
 
         <div class="flex-1 p-6 md:p-8 lg:p-10">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl">
 
                 {{-- Header Section con Botón --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -108,7 +108,7 @@
                     {{-- Header de la tabla --}}
                     <div class="bg-gradient-to-r from-green-600 to-green-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-clock mr-3 text-white-300"></i>
+                            <i class="fas fa-clock text-white-300"></i>
                             Horario
                         </h2>
                     </div>
@@ -173,7 +173,7 @@
                                 @if (count($data) == 0)
                                     <tr>
                                         <td colspan="7" class="px-6 py-12 text-center">
-                                            <svg class="w-16 h-16 text-white/40 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-16 h-16 text-white/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
                                             <p class="text-white/50 text-lg font-medium">No se encontro un horario registrado</p>

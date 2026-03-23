@@ -5,13 +5,13 @@ relevantes para la comunidad estudiantil de ingeniería.')
 <div>
     <!-- Hero Section -->
     <section class="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <div class="container mx-auto px-4 py-24 lg:py-32">
+        <div class="container px-4 py-24 lg:py-32">
             <div class="text-center space-y-8">
                 <div class="space-y-4">
                     <h1 class="text-4xl lg:text-6xl font-bold text-balance leading-tight">Noticias y
                         <span class="bg-blue-600 hover:bg-blue-700 text-white">Convocatorias</span>
                     </h1>
-                    <p class="text-xl text-white/60 text-pretty max-w-2xl mx-auto leading-relaxed">
+                    <p class="text-xl text-white/60 text-pretty max-w-2xl leading-relaxed">
                         Mantente informado sobre los últimos eventos, oportunidades académicas y noticias relevantes
                         para la comunidad estudiantil de ingeniería.
                     </p>
@@ -24,8 +24,8 @@ relevantes para la comunidad estudiantil de ingeniería.')
     <section class="bg-white/5 relative">
         <!-- Filtros Fijos - Debajo de la barra de navegación -->
         <div class="sticky top-16 z-40 bg-white/5 border-b border-white/10 py-4 shadow-sm">
-            <div class="container mx-auto px-4">
-                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-4/5 max-w-7xl mx-auto">
+            <div class="container px-4">
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-4/5 max-w-7xl">
                     <div class="relative flex-1">
                         <div class="relative">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -59,8 +59,8 @@ relevantes para la comunidad estudiantil de ingeniería.')
             </div>
         </div>
 
-        <div class="container mx-auto px-4 py-12">
-            <div class="flex items-center justify-between mb-12 w-4/5 max-w-7xl mx-auto">
+        <div class="container px-4 py-12">
+            <div class="flex items-center justify-between mb-12 w-4/5 max-w-7xl">
                 <div>
                     <h2 class="text-3xl lg:text-4xl font-bold mb-4">
                         <span class="bg-blue-600 hover:bg-blue-700 text-white">Noticias</span> Destacadas
@@ -84,7 +84,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
 
             @if(count($filteredNews) > 0)
             <!-- Grid de 3 columnas centrado y más ancho -->
-            <div class="grid lg:grid-cols-3 gap-8 w-4/5 max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-3 gap-8 w-4/5 max-w-7xl">
                 @foreach($filteredNews as $news)
                 <div class="bg-white/5 rounded-xl border border-white/10 overflow-hidden shadow-sm news-card-hover cursor-pointer group"
                     wire:key="news-{{ $news['id'] }}" onclick="openNewsModal(@js($news))">
@@ -101,7 +101,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                             <div class="flex items-center text-sm text-white/50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-calendar h-4 w-4 mr-1">
+                                    stroke-linejoin="round" class="lucide lucide-calendar h-4 w-4">
                                     <path d="M8 2v4"></path>
                                     <path d="M16 2v4"></path>
                                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
@@ -124,7 +124,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                             Leer más
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4 ml-1">
+                                stroke-linejoin="round" class="lucide lucide-arrow-right h-4 w-4">
                                 <path d="M5 12h14"></path>
                                 <path d="m12 5 7 7-7 7"></path>
                             </svg>
@@ -134,8 +134,8 @@ relevantes para la comunidad estudiantil de ingeniería.')
                 @endforeach
             </div>
             @else
-            <div class="text-center py-16 w-4/5 max-w-7xl mx-auto">
-                <div class="h-16 w-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
+            <div class="text-center py-16 w-4/5 max-w-7xl">
+                <div class="h-16 w-16 mb-4 rounded-full bg-white/5 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-search h-8 w-8 text-white/40">
@@ -149,7 +149,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
             @endif
 
             @if (count($filteredNews) > 0)
-            <div class="mt-12 mx-auto w-4/5 max-w-7xl">
+            <div class="mt-12 w-4/5 max-w-7xl">
                 <!-- Paginación centrada -->
                 {{ $filteredNews->links() }}
             </div>

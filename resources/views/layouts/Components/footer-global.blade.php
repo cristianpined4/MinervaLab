@@ -1,4 +1,4 @@
-<footer class="border-t border-white/20 bg-white/10 backdrop-blur-md py-8 px-4 text-center max-w-7xl mx-auto">
+<footer class="border-t border-white/20 bg-white/10 backdrop-blur-md py-8 px-4 text-center max-w-7xl">
   <div class="flex items-center justify-center gap-2 mb-4">
     <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
       <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
