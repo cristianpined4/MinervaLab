@@ -49,7 +49,7 @@
             class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
             El Futuro de la Educación
         </h1>
-        <p class="text-xl text-white/70 mb-8 max-w-3xl leading-relaxed">
+        <p class="text-xl text-white/70 mb-8 max-w-3xl leading-relaxed mx-auto">
             Descubre experiencias educativas inmersivas con tecnología de realidad virtual de vanguardia. Transforma
             la
             manera de aprender y enseñar en Minerva Labs.
@@ -141,7 +141,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 px-4 text-center max-w-4xl">
+    <section class="py-20 px-4 text-center max-w-4xl mx-auto">
         <h2 class="text-4xl font-bold mb-6">¿Listo para Transformar tu Experiencia Educativa?</h2>
         <p class="text-xl text-white/70 mb-8">Únete a Minerva Labs y descubre el poder de la realidad virtual en la
             educación</p>

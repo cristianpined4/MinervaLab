@@ -47,7 +47,7 @@
                                 Habitación
                             </label>
                             <select wire:model="fields.id_room" id="id_room"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                                 <option value="">Seleccione una habitación</option>
                                 @foreach ($rooms as $room)
                                     <option value="{{ $room->id }}">{{ $room->description }}</option>

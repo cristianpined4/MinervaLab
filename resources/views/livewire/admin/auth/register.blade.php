@@ -199,9 +199,9 @@
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-2">Facultad</label>
                         <select wire:model.defer="fields.id_faculty"
-                                class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                class="w-full h-11 rounded-xl border border-white/20 bg-white/5 px-4
                                        text-sm text-white outline-none
-                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
+                                       focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40
                                        @error('fields.id_faculty') border-red-500/70 @enderror">
                             <option value="">Seleccione</option>
                             @forelse(($facultys ?? []) as $row)

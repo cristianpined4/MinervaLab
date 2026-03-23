@@ -20,7 +20,7 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Categoría</label>
-                            <select wire:model="fields.id_scene_category" class="form-control" id="id_scene_category">
+                            <select wire:model="fields.id_scene_category" class="form-control text-white" id="id_scene_category">
                                 <option value="">Seleccione una categoría</option>
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->description }}</option>

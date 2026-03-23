@@ -91,7 +91,7 @@
                                 <span class="text-red-500 text-sm">* {{ $message }}</span>
                             @enderror</label>
                             <select wire:model="fields.id_rol" id="id_rol"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                                 <option value="">Seleccione un rol</option>
                                 @foreach ($id_roles as $rol)
                                     <option value="{{ $rol->id }}">{{ $rol->description }}</option>
@@ -106,7 +106,7 @@
                                 <span class="text-red-500 text-sm">* {{ $message }}</span>
                             @enderror</label>
                             <select wire:model="fields.id_faculty" id="id_faculty"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                                 <option value="">Seleccione una facultad</option>
                                 @foreach ($faculties as $faculty)
                                     <option value="{{ $faculty->id }}">{{ $faculty->description }}</option>

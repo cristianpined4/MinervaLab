@@ -42,7 +42,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
 
                     <div class="relative">
                         <select wire:model.live="currentCategory"
-                            class="appearance-none bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-8">
+                            class="appearance-none bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 pr-8 text-white">
                             <option value="all">Todas las categorías</option>
                             <option value="evento">Eventos</option>
                             <option value="empleo">Empleo</option>

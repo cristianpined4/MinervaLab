@@ -43,7 +43,7 @@
       {{-- HEADER condicional --}}
       @if (!View::hasSection('hide_header'))
         <header class="border-b border-white/20 bg-white/10 backdrop-blur-md">
-          <div class="max-w-7xl px-4 py-4 flex items-center justify-between">
+          <div class="max-w-7xl mx-3 md:mx-auto py-4 flex items-center justify-between">
             <div class="flex items-center gap-2">
               <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
                 <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -65,13 +65,13 @@
       @endif
 
       {{-- CONTENIDO PRINCIPAL --}}
-      <main class="p-6">
+      <main class="p-6 mx-auto max-w-7xl">
         @yield('content')
       </main>
 
       {{-- FOOTER condicional --}}
       @if (!View::hasSection('hide_footer'))
-        <footer class="border-t border-white/20 bg-white/10 backdrop-blur-md py-8 px-4 text-center max-w-7xl">
+        <footer class="border-t border-white/20 bg-white/10 backdrop-blur-md py-8 px-4 text-center max-w-7xl mx-auto">
           <div class="flex items-center justify-center gap-2 mb-4">
             <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
               <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

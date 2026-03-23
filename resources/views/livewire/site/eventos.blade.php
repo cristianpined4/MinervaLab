@@ -78,7 +78,7 @@
                             </path>
                         </svg>
                         <select wire:model.live="tipo_evento"
-                            class="w-full lg:w-56 pl-12 pr-10 py-3 border border-white/20 rounded-lg bg-white/5 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full lg:w-56 pl-12 pr-10 py-3 border border-white/20 rounded-lg bg-white/5 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent">
                             <option value="">Tipo de evento</option>
                             <option value="congreso">Congreso</option>
                             <option value="taller">Taller</option>
@@ -97,7 +97,7 @@
                 <div class="w-full lg:w-auto">
                     <div class="relative">
                         <select wire:model.live="modalidad"
-                            class="w-full lg:w-48 pl-4 pr-10 py-3 border border-white/20 rounded-lg bg-white/5 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full lg:w-48 pl-4 pr-10 py-3 border border-white/20 rounded-lg bg-white/5 text-white appearance-none focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent">
                             <option value="">Modalidad</option>
                             <option value="presencial">Presencial</option>
                             <option value="virtual">Virtual</option>

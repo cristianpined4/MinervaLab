@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label class="form-label">Rol</label>
                         <select wire:model="fields.role_id" id="role_id"
-                            class="form-control @error('fields.role_id') was-validated is-invalid @enderror">
+                            class="form-control text-white @error('fields.role_id') was-validated is-invalid @enderror">
                             <option value="">-- Seleccione --</option>
                             @foreach ($roles as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label class="form-label">Estado</label>
                         <select wire:model="fields.is_active" id="is_active"
-                            class="form-control @error('fields.is_active') was-validated is-invalid @enderror">
+                            class="form-control text-white @error('fields.is_active') was-validated is-invalid @enderror">
                             <option value="">-- Seleccione --</option>
                             <option value="1">Activo</option>
                             <option value="0">Inactivo</option>

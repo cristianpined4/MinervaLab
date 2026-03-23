@@ -44,7 +44,7 @@
                                 Estado del salón
                             </label>
                             <select wire:model="fields.status" id="status"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition">
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                                 <option value="1">DISPONIBLE</option>
                                 <option value="0">INHABILITADO</option>
                             </select>

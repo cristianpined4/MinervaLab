@@ -181,15 +181,29 @@ button.is-waiting {
   width: 100%;
   padding: 0.5rem;
   font-size: 1rem;
-  border: 1px solid #ced4da;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 .form-control:focus,
 .form-control-textarea:focus,
 .form-control-select:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+/* Estilo para opciones en selectores */
+select option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+select option:checked {
+  background-color: #0891b2;
+  color: #ffffff;
 }
 
 /* Checkbox y Radio */

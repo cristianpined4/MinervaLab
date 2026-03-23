@@ -23,7 +23,7 @@
                                 Selecciona un día de la semana
                             </label>
                             <select wire:model="fields.day" id="day"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                                 <option value="1">Lunes</option>
                                 <option value="2">Martes</option>
                                 <option value="3">Miércoles</option>

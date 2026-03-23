@@ -43,7 +43,7 @@
                         <div class="form-group mt-3">
                             <label class="form-label">Sala</label>
                             <select wire:model.live="room" id="room" wire:key="room-select-{{ $record_id ?? 'new' }}"
-                                class="form-control @error('room') was-validated is-invalid @enderror">
+                                class="form-control text-white @error('room') was-validated is-invalid @enderror">
                                 @foreach ($rooms as $r)
                                     <option value="{{ $r->id }}">{{ $r->description }}</option>
                                 @endforeach
@@ -52,7 +52,7 @@
                         <div class="form-group mt-3">
                             <label class="form-label">Equipo (Código)</label>
                             <select wire:model.live="fields.id_vr" id="id_vr" wire:key="vr-select-room-{{ $room ?? 'none' }}-record-{{ $record_id ?? 'new' }}"
-                                class="form-control @error('fields.id_vr') was-validated is-invalid @enderror">
+                                class="form-control text-white @error('fields.id_vr') was-validated is-invalid @enderror">
                                 @forelse ($vr_glasses as $vr)
                                     <option value="{{ $vr->id }}">{{ $vr->code }}</option>
                                 @empty
