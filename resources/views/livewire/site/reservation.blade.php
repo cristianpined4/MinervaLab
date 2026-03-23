@@ -20,7 +20,7 @@
                     <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg p-6 border border-white/10">
                         <div class="flex-row items-center justify-between mb4">
                             <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                 </svg>
@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="text-sm text-white/60 mb-3">
-                            Tiempo de escenas estimado: <span class="font-bold text-indigo-600">{{ $total_time }} min</span>
+                            Tiempo de escenas estimado: <span class="font-bold text-cyan-400">{{ $total_time }} min</span>
                         </div>
                         @if (!empty($warnings))
                             <div class="mb-4 space-y-2">
@@ -60,7 +60,7 @@
                                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
                                         <i class="fas @if ($scene->sceneCategory->icon) {{'fa-' . $scene->sceneCategory->icon}}
                                         @else {{'fa-vr-cardboard'}} @endif text-white text-6xl"></i>
-                                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                                        <div class="absolute top-3 right-3 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
                                             <span class="text-xs font-bold text-white">VR Ready</span>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@
                 <div class="lg:col-span-1">
                     <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg p-6 border border-white/10 sticky top-8">
                         <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                             Fecha y Horario
