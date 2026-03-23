@@ -15,7 +15,7 @@
     >
         <i class="fa-solid fa-bell text-xl"></i>
         <template x-if="unreadCount > 0">
-            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center" x-text="unreadCount > 99 ? '99+' : unreadCount"></span>
+            <span class="absolute -top-1 -right-1 bg-white/50 text-white text-xs font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center" x-text="unreadCount > 99 ? '99+' : unreadCount"></span>
         </template>
     </button>
 

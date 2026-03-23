@@ -130,11 +130,11 @@
         <div class="flex justify-center mb-10">
             <div class="inline-flex shadow-md rounded-[10px]">
                 <button wire:click="$set('tab', 'proximos')"
-                    class="px-12 py-2 text-sm font-medium text-blue-600 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-l-[10px]">
+                    class="px-12 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-l-[10px]">
                     Próximos Eventos
                 </button>
                 <button wire:click="$set('tab', 'pasados')"
-                    class="px-12 py-2 text-sm font-medium text-white/60 bg-white/5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 rounded-r-[10px]">
+                    class="px-12 py-2 text-sm font-medium text-white/60 bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 rounded-r-[10px]">
                     Eventos Pasados
                 </button>
             </div>

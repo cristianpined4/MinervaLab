@@ -9,7 +9,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
             <div class="text-center space-y-8">
                 <div class="space-y-4">
                     <h1 class="text-4xl lg:text-6xl font-bold text-balance leading-tight">Noticias y
-                        <span class="text-blue-600">Convocatorias</span>
+                        <span class="bg-blue-600 hover:bg-blue-700 text-white">Convocatorias</span>
                     </h1>
                     <p class="text-xl text-white/60 text-pretty max-w-2xl mx-auto leading-relaxed">
                         Mantente informado sobre los últimos eventos, oportunidades académicas y noticias relevantes
@@ -63,7 +63,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
             <div class="flex items-center justify-between mb-12 w-4/5 max-w-7xl mx-auto">
                 <div>
                     <h2 class="text-3xl lg:text-4xl font-bold mb-4">
-                        <span class="text-blue-600">Noticias</span> Destacadas
+                        <span class="bg-blue-600 hover:bg-blue-700 text-white">Noticias</span> Destacadas
                     </h2>
                     <p class="text-xl text-white/60">
                         Explora las últimas convocatorias, eventos y oportunidades académicas.
@@ -111,7 +111,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                             </div>
                         </div>
 
-                        <h3 class="font-semibold text-xl text-balance group-hover:text-blue-600 transition-colors">
+                        <h3 class="font-semibold text-xl text-balance group-hover:bg-blue-600 hover:bg-blue-700 text-white transition-colors">
                             {{ $news['title'] }}
                         </h3>
 
@@ -120,7 +120,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                         </p>
 
                         <div
-                            class="flex items-center text-sm text-blue-600 font-medium group-hover:gap-2 transition-all mt-2">
+                            class="flex items-center text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium group-hover:gap-2 transition-all mt-2">
                             Leer más
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

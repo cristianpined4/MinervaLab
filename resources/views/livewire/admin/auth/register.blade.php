@@ -55,7 +55,7 @@
 
                 {{-- ALERTA DE ERRORES GLOBALES --}}
                 @if ($errors->any())
-                    <div class="mb-5 rounded-2xl border border-red-500/50 bg-red-500/10 px-4 py-3">
+                    <div class="mb-5 rounded-2xl border border-red-500/50 bg-white/50/10 px-4 py-3">
                         <div class="flex items-start gap-2">
                             <div class="mt-0.5 h-2 w-2 rounded-full bg-red-400"></div>
                             <div>
@@ -83,7 +83,7 @@
 
                 {{-- ALERTA ERROR GENERAL (por si usas session('error') en el controlador) --}}
                 @if (session('error'))
-                    <div class="mb-5 rounded-2xl border border-red-500/50 bg-red-500/10 px-4 py-3">
+                    <div class="mb-5 rounded-2xl border border-red-500/50 bg-white/50/10 px-4 py-3">
                         <p class="text-xs text-red-200">
                             {{ session('error') }}
                         </p>

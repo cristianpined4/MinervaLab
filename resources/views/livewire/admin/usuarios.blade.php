@@ -139,7 +139,7 @@
                             class="bg-white/50 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition text-sm"
                             wire:click="edit('{{ $usuario->id }}')">Editar</button>
                         @if (Auth::user()->id !== $usuario->id && Auth::user()->role_id == 1)
-                        <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm"
+                        <button class="bg-white/50 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm"
                             onclick="confirmarEliminar({{ $usuario->id }})">Eliminar</button>
                         @endif
                     </td>

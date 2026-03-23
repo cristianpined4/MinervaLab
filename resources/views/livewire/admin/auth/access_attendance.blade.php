@@ -61,7 +61,7 @@
 
                 {{-- ERROR --}}
                 @if ($error)
-                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-red-500/10 px-4 py-3">
+                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-white/50/10 px-4 py-3">
                         <p class="text-xs text-red-200">{{ $error }}</p>
                     </div>
                 @endif

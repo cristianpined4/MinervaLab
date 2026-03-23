@@ -128,7 +128,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
+                            <tbody class="divide-y divide-white/20">
                                 {{-- Fila ejemplo 1 --}}
                                 @foreach ($data as $row)
                                     <tr class="hover:bg-white/5 transition-colors">
@@ -137,7 +137,7 @@
                                                 <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
-                                                <span class="text-sm font-medium text-gray-900">{{ $row->starts_at }}</span>
+                                                <span class="text-sm font-medium text-white">{{ $row->starts_at }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -145,20 +145,20 @@
                                                 <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
-                                                <span class="text-sm font-medium text-gray-900">{{ $row->ends_at }}</span>
+                                                <span class="text-sm font-medium text-white">{{ $row->ends_at }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <div class="text-sm text-gray-900 font-medium">{{ $row->description }}</div>
+                                            <div class="text-sm text-white font-medium">{{ $row->description }}</div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Editar" wire:click="abrirModal({{ $row->id }})">
+                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors" title="Editar" wire:click="abrirModal({{ $row->id }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                     </svg>
                                                 </button>
-                                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors" title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                     </svg>
@@ -170,7 +170,7 @@
                                 @if (count($data) == 0)
                                     <tr>
                                         <td colspan="5" class="px-6 py-12 text-center">
-                                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-16 h-16 text-white/40 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
                                             <p class="text-white/50 text-lg font-medium">No tienes reservaciones aún</p>
@@ -186,9 +186,9 @@
                     <div class="bg-white/5 px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div class="text-sm text-white/60">
                             @if($data->total() > 0)
-                                Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
-                                &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>
-                                de <span class="font-semibold text-gray-900">{{ $data->total() }}</span> registros
+                                Mostrando <span class="font-semibold text-white">{{ $data->firstItem() }}</span>
+                                &ndash; <span class="font-semibold text-white">{{ $data->lastItem() }}</span>
+                                de <span class="font-semibold text-white">{{ $data->total() }}</span> registros
                             @else
                                 Sin registros
                             @endif

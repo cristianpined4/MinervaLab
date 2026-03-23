@@ -204,7 +204,7 @@
         <form method="POST" action="{{ route('logout') }}" class="mt-2">
             @csrf
             <button type="submit"
-                class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/10 transition-colors">
+                class="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-white/50/10 transition-colors">
                 <i class="fas fa-right-from-bracket w-4 text-center"></i>
                 Cerrar sesión
             </button>

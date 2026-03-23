@@ -52,7 +52,7 @@
 
                 {{-- ERRORES DE VALIDACIÓN (Laravel) --}}
                 @if ($errors->any())
-                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-red-500/10 px-4 py-3">
+                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-white/50/10 px-4 py-3">
                         <div class="flex items-start gap-2">
                             <div class="mt-1 h-2 w-2 rounded-full bg-red-400"></div>
                             <div>
@@ -78,7 +78,7 @@
 
                 {{-- ERROR DE LOGIN (credenciales / usuario inactivo) --}}
                 @if ($loginError)
-                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-red-500/10 px-4 py-3">
+                    <div class="mb-4 rounded-2xl border border-red-500/50 bg-white/50/10 px-4 py-3">
                         <p class="text-xs text-red-200">{{ $loginError }}</p>
                     </div>
                 @endif

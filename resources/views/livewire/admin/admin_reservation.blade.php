@@ -81,7 +81,7 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
+                            <tbody class="divide-y divide-white/20">
                             @foreach ($data as $row)
                                 <tr class="hover:bg-white/5 transition-colors">
 
@@ -90,37 +90,37 @@
                                             <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
-                                            <span class="text-sm font-medium text-gray-900">@dateFormat($row->date)</span>
+                                            <span class="text-sm font-medium text-white">@dateFormat($row->date)</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">@timeFormat($row->starts_at)</span>
+                                            <span class="text-sm font-medium text-white">@timeFormat($row->starts_at)</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">{{ $row->time }} min</span>
+                                            <span class="text-sm font-medium text-white">{{ $row->time }} min</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">{{ $row->HasRoom->description }}</span>
+                                            <span class="text-sm font-medium text-white">{{ $row->HasRoom->description }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">{{ $row->HasUser->username }}</span>
+                                            <span class="text-sm font-medium text-white">{{ $row->HasUser->username }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">{{ $row->students }}</span>
+                                            <span class="text-sm font-medium text-white">{{ $row->students }}</span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-sm font-medium text-gray-900">@php
+                                            <span class="text-sm font-medium text-white">@php
 
                                                 if($row->status == 0) {
                                                     echo 'Pendiente';
@@ -141,16 +141,16 @@
                                         <div class="flex items-center justify-center gap-2">
                                             @if ($row->status == 0)
 
-                                                <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                                                         title="Autorizar" wire:click="confirmarAutorizar({{ $row->id }})">
                                                         <i class="fas fa-check mr-3"></i>
                                                 </button>
-                                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                                                         title="Rechazar" wire:click="confirmarRechazar({{ $row->id }})">
                                                         <i class="fas fa-ban mr-3"></i>
                                                 </button>
                                             @elseif ($row->status == 1)
-                                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                                                         title="Cancelar" wire:click="confirmarCancelar({{ $row->id }})">
                                                         <i class="fas fa-times mr-3"></i>
                                                 </button>
@@ -162,7 +162,7 @@
                             @if (count($data) == 0)
                                 <tr>
                                     <td colspan="7" class="px-6 py-12 text-center">
-                                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                                        <svg class="w-16 h-16 text-white/40 mx-auto mb-4" fill="none" stroke="currentColor"
                                              viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
@@ -180,9 +180,9 @@
                     <div class="bg-white/5 px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div class="text-sm text-white/60">
                             @if($data->total() > 0)
-                                Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
-                                &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>
-                                de <span class="font-semibold text-gray-900">{{ $data->total() }}</span> reservaciones
+                                Mostrando <span class="font-semibold text-white">{{ $data->firstItem() }}</span>
+                                &ndash; <span class="font-semibold text-white">{{ $data->lastItem() }}</span>
+                                de <span class="font-semibold text-white">{{ $data->total() }}</span> reservaciones
                             @else
                                 Sin reservaciones registradas
                             @endif

@@ -43,7 +43,7 @@
     <!-- Contenido - inicio -->
     <section class="py-20 px-4 text-center max-w-7xl mx-auto">
         <span
-            class="mb-6 inline-block bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full text-sm">Laboratorio
+            class="mb-6 inline-block bg-white/50/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full text-sm">Laboratorio
             de Realidad Virtual</span>
         <h1
             class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">

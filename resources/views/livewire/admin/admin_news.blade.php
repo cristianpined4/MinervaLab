@@ -197,7 +197,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100">
+                            <tbody class="divide-y divide-white/10">
                                 @forelse ($data as $item)
                                     <tr class="hover:bg-white/5 transition-colors">
 
@@ -243,7 +243,7 @@
                                                         alt="{{ $item->title }}"
                                                         class="h-10 w-16 object-cover rounded-lg mx-auto shadow">
                                                 @elseif ($item->resource_type === 'video')
-                                                    <span class="inline-flex items-center gap-1 text-xs text-red-600 font-semibold">
+                                                    <span class="inline-flex items-center gap-1 text-xs bg-red-600 hover:bg-red-700 text-white font-semibold">
                                                         <i class="fas fa-film"></i> Video
                                                     </span>
                                                 @else

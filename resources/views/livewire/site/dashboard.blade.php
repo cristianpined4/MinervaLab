@@ -67,7 +67,7 @@
                                 <p class="text-blue-200/60 text-xs font-medium mb-1 uppercase tracking-wider">Total</p>
                                 <p class="text-3xl font-bold text-white">{{ $totalReservations }}</p>
                             </div>
-                            <div class="w-11 h-11 bg-blue-500/20 border border-blue-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div class="w-11 h-11 bg-white/50/20 border border-blue-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <i class="fas fa-calendar text-blue-400"></i>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                                 <p class="text-blue-200/60 text-xs font-medium mb-1 uppercase tracking-wider">Rechazadas</p>
                                 <p class="text-3xl font-bold text-red-400">{{ $declinedReservations }}</p>
                             </div>
-                            <div class="w-11 h-11 bg-red-500/20 border border-red-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div class="w-11 h-11 bg-white/50/20 border border-red-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <i class="fas fa-times-circle text-red-400"></i>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                                             $statusMap = [
                                                 0 => ['label' => 'Pendiente',  'class' => 'bg-white/50/20 text-yellow-400 border-yellow-500/30'],
                                                 1 => ['label' => 'Aprobada',   'class' => 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'],
-                                                2 => ['label' => 'Rechazada',  'class' => 'bg-red-500/20 text-red-400 border-red-500/30'],
+                                                2 => ['label' => 'Rechazada',  'class' => 'bg-white/50/20 text-red-400 border-red-500/30'],
                                                 3 => ['label' => 'Cancelada',  'class' => 'bg-white/50/20 text-white/40 border-gray-500/30'],
                                                 4 => ['label' => 'No asistió', 'class' => 'bg-orange-500/20 text-orange-400 border-orange-500/30'],
                                             ];

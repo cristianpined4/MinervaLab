@@ -195,11 +195,11 @@
                                             <div class="w-10 h-10 rounded-full flex items-center justify-center
                                                 {{ $horario['disponible'] ? 'bg-green-100' : 'bg-red-100' }}">
                                                 @if($horario['disponible'])
-                                                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg class="w-5 h-5 bg-green-600 hover:bg-green-700 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                                     </svg>
                                                 @else
-                                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg class="w-5 h-5 bg-red-600 hover:bg-red-700 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                                     </svg>
                                                 @endif
@@ -209,11 +209,11 @@
                                                     @timeFormat($horario['starts_at']) - @timeFormat($horario['ends_at'])
                                                 </span>
                                                 @if($horario['disponible'])
-                                                    <span class="text-xs text-green-600 font-medium">
+                                                    <span class="text-xs bg-green-600 hover:bg-green-700 text-white font-medium">
                                                         {{ $horario['restantes'] }} {{ $horario['restantes'] == 1 ? 'espacio' : 'espacios' }} disponible{{ $horario['restantes'] == 1 ? '' : 's' }}
                                                     </span>
                                                 @else
-                                                    <span class="text-xs text-red-600 font-medium">No disponible</span>
+                                                    <span class="text-xs bg-red-600 hover:bg-red-700 text-white font-medium">No disponible</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -225,7 +225,7 @@
                                             @endphp
                                             <div class="text-xs text-white/50">Disponible: {{ $slotMinutes }} min</div>
                                             @if($total_time > $slotMinutes)
-                                                <div class="text-xs text-yellow-600 font-semibold">No cabe ({{ $total_time }} min)</div>
+                                                <div class="text-xs bg-yellow-600 hover:bg-yellow-700 text-white font-semibold">No cabe ({{ $total_time }} min)</div>
                                             @endif
                                         </div>
                                     </div>

@@ -153,8 +153,8 @@
                                     <div class="absolute top-3 left-3">
                                         @php
                                             $badge = match($item->resource_type) {
-                                                'video'  => ['bg-red-500/80',    'fa-play',    'Video'],
-                                                'image'  => ['bg-blue-500/80',   'fa-image',   'Imagen'],
+                                                'video'  => ['bg-white/50/80',    'fa-play',    'Video'],
+                                                'image'  => ['bg-white/50/80',   'fa-image',   'Imagen'],
                                                 default  => ['bg-indigo-500/80', 'fa-file-alt','Artículo'],
                                             };
                                         @endphp
