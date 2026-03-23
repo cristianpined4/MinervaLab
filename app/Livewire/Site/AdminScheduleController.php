@@ -62,8 +62,8 @@ class AdminScheduleController extends Component
             $this->record_id = $id;
             $registro = Schedule::find($id);
             $this->fields['day'] = $registro->day;
-            $this->fields['starts_at'] = $registro->starts_at;
-            $this->fields['ends_at'] = $registro->ends_at;
+            $this->fields['starts_at'] = $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('H:i') : null;
+            $this->fields['ends_at'] = $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('H:i') : null;
         } else {
             $this->record_id = null;
             $this->fields = [
