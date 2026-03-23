@@ -70,7 +70,7 @@
 
                                         <div class="flex items-center justify-between gap-2">
                                             <button wire:click="verVideo({{ $scene->id }})"
-                                                class="bg-white/5 hover:bg-white/10 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                                                class="bg-white/5 hover:bg-white/10 text-cyan-400 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
                                                 <i class="fas fa-play-circle"></i> Vista previa
                                             </button>
                                             @if (in_array($scene->id, $selected_scenes))
