@@ -35,6 +35,22 @@
   color: #000;
 }
 
+/* Bordes para inputs en modales con fondo blanco */
+.modal input,
+.modal textarea,
+.modal select,
+.modal .form-control {
+  border: 1px solid #999 !important;
+}
+
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus,
+.modal .form-control:focus {
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15) !important;
+}
+
 .modal-dialog {
   background-color: #fff;
   padding: 1rem;
