@@ -234,7 +234,7 @@
                         </div>
 
                         {{-- Resumen de la reservación --}}
-                        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4 mb-6">
+                        <div class="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
                             <h4 class="text-sm font-bold text-white mb-3">Resumen de Reservación</h4>
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center justify-between">
