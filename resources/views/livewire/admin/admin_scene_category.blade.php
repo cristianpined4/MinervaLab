@@ -120,7 +120,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
                                             <div class="flex items-center justify-center gap-2">
-                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Editar" wire:click="abrirModal({{ $row->id }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24">
@@ -129,7 +129,7 @@
                                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                     </svg>
                                                 </button>
-                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Eliminar" wire:click="confirmarEliminar({{ $row->id }})">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24">

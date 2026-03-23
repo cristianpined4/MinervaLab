@@ -183,20 +183,20 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-center">
                                         <div class="flex items-center justify-center gap-2">
                                             @if ($row->status == 0)
-                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                         title="Cancelar" wire:click="confirmarCancelar({{ $row->id }})">
                                                         <i class="fas fa-times mr-3"></i>
                                                 </button>
                                             @endif
                                             @if ($row->status == 1)
                                                 @can('admin')
-                                                    <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                    <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
                                                             <i class="fas fa-user mr-3"></i>
                                                     </button>
                                                 @endcan
                                                 @can('teacher')
-                                                    <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                    <button type="button" class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                             title="Cancelar" wire:click="mostrarAsistencia({{ $row->id }})">
                                                             <i class="fas fa-user mr-3"></i>
                                                     </button>
@@ -204,7 +204,7 @@
                                             @endif
                                             @if ($row->status == 1 || $row->status == 4)
                                                 <button type="button"
-                                                    class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                                    class="p-2 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Pdf" wire:click="pdfAttendance({{ $row->id }})">
                                                     <i class="fas fa-file mr-3"></i>
                                                 </button>

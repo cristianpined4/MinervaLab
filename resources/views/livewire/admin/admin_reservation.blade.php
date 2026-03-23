@@ -141,16 +141,16 @@
                                         <div class="flex items-center justify-center gap-2">
                                             @if ($row->status == 0)
 
-                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                         title="Autorizar" wire:click="confirmarAutorizar({{ $row->id }})">
                                                         <i class="fas fa-check mr-3"></i>
                                                 </button>
-                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                         title="Rechazar" wire:click="confirmarRechazar({{ $row->id }})">
                                                         <i class="fas fa-ban mr-3"></i>
                                                 </button>
                                             @elseif ($row->status == 1)
-                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                                                <button class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                         title="Cancelar" wire:click="confirmarCancelar({{ $row->id }})">
                                                         <i class="fas fa-times mr-3"></i>
                                                 </button>
