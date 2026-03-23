@@ -67,7 +67,7 @@ class AdminVrController extends Component
             $this->record_id = $id;
             $registro = VrGlasses::find($id);
             $this->fields['code'] = $registro->code;
-            $this->fields['entry_date'] = $registro->entry_date;
+            $this->fields['entry_date'] = $registro->entry_date ? \Carbon\Carbon::parse($registro->entry_date)->format('Y-m-d') : null;
             $this->fields['life_hours'] = $registro->life_hours;
             $this->fields['usefull_years'] = $registro->usefull_years;
         } else {

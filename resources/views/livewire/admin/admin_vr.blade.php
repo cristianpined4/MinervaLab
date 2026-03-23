@@ -31,7 +31,7 @@
                                 Fecha de ingreso
                             </label>
                             <input wire:model="fields.entry_date" type="date" id="entry_date"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.entry_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror

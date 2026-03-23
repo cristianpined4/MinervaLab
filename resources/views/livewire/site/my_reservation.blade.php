@@ -20,27 +20,27 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">Carnet</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">Fecha</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">Asistencia</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black/60 uppercase tracking-wider">Carnet</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black/60 uppercase tracking-wider">Fecha</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-black/60 uppercase tracking-wider">Asistencia</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-white/20">
                                 @foreach ($attendance_list as $item)
-                                    <tr class="hover:bg-white/5 transition-colors">
+                                    <tr class="hover:bg-black/5 transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-white">{{ $item->carnet }}</span>
+                                                <span class="text-sm font-medium text-black">{{ $item->carnet }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-white">@dateFormat($item->date)</span>
+                                                <span class="text-sm font-medium text-black">@dateFormat($item->date)</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-white">{{ $item->attendance ? 'Asistió' : 'No asistió' }}</span>
+                                                <span class="text-sm font-medium text-black">{{ $item->attendance ? 'Asistió' : 'No asistió' }}</span>
                                             </div>
                                         </td>
                                     </tr>
