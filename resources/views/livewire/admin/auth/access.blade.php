@@ -25,7 +25,7 @@
 
         {{-- IZQUIERDA: Card de login --}}
         <div class="flex items-center justify-center px-8 lg:px-10 py-12">
-            <div class="w-full max-w-sm text-black">
+            <div class="w-full max-w-sm text-white">
 
                 {{-- LOGO --}}
                 <div class="flex items-center gap-3 mb-8">
@@ -91,7 +91,7 @@
                     <input wire:model.defer="key" type="password"
                         placeholder="••••••••"
                         class="w-full h-11 rounded-xl border border-slate-700/70 bg-[#020617]/80 px-4
-                        text-sm text-black placeholder-slate-500 outline-none
+                        text-sm text-white placeholder-slate-500 outline-none
                         focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                         @error('key') border-red-500/70 @enderror">
                     @error('key')

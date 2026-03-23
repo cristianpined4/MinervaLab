@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="flex flex-col md:flex-row bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen">
+    <main class="flex flex-col md:flex-row min-h-screen">
 
         <!-- Modal -->
         <div id="modal-home" class="modal" wire:ignore.self>
@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label class="form-label">Color</label>
                             <input wire:model="fields.color" type="color" id="color"
-                                class="form-control form-control-color w-16 h-10 cursor-pointer border-2 border-gray-300 rounded-lg">
+                                class="form-control form-control-color w-16 h-10 cursor-pointer border-2 border-white/20 rounded-lg">
                             @error('fields.color')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -64,8 +64,8 @@
 
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Administrar categorías</h1>
-                        <p class="text-gray-600">Gestión de categorías de escena para clasificación visual</p>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Administrar categorías</h1>
+                        <p class="text-white/60">Gestión de categorías de escena para clasificación visual</p>
                     </div>
                     <button wire:click="abrirModal"
                         class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
@@ -77,7 +77,7 @@
                     </button>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+                <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
                     <div class="bg-gradient-to-r from-indigo-600 to-indigo-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,8 +90,8 @@
 
                     <div class="relative w-full border-b-2">
                         <input wire:model.live="search" type="text" placeholder="Buscar categoría..."
-                            class="w-full rounded-lg bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
-                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                            class="w-full rounded-lg bg-white/5 text-white placeholder-white/40 px-4 py-2 text-sm focus:outline-none">
+                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-white/40" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 3a7.5 7.5 0 006.15 13.65z" />
@@ -100,22 +100,22 @@
 
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-50 border-b-2 border-gray-200">
+                            <thead class="bg-white/5 border-b-2 border-white/10">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Descripción</th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Color</th>
-                                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">Descripción</th>
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">Color</th>
+                                    <th class="px-6 py-4 text-center text-xs font-bold text-white/60 uppercase tracking-wider">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 @foreach ($data as $row)
-                                    <tr class="hover:bg-gray-50 transition-colors">
+                                    <tr class="hover:bg-white/5 transition-colors">
                                         <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $row->description }}</td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-2">
-                                                <div class="w-6 h-6 rounded-full border border-gray-300"
+                                                <div class="w-6 h-6 rounded-full border border-white/20"
                                                     style="background-color: {{ $row->color }}"></div>
-                                                <span class="text-sm text-gray-700">{{ $row->color }}</span>
+                                                <span class="text-sm text-white">{{ $row->color }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
@@ -145,7 +145,7 @@
 
                                 @if (count($data) == 0)
                                     <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center text-gray-500">
+                                        <td colspan="3" class="px-6 py-12 text-center text-white/50">
                                             No hay categorías registradas
                                         </td>
                                     </tr>

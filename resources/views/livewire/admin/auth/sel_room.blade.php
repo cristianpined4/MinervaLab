@@ -20,7 +20,7 @@
 
             @foreach($rooms as $room)
                 <button wire:click="selectRoom({{ $room->id }})"
-                    class="block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all group">
+                    class="block bg-white/5 rounded-2xl border border-white/10 shadow-md overflow-hidden hover:shadow-xl transition-all group">
 
                     <div class="flex flex-col sm:flex-row">
 
@@ -30,10 +30,10 @@
                         </div>
 
                         <div class="sm:w-3/4 p-6">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-cyan-600 transition-colors">
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-600 transition-colors">
                                 Salón # {{ $room->id }}
                             </h3>
-                            <p class="text-gray-600 text-sm">
+                            <p class="text-white/60 text-sm">
                                 {{ $room->description }}
                             </p>
                         </div>
@@ -55,7 +55,7 @@
 
             {{-- Imagen del QR --}}
             @if($qrImage)
-                <img src="{{ $qrImage }}" class="w-72 h-72 bg-white p-2 rounded-xl shadow-lg">
+                <img src="{{ $qrImage }}" class="w-72 h-72 bg-white/5 p-2 rounded-xl shadow-lg">
             @endif
 
             <button wire:click="$set('showQR', false)"

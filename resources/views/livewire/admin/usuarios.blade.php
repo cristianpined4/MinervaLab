@@ -101,8 +101,8 @@
     </div>
     <hr style="margin-top: 20px; margin-bottom: 10px;">
     <div class="overflow-x-auto">
-        <table class="table min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
+        <table class="table min-w-full bg-white/5 border border-white/10 rounded-lg shadow-sm">
+            <thead class="bg-white/5 text-white/60 uppercase text-xs font-semibold">
                 <tr>
                     <th class="px-4 py-3 text-left">ID</th>
                     <th class="px-4 py-3 text-left">Nombre</th>
@@ -113,9 +113,9 @@
                     <th class="px-4 py-3 text-left">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="text-gray-700 text-sm">
+            <tbody class="text-white text-sm">
                 @foreach ($records as $usuario)
-                <tr class="border-b hover:bg-gray-50">
+                <tr class="border-b hover:bg-white/5">
                     <td class="px-4 py-3">{{ $usuario->id }}</td>
                     <td class="px-4 py-3">{{ $usuario->name }} {{ $usuario->lastname }}</td>
                     <td class="px-4 py-3">{{ $usuario->email }}</td>
@@ -136,7 +136,7 @@
                     </td>
                     <td class="px-4 py-3 flex space-x-2 items-center">
                         <button
-                            class="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition text-sm"
+                            class="bg-white/50 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition text-sm"
                             wire:click="edit('{{ $usuario->id }}')">Editar</button>
                         @if (Auth::user()->id !== $usuario->id && Auth::user()->role_id == 1)
                         <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm"

@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="relative z-10 min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+    <main class="relative z-10 min-h-screen bg-white">
 
         {{-- ============================================================
         |  BIENVENIDA

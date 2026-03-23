@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="relative z-10 min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+    <main class="relative z-10 min-h-screen bg-white">
 
         {{-- ============================================================
         |  BIENVENIDA
@@ -93,7 +93,7 @@
                                 <p class="text-blue-200/60 text-xs font-medium mb-1 uppercase tracking-wider">Pendientes</p>
                                 <p class="text-3xl font-bold text-yellow-400">{{ $pendingReservations }}</p>
                             </div>
-                            <div class="w-11 h-11 bg-yellow-500/20 border border-yellow-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div class="w-11 h-11 bg-white/50/20 border border-yellow-500/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <i class="fas fa-hourglass-half text-yellow-400"></i>
                             </div>
                         </div>
@@ -200,10 +200,10 @@
                                     @foreach ($recent as $res)
                                         @php
                                             $statusMap = [
-                                                0 => ['label' => 'Pendiente',  'class' => 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'],
+                                                0 => ['label' => 'Pendiente',  'class' => 'bg-white/50/20 text-yellow-400 border-yellow-500/30'],
                                                 1 => ['label' => 'Aprobada',   'class' => 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'],
                                                 2 => ['label' => 'Rechazada',  'class' => 'bg-red-500/20 text-red-400 border-red-500/30'],
-                                                3 => ['label' => 'Cancelada',  'class' => 'bg-gray-500/20 text-gray-400 border-gray-500/30'],
+                                                3 => ['label' => 'Cancelada',  'class' => 'bg-white/50/20 text-white/40 border-gray-500/30'],
                                                 4 => ['label' => 'No asistió', 'class' => 'bg-orange-500/20 text-orange-400 border-orange-500/30'],
                                             ];
                                             $status = $statusMap[$res->status] ?? $statusMap[0];

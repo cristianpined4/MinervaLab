@@ -25,7 +25,7 @@
 
         {{-- IZQUIERDA: Card de login --}}
         <div class="flex items-center justify-center px-8 lg:px-10 py-12">
-            <div class="w-full max-w-sm text-black">
+            <div class="w-full max-w-sm text-white">
 
                 {{-- LOGO --}}
                 <div class="flex items-center gap-3 mb-8">
@@ -100,7 +100,7 @@
                                placeholder="Tu usuario"
                                onkeyup="this.value = this.value.toLowerCase();"
                                class="w-full h-11 rounded-xl border border-slate-700/70 bg-[#020617]/80 px-4
-                                      text-sm text-black placeholder-slate-500 outline-none
+                                      text-sm text-white placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('username') border-red-500/70 @enderror">
                 @error('username')
@@ -114,7 +114,7 @@
                         <input wire:model.defer="password" type="password"
                                placeholder="••••••••"
                                class="w-full h-11 rounded-xl border border-slate-700/70 bg-[#020617]/80 px-4
-                                      text-sm text-black placeholder-slate-500 outline-none
+                                      text-sm text-white placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('password') border-red-500/70 @enderror">
                 @error('password')
@@ -153,7 +153,7 @@
 
         {{-- DERECHA: Panel informativo / hero --}}
         <div class="hidden lg:flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-12">
-            <div class="max-w-md text-black">
+            <div class="max-w-md text-white">
 
                 <span class="inline-flex items-center px-4 py-1 rounded-full bg-sky-500/10 border border-sky-500/40
                              text-[11px] font-medium text-sky-300 mb-6">

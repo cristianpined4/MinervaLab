@@ -5,21 +5,21 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen py-8 px-4 md:px-8">
-        <div class="max-w-7xl mx-auto">
+    <ma    <main class="min-h-screen py-8 px-4 md:px-8">
+<div class="max-w-7xl mx-auto">
             {{-- Header --}}
             <div class="mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Reservar Aula VR</h1>
-                <p class="text-gray-600">Selecciona una escena, fecha y hora para tu reservación</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Reservar Aula VR</h1>
+                <p class="text-white/60">Selecciona una escena, fecha y hora para tu reservación</p>
             </div>
 
             {{-- GRID PRINCIPAL --}}
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {{-- COLUMNA 1 --}}
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg p-6 border border-white/10">
                         <div class="flex-row items-center justify-between mb4">
-                            <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
                                 <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -28,13 +28,13 @@
                             </h2>
                         </div>
 
-                        <div class="text-sm text-gray-600 mb-3">
+                        <div class="text-sm text-white/60 mb-3">
                             Tiempo de escenas estimado: <span class="font-bold text-indigo-600">{{ $total_time }} min</span>
                         </div>
                         @if (!empty($warnings))
                             <div class="mb-4 space-y-2">
                                 @foreach($warnings as $w)
-                                    <div class="text-sm bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                                    <div class="text-sm bg-white/5 border-l-4 border-white/20 p-3 rounded">
                                         <strong>Advertencia:</strong> {{ $w }}
                                     </div>
                                 @endforeach
@@ -44,8 +44,8 @@
                         {{-- INPUT BUSCAR --}}
                         <div class="relative w-full border-b-2 mb-6">
                             <input wire:model.live="search" type="text" placeholder="Buscar escena..."
-                                class="w-full rounded-lg bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
-                            <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                class="w-full rounded-lg bg-white/5 text-white placeholder-white/40 px-4 py-2 text-sm focus:outline-none">
+                            <svg class="absolute right-3 top-2.5 w-5 h-5 text-white/40" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 3a7.5 7.5 0 006.15 13.65z" />
@@ -55,22 +55,22 @@
                         {{-- GRID ESCENAS --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             @foreach ($scenes as $scene)
-                                <div class="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-gray-200 hover:border-indigo-500 transform hover:-translate-y-1">
+                                <div class="bg-white/5 rounded-xl border border-white/10 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-white/10 hover:border-indigo-500 transform hover:-translate-y-1">
                                     <div class="h-48  flex items-center justify-center relative overflow-hidden" style="background-color: {{ $scene->sceneCategory->color }}">
                                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
                                         <i class="fas @if ($scene->sceneCategory->icon) {{'fa-' . $scene->sceneCategory->icon}}
                                         @else {{'fa-vr-cardboard'}} @endif text-white text-6xl"></i>
                                         <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                                            <span class="text-xs font-bold text-gray-700">VR Ready</span>
+                                            <span class="text-xs font-bold text-white">VR Ready</span>
                                         </div>
                                     </div>
                                     <div class="p-4">
-                                        <h3 class="font-bold text-gray-800 text-lg mb-1">{{ $scene->description }}</h3>
-                                        <p class="text-sm text-gray-500 mb-3">{{ $scene->sceneCategory->description ?? '' }}</p>
+                                        <h3 class="font-bold text-white text-lg mb-1">{{ $scene->description }}</h3>
+                                        <p class="text-sm text-white/50 mb-3">{{ $scene->sceneCategory->description ?? '' }}</p>
 
                                         <div class="flex items-center justify-between gap-2">
                                             <button wire:click="verVideo({{ $scene->id }})"
-                                                class="bg-gray-100 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                                                class="bg-white/5 hover:bg-white/10 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
                                                 <i class="fas fa-play-circle mr-1"></i> Vista previa
                                             </button>
                                             @if (in_array($scene->id, $selected_scenes))
@@ -91,15 +91,15 @@
                         </div>
 
                         {{-- Detalles de la reservación --}}
-                        <div class="border-t border-gray-200 pt-6">
-                            <h3 class="text-lg font-bold text-gray-800 mb-4">Detalles de la Reservación</h3>
+                        <div class="border-t border-white/10 pt-6">
+                            <h3 class="text-lg font-bold text-white mb-4">Detalles de la Reservación</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {{-- Selector de sala --}}
                                 <div class="mb-6">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold text-white mb-2">
                                         Selecciona una sala
                                     </label>
-                                    <select wire:model="room_id"  wire:change='calcTime'  class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                    <select wire:model="room_id"  wire:change='calcTime'  class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                                         <option value="">Seleccionar...</option>
                                         @foreach($rooms as $room)
                                             <option value="{{ $room->id }}">{{ $room->description }}</option>
@@ -108,18 +108,18 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold text-white mb-2">
                                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         Duración de escenas
                                     </label>
-                                    <div class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 bg-gray-100 text-gray-700">
+                                    <div class="w-full border-2 border-white/20 rounded-xl px-4 py-3 bg-white/5 text-white">
                                         {{ $total_time }} min
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold text-white mb-2">
                                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                         </svg>
@@ -127,11 +127,11 @@
                                     </label>
                                     <input wire:model.live="numeroEstudiantes" wire:change='calcTime' type="number"
                                         placeholder="Ej: 10"
-                                        class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                                    <p class="text-xs text-gray-500 mt-1">Máximo {{$maxStudents}} estudiantes por reserva ({{$vrCount}} lentes disponibles en la sala).</p>
+                                        class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                    <p class="text-xs text-white/50 mt-1">Máximo {{$maxStudents}} estudiantes por reserva ({{$vrCount}} lentes disponibles en la sala).</p>
                                 </div>
                                 @if ($sessions > 1)
-                                    <div class="mt-2 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
+                                    <div class="mt-2 flex items-start gap-2 bg-white/5 border border-white/10 rounded-lg p-3">
                                         <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
@@ -142,22 +142,22 @@
                                 @endif
                                 {{--
                                 <div class="md:col-span-2">
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    <label class="block text-sm font-semibold text-white mb-2">
                                         <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                         Notas adicionales (opcional)
                                     </label>
                                     <textarea wire:model="notas" rows="3" placeholder="Objetivos de aprendizaje, requisitos especiales, etc."
-                                        class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none"></textarea>
+                                        class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none"></textarea>
                                 </div> --}}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 sticky top-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg p-6 border border-white/10 sticky top-8">
+                        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
                             <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
@@ -166,31 +166,31 @@
 
                         {{-- Selector de fecha --}}
                         <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha
                             </label>
                             <input wire:model="fecha" wire:change='getDispose' type="date"
                                 min="{{ $minDate }}"
                                 @if(!$room_id) disabled @endif
                                 placeholder="DD/MM/YYYY"
-                                class="w-full text-black border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-gray-100 cursor-not-allowed opacity-60 @endif">
+                                class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-white/5 cursor-not-allowed opacity-60 @endif">
                             @if (!$room_id)
-                                <p class="text-xs text-gray-500 mt-1">Selecciona una sala primero</p>
+                                <p class="text-xs text-white/50 mt-1">Selecciona una sala primero</p>
                             @endif
                         </div>
 
                         <div class="mb-6">
-                            <h3 class="text-sm font-bold text-gray-700 mb-3 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-white mb-3 flex items-center justify-between">
                                 <span>Horarios disponibles</span>
-                                <span class="text-xs font-normal text-gray-500">Selecciona uno</span>
+                                <span class="text-xs font-normal text-white/50">Selecciona uno</span>
                             </h3>
                             <div class="space-y-2 max-h-64 overflow-y-auto">
                                 @foreach ($disponibilidad as $key => $horario)
                                     <div wire:click="seleccionarHorario('{{ $key }}')"
                                          class="flex items-center justify-between border-2 rounded-xl p-3 transition-all cursor-pointer
                                          {{ $horario['disponible']
-                                            ? 'border-gray-200 hover:border-indigo-500 hover:bg-indigo-50'
-                                            : 'border-gray-100 bg-gray-50 cursor-not-allowed opacity-60' }}">
+                                            ? 'border-white/10 hover:border-indigo-500 hover:bg-indigo-50'
+                                            : 'border-white/10 bg-white/5 cursor-not-allowed opacity-60' }}">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 rounded-full flex items-center justify-center
                                                 {{ $horario['disponible'] ? 'bg-green-100' : 'bg-red-100' }}">
@@ -205,7 +205,7 @@
                                                 @endif
                                             </div>
                                             <div>
-                                                <span class="font-semibold text-gray-800 block">
+                                                <span class="font-semibold text-white block">
                                                     @timeFormat($horario['starts_at']) - @timeFormat($horario['ends_at'])
                                                 </span>
                                                 @if($horario['disponible'])
@@ -223,7 +223,7 @@
                                                 $slotEnds = \Carbon\Carbon::parse($horario['ends_at']);
                                                 $slotMinutes = $slotStarts->diffInMinutes($slotEnds);
                                             @endphp
-                                            <div class="text-xs text-gray-500">Disponible: {{ $slotMinutes }} min</div>
+                                            <div class="text-xs text-white/50">Disponible: {{ $slotMinutes }} min</div>
                                             @if($total_time > $slotMinutes)
                                                 <div class="text-xs text-yellow-600 font-semibold">No cabe ({{ $total_time }} min)</div>
                                             @endif
@@ -235,23 +235,23 @@
 
                         {{-- Resumen de la reservación --}}
                         <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4 mb-6">
-                            <h4 class="text-sm font-bold text-gray-800 mb-3">Resumen de Reservación</h4>
+                            <h4 class="text-sm font-bold text-white mb-3">Resumen de Reservación</h4>
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Fecha:</span>
-                                    <span class="font-semibold text-gray-800">{{ $fecha ? formatDate($fecha) : '--/--/----' }}</span>
+                                    <span class="text-white/60">Fecha:</span>
+                                    <span class="font-semibold text-white">{{ $fecha ? formatDate($fecha) : '--/--/----' }}</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Tiempo total:</span>
-                                    <span class="font-semibold text-gray-800">{{ $total_time }} min</span>
+                                    <span class="text-white/60">Tiempo total:</span>
+                                    <span class="font-semibold text-white">{{ $total_time }} min</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Reproducciones:</span>
-                                    <span class="font-semibold text-gray-800">{{ $sessions }} Rep.</span>
+                                    <span class="text-white/60">Reproducciones:</span>
+                                    <span class="font-semibold text-white">{{ $sessions }} Rep.</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Horario:</span>
-                                    <span class="font-semibold text-gray-800">
+                                    <span class="text-white/60">Horario:</span>
+                                    <span class="font-semibold text-white">
                                         @if($horarioSeleccionado)
                                             @timeFormat($horarioSeleccionado['starts_at']) - @timeFormat($horarioSeleccionado['ends_at'])
                                         @else
@@ -260,8 +260,8 @@
                                     </span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Estudiantes:</span>
-                                    <span class="font-semibold text-gray-800">{{ $numeroEstudiantes }}</span>
+                                    <span class="text-white/60">Estudiantes:</span>
+                                    <span class="font-semibold text-white">{{ $numeroEstudiantes }}</span>
                                 </div>
                             </div>
                         </div>
@@ -274,7 +274,7 @@
                             </svg>
                             Confirmar Reservación
                         </button>
-                        <p class="text-xs text-gray-500 text-center mt-3">
+                        <p class="text-xs text-white/50 text-center mt-3">
                             Recibirás un correo de confirmación. Estado de la reserva <strong>PENDIENTE</strong>.
                         </p>
                     </div>
@@ -288,8 +288,8 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header border-b border-gray-700 text-white">
-                    <h2 class="text-xl font-bold text-black flex items-center gap-2" id="video_title">Vista previa</h2>
-                    <button type="button" class="btn btn-close text-black text-3xl" aria-label="Cerrar"
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2" id="video_title">Vista previa</h2>
+                    <button type="button" class="btn btn-close text-white text-3xl" aria-label="Cerrar"
                         onclick="closeModal(this.closest('.modal'))">&times;</button>
                 </div>
                 <div class="modal-body p-0">

@@ -21,7 +21,7 @@
 
         {{-- IZQUIERDA --}}
         <div class="flex items-center justify-center px-8 lg:px-10 py-12">
-            <div class="w-full max-w-md text-black">
+            <div class="w-full max-w-md text-white">
 
                 {{-- LOGO --}}
                 <div class="flex items-center gap-3 mb-8">
@@ -99,8 +99,8 @@
                             <label class="block text-xs font-medium text-slate-300 mb-2">Nombre</label>
                             <input wire:model.defer="fields.first_name" type="text"
                                    placeholder="Nombre"
-                                   class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                          text-sm text-black placeholder-slate-500 outline-none
+                                   class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                          text-sm text-white placeholder-slate-500 outline-none
                                           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                           @error('fields.first_name') border-red-500/70 @enderror">
                             @error('fields.first_name')
@@ -112,8 +112,8 @@
                             <label class="block text-xs font-medium text-slate-300 mb-2">Apellido</label>
                             <input wire:model.defer="fields.last_name" type="text"
                                    placeholder="Apellido"
-                                   class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                          text-sm text-black placeholder-slate-500 outline-none
+                                   class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                          text-sm text-white placeholder-slate-500 outline-none
                                           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                           @error('fields.last_name') border-red-500/70 @enderror">
                             @error('fields.last_name')
@@ -128,8 +128,8 @@
                         <input wire:model.defer="fields.username" type="text"
                                placeholder="Nombre de usuario"
                                onkeyup="this.value = this.value.toLowerCase();"
-                               class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                      text-sm text-black placeholder-slate-500 outline-none
+                               class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                      text-sm text-white placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('fields.username') border-red-500/70 @enderror">
                         @error('fields.username')
@@ -143,8 +143,8 @@
                         <input wire:model.defer="fields.email" type="email"
                                placeholder="correo@ejemplo.com"
                                onkeyup="this.value = this.value.toLowerCase();"
-                               class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                      text-sm text-black placeholder-slate-500 outline-none
+                               class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                      text-sm text-white placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('fields.email') border-red-500/70 @enderror">
                         @error('fields.email')
@@ -158,8 +158,8 @@
                             <label class="block text-xs font-medium text-slate-300 mb-2">Contraseña</label>
                             <input wire:model.defer="fields.password" type="password"
                                    placeholder="••••••••"
-                                   class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                          text-sm text-black placeholder-slate-500 outline-none
+                                   class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                          text-sm text-white placeholder-slate-500 outline-none
                                           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                           @error('fields.password') border-red-500/70 @enderror">
                             @error('fields.password')
@@ -171,8 +171,8 @@
                             <label class="block text-xs font-medium text-slate-300 mb-2">Confirmar contraseña</label>
                             <input wire:model.defer="other_fields.password_confirmation" type="password"
                                    placeholder="••••••••"
-                                   class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                          text-sm text-black placeholder-slate-500 outline-none
+                                   class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                          text-sm text-white placeholder-slate-500 outline-none
                                           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                           @error('other_fields.password_confirmation') border-red-500/70 @enderror">
                             @error('other_fields.password_confirmation')
@@ -186,8 +186,8 @@
                         <label class="block text-xs font-medium text-slate-300 mb-2">Teléfono</label>
                         <input wire:model.defer="fields.phone" type="text"
                                placeholder="7000-0000"
-                               class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                      text-sm text-black placeholder-slate-500 outline-none
+                               class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                      text-sm text-white placeholder-slate-500 outline-none
                                       focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                       @error('fields.phone') border-red-500/70 @enderror">
                         @error('fields.phone')
@@ -199,8 +199,8 @@
                     <div>
                         <label class="block text-xs font-medium text-slate-300 mb-2">Facultad</label>
                         <select wire:model.defer="fields.id_faculty"
-                                class="w-full h-11 rounded-xl border border-slate-300 bg-white/95 px-4
-                                       text-sm text-black outline-none
+                                class="w-full h-11 rounded-xl border border-white/20 bg-white/95 px-4
+                                       text-sm text-white outline-none
                                        focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
                                        @error('fields.id_faculty') border-red-500/70 @enderror">
                             <option value="">Seleccione</option>

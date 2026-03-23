@@ -25,7 +25,7 @@
                 shadow-[0_28px_80px_rgba(15,23,42,0.95)] overflow-hidden relative z-10">
 
         <div class="flex items-center justify-center px-8 lg:px-10 py-12">
-            <div class="w-full max-w-sm text-black">
+            <div class="w-full max-w-sm text-white">
 
                 {{-- LOGO --}}
                 <div class="flex items-center gap-3 mb-8">

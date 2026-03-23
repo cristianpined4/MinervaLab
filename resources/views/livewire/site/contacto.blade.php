@@ -8,14 +8,14 @@
             <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
                 <span class="text-blue-600">Contactos</span> Institucionales
             </h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto mt-4 leading-relaxed">
+            <p class="text-lg text-white/60 max-w-2xl mx-auto mt-4 leading-relaxed">
                 Encuentra la información de contacto de las principales áreas académicas, administrativas y de apoyo.
             </p>
         </div>
     </section>
 
     <!-- Directorio -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-white/5">
         <div class="container mx-auto px-8 max-w-7xl">
             <h2 class="text-3xl font-bold text-center mb-14">
                 <span class="text-blue-600">Directorio</span> de Dependencias Universitarias
@@ -23,16 +23,16 @@
 
             <div class="grid gap-14 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach($contacts as $contact)
-                    <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                    <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-white/10 group">
                         <img src="{{ $contact['image'] }}" alt="{{ $contact['name'] }}" 
                              class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
 
                         <div class="p-6">
-                            <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+                            <div class="flex items-center justify-between text-sm text-white/50 mb-2">
                                 <span class="{{ $contact['category_color'] }} font-medium px-3 py-1 rounded-full text-xs">
                                     {{ $contact['category'] }}
                                 </span>
-                                <div class="flex items-center text-gray-600">
+                                <div class="flex items-center text-white/60">
                                     <!-- Ícono de teléfono -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 text-blue-600" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -43,11 +43,11 @@
                                 </div>
                             </div>
 
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                            <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-blue-600 transition-colors">
                                 {{ $contact['name'] }}
                             </h3>
 
-                            <p class="text-gray-600 mb-3 leading-relaxed">
+                            <p class="text-white/60 mb-3 leading-relaxed">
                                 {{ $contact['description'] }}
                             </p>
 

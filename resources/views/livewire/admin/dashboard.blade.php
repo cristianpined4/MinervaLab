@@ -18,16 +18,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <label class="block text-sm font-semibold text-white mb-2">
                             Clave de acceso
                             @error('fields.key')
                                 <span class="text-red-500 text-sm ms-1">* {{ $message }}</span>
                             @enderror
                         </label>
                         <input wire:model="fields.key" type="text" id="key" placeholder="Ingrese la clave de asistencia"
-                            class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition uppercase"
+                            class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition uppercase"
                             oninput="this.value = this.value.toUpperCase();">
-                        <p class="text-xs text-gray-400 mt-1">Mínimo 10 caracteres. Esta clave la usan los docentes para registrar asistencia.</p>
+                        <p class="text-xs text-white/40 mt-1">Mínimo 10 caracteres. Esta clave la usan los docentes para registrar asistencia.</p>
                     </div>
                 </div>
                 <div class="modal-footer">

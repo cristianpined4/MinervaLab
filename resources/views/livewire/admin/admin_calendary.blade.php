@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="flex flex-col md:flex-row bg-gradient-to-br from-green-50 via-white to-emerald-50 min-h-screen">
+    <main class="flex flex-col md:flex-row min-h-screen">
           <!-- modales -->
         <div id="modal-home" class="modal" wire:ignore.self>
             <div class="modal-dialog">
@@ -19,20 +19,20 @@
 
                         {{-- Selector de fecha mejorado --}}
                         <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha de inicio
                             </label>
                             <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
-                                class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror                        </div>
                         <div class="form-group">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha final
                             </label>
                             <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
-                                class="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror                        </div>
@@ -72,8 +72,8 @@
                 {{-- Header Section con Botón --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Administrar exclusiones</h1>
-                        <p class="text-gray-600">Gestion de dias festivos, asueto, feriado y eventos no contemplados</p>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Administrar exclusiones</h1>
+                        <p class="text-white/60">Gestion de dias festivos, asueto, feriado y eventos no contemplados</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <button
@@ -88,7 +88,7 @@
                 </div>
 
                 {{-- Tabla de Reservaciones --}}
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+                <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
 
                     {{-- Header de la tabla --}}
                     <div class="bg-gradient-to-r from-yellow-600 to-yellow-600 px-6 py-4">
@@ -103,8 +103,8 @@
                         <input wire:model.live="search"
                             type="text"
                             placeholder="Buscar exclusión..."
-                            class="w-full rounded-lg bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
-                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-full rounded-lg bg-white/5 text-white placeholder-white/40 px-4 py-2 text-sm focus:outline-none">
+                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 3a7.5 7.5 0 006.15 13.65z" />
                         </svg>
@@ -112,18 +112,18 @@
                     {{-- Tabla responsive --}}
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-50 border-b-2 border-gray-200">
+                            <thead class="bg-white/5 border-b-2 border-white/10">
                                 <tr>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">
                                         Fecha de inicio
                                     </th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">
                                         Fecha de fin
                                     </th>
-                                    <th class="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    <th class="px-6 py-4 text-left text-xs font-bold text-white/60 uppercase tracking-wider">
                                         Descripcion
                                     </th>
-                                    <th class="px-6 py-4 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    <th class="px-6 py-4 text-center text-xs font-bold text-white/60 uppercase tracking-wider">
                                         Acciones
                                     </th>
                                 </tr>
@@ -131,10 +131,10 @@
                             <tbody class="divide-y divide-gray-200">
                                 {{-- Fila ejemplo 1 --}}
                                 @foreach ($data as $row)
-                                    <tr class="hover:bg-gray-50 transition-colors">
+                                    <tr class="hover:bg-white/5 transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
                                                 <span class="text-sm font-medium text-gray-900">{{ $row->starts_at }}</span>
@@ -142,7 +142,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
                                                 <span class="text-sm font-medium text-gray-900">{{ $row->ends_at }}</span>
@@ -173,8 +173,8 @@
                                             <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                                             </svg>
-                                            <p class="text-gray-500 text-lg font-medium">No tienes reservaciones aún</p>
-                                            <p class="text-gray-400 text-sm mt-2">Haz clic en "Agregar Reservación" para crear una nueva</p>
+                                            <p class="text-white/50 text-lg font-medium">No tienes reservaciones aún</p>
+                                            <p class="text-white/40 text-sm mt-2">Haz clic en "Agregar Reservación" para crear una nueva</p>
                                         </td>
                                     </tr>
                                 @endif
@@ -183,8 +183,8 @@
                     </div>
 
                     {{-- Footer de la tabla con paginación --}}
-                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-                        <div class="text-sm text-gray-600">
+                    <div class="bg-white/5 px-6 py-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="text-sm text-white/60">
                             @if($data->total() > 0)
                                 Mostrando <span class="font-semibold text-gray-900">{{ $data->firstItem() }}</span>
                                 &ndash; <span class="font-semibold text-gray-900">{{ $data->lastItem() }}</span>

@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="flex flex-col md:flex-row bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen">
+    <main class="flex flex-col md:flex-row min-h-screen">
 
         {{-- ============================================================
         |  MODAL: Crear / Editar noticia
@@ -72,7 +72,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label">
                                     @if ($fields['resource_type'] === 'video') Video @else Imagen @endif
-                                    <span class="text-gray-400 text-xs">(máx. 50 MB)</span>
+                                    <span class="text-white/40 text-xs">(máx. 50 MB)</span>
                                 </label>
                                 <input wire:model="upload" type="file"
                                     accept="{{ $fields['resource_type'] === 'video' ? 'video/*' : 'image/*' }}"
@@ -139,8 +139,8 @@
                 {{-- Cabecera --}}
                 <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Noticias y Multimedia</h1>
-                        <p class="text-gray-600">Gestiona noticias, imágenes y videos del sitio</p>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Noticias y Multimedia</h1>
+                        <p class="text-white/60">Gestiona noticias, imágenes y videos del sitio</p>
                     </div>
                     <button wire:click="abrirModal"
                         class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
@@ -150,7 +150,7 @@
                 </div>
 
                 {{-- Tabla --}}
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+                <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
 
                     {{-- Header tabla --}}
                     <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
@@ -164,8 +164,8 @@
                     <div class="relative w-full border-b-2">
                         <input wire:model.live="search" type="text"
                             placeholder="Buscar por título, tipo..."
-                            class="w-full rounded-none bg-white text-black placeholder-gray-500 px-4 py-2 text-sm focus:outline-none">
-                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-gray-400" fill="none"
+                            class="w-full rounded-none bg-white/5 text-white placeholder-white/40 px-4 py-2 text-sm focus:outline-none">
+                        <svg class="absolute right-3 top-2.5 w-5 h-5 text-white/40" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 3a7.5 7.5 0 006.15 13.65z" />
@@ -175,31 +175,31 @@
                     {{-- Tabla responsiva --}}
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-gray-50 border-b-2 border-gray-200">
+                            <thead class="bg-white/5 border-b-2 border-white/10">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider w-16">
+                                    <th class="px-4 py-3 text-left text-xs font-bold text-white/60 uppercase tracking-wider w-16">
                                         Tipo
                                     </th>
-                                    <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                                    <th class="px-4 py-3 text-left text-xs font-bold text-white/60 uppercase tracking-wider">
                                         Título
                                     </th>
-                                    <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider hidden md:table-cell">
+                                    <th class="px-4 py-3 text-left text-xs font-bold text-white/60 uppercase tracking-wider hidden md:table-cell">
                                         Descripción
                                     </th>
-                                    <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider hidden sm:table-cell w-32">
+                                    <th class="px-4 py-3 text-left text-xs font-bold text-white/60 uppercase tracking-wider hidden sm:table-cell w-32">
                                         Fecha
                                     </th>
-                                    <th class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider w-28">
+                                    <th class="px-4 py-3 text-center text-xs font-bold text-white/60 uppercase tracking-wider w-28">
                                         Recurso
                                     </th>
-                                    <th class="px-4 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider w-28">
+                                    <th class="px-4 py-3 text-center text-xs font-bold text-white/60 uppercase tracking-wider w-28">
                                         Acciones
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
                                 @forelse ($data as $item)
-                                    <tr class="hover:bg-gray-50 transition-colors">
+                                    <tr class="hover:bg-white/5 transition-colors">
 
                                         {{-- Tipo --}}
                                         <td class="px-4 py-3">
@@ -218,19 +218,19 @@
 
                                         {{-- Título --}}
                                         <td class="px-4 py-3">
-                                            <span class="text-sm font-semibold text-gray-800">{{ $item->title }}</span>
+                                            <span class="text-sm font-semibold text-white">{{ $item->title }}</span>
                                         </td>
 
                                         {{-- Descripción --}}
                                         <td class="px-4 py-3 hidden md:table-cell">
-                                            <span class="text-xs text-gray-500 line-clamp-2">
+                                            <span class="text-xs text-white/50 line-clamp-2">
                                                 {{ \Str::limit($item->description, 80) }}
                                             </span>
                                         </td>
 
                                         {{-- Fecha --}}
                                         <td class="px-4 py-3 hidden sm:table-cell">
-                                            <span class="text-xs text-gray-600">
+                                            <span class="text-xs text-white/60">
                                                 {{ $item->date ? formatDate($item->date) : '—' }}
                                             </span>
                                         </td>
@@ -247,10 +247,10 @@
                                                         <i class="fas fa-film"></i> Video
                                                     </span>
                                                 @else
-                                                    <span class="text-xs text-gray-400">—</span>
+                                                    <span class="text-xs text-white/40">—</span>
                                                 @endif
                                             @else
-                                                <span class="text-xs text-gray-400">—</span>
+                                                <span class="text-xs text-white/40">—</span>
                                             @endif
                                         </td>
 
@@ -274,7 +274,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="6" class="px-6 py-12 text-center">
-                                            <div class="flex flex-col items-center gap-3 text-gray-400">
+                                            <div class="flex flex-col items-center gap-3 text-white/40">
                                                 <i class="fas fa-newspaper text-4xl"></i>
                                                 <p class="text-sm font-medium">No hay noticias registradas</p>
                                                 <button wire:click="abrirModal"
@@ -290,16 +290,16 @@
                     </div>
 
                     {{-- Paginación --}}
-                    <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-4">
+                    <div class="px-6 py-4 border-t border-white/10 flex items-center justify-between gap-4">
                         <div class="flex items-center gap-2">
-                            <label class="text-xs text-gray-500">Mostrar</label>
+                            <label class="text-xs text-white/50">Mostrar</label>
                             <select wire:model.live="paginate"
-                                class="text-xs border border-gray-200 rounded px-2 py-1 focus:outline-none">
+                                class="text-xs border border-white/10 rounded px-2 py-1 focus:outline-none">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                             </select>
-                            <span class="text-xs text-gray-500">registros</span>
+                            <span class="text-xs text-white/50">registros</span>
                         </div>
                         {{ $data->links() }}
                     </div>

@@ -11,7 +11,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                     <h1 class="text-4xl lg:text-6xl font-bold text-balance leading-tight">Noticias y
                         <span class="text-blue-600">Convocatorias</span>
                     </h1>
-                    <p class="text-xl text-gray-600 text-pretty max-w-2xl mx-auto leading-relaxed">
+                    <p class="text-xl text-white/60 text-pretty max-w-2xl mx-auto leading-relaxed">
                         Mantente informado sobre los últimos eventos, oportunidades académicas y noticias relevantes
                         para la comunidad estudiantil de ingeniería.
                     </p>
@@ -21,9 +21,9 @@ relevantes para la comunidad estudiantil de ingeniería.')
     </section>
 
     <!-- News Grid Section -->
-    <section class="bg-gray-50 relative">
+    <section class="bg-white/5 relative">
         <!-- Filtros Fijos - Debajo de la barra de navegación -->
-        <div class="sticky top-16 z-40 bg-white border-b border-gray-200 py-4 shadow-sm">
+        <div class="sticky top-16 z-40 bg-white/5 border-b border-white/10 py-4 shadow-sm">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-4/5 max-w-7xl mx-auto">
                     <div class="relative flex-1">
@@ -31,18 +31,18 @@ relevantes para la comunidad estudiantil de ingeniería.')
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round"
-                                class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400">
+                                class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.3-4.3"></path>
                             </svg>
                             <input type="text" wire:model.live="currentSearchTerm" placeholder="Buscar noticias..."
-                                class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                class="w-full pl-10 pr-4 py-3 rounded-lg border border-white/20 bg-white/5 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                     </div>
 
                     <div class="relative">
                         <select wire:model.live="currentCategory"
-                            class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-8">
+                            class="appearance-none bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-8">
                             <option value="all">Todas las categorías</option>
                             <option value="evento">Eventos</option>
                             <option value="empleo">Empleo</option>
@@ -65,12 +65,12 @@ relevantes para la comunidad estudiantil de ingeniería.')
                     <h2 class="text-3xl lg:text-4xl font-bold mb-4">
                         <span class="text-blue-600">Noticias</span> Destacadas
                     </h2>
-                    <p class="text-xl text-gray-600">
+                    <p class="text-xl text-white/60">
                         Explora las últimas convocatorias, eventos y oportunidades académicas.
                     </p>
                 </div>
-                <div class="text-sm text-gray-500 hidden sm:block">
-                    <p class="text-sm text-gray-700 leading-5 dark:text-gray-400">
+                <div class="text-sm text-white/50 hidden sm:block">
+                    <p class="text-sm text-white leading-5 dark:text-white/40">
                         <span>Mostrando</span>
                         <span class="font-medium">{{ $filteredNews->firstItem() ?? 0 }}</span>
                         <span>de</span>
@@ -86,7 +86,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
             <!-- Grid de 3 columnas centrado y más ancho -->
             <div class="grid lg:grid-cols-3 gap-8 w-4/5 max-w-7xl mx-auto">
                 @foreach($filteredNews as $news)
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm news-card-hover cursor-pointer group"
+                <div class="bg-white/5 rounded-xl border border-white/10 overflow-hidden shadow-sm news-card-hover cursor-pointer group"
                     wire:key="news-{{ $news['id'] }}" onclick="openNewsModal(@js($news))">
                     <!-- Imagen agregada como en el original -->
                     <img src="{{ $news['image'] }}" alt="{{ $news['title'] }}"
@@ -98,7 +98,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                                 class="inline-flex items-center justify-center rounded-md px-3 py-1 text-xs font-medium badge-{{ $news['category'] }}">
                                 {{ $news['category_label'] }}
                             </span>
-                            <div class="flex items-center text-sm text-gray-500">
+                            <div class="flex items-center text-sm text-white/50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-calendar h-4 w-4 mr-1">
@@ -115,7 +115,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                             {{ $news['title'] }}
                         </h3>
 
-                        <p class="text-gray-600 text-base leading-relaxed">
+                        <p class="text-white/60 text-base leading-relaxed">
                             {{ $news['description'] }}
                         </p>
 
@@ -135,16 +135,16 @@ relevantes para la comunidad estudiantil de ingeniería.')
             </div>
             @else
             <div class="text-center py-16 w-4/5 max-w-7xl mx-auto">
-                <div class="h-16 w-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <div class="h-16 w-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-search h-8 w-8 text-gray-400">
+                        class="lucide lucide-search h-8 w-8 text-white/40">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold mb-2">No se encontraron noticias</h3>
-                <p class="text-gray-500">Intenta con otros términos de búsqueda o categorías.</p>
+                <p class="text-white/50">Intenta con otros términos de búsqueda o categorías.</p>
             </div>
             @endif
 

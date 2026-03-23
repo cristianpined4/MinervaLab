@@ -44,7 +44,7 @@
             <h1 class="text-5xl md:text-6xl font-bold text-balance mb-4">
                 Documentos <span class="text-blue-500">Importantes</span>
             </h1>
-            <p class="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            <p class="text-white/60 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
                 Accede a manuales, guías y documentos esenciales de la carrera de Ingeniería en Sistemas Informáticos.
             </p>
         </div>
@@ -56,18 +56,18 @@
             <div class="flex flex-col lg:flex-row gap-4 items-center">
                 <!-- Búsqueda -->
                 <div class="relative w-full lg:w-200">
-                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none"
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
                     <input type="text" wire:model.live="search" placeholder="Buscar documentos..."
-                        class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full pl-12 pr-4 py-3 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
 
                 <!-- Contador -->
                 <div class="w-full lg:w-auto text-center lg:text-right ml-auto">
-                    <p class="text-sm text-gray-700 leading-5 dark:text-gray-400">
+                    <p class="text-sm text-white leading-5 dark:text-white/40">
                         <span>Mostrando</span>
                         <span class="font-medium">{{ $records->firstItem() ?? 0 }}</span>
                         <span>de</span>
