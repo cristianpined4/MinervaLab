@@ -98,7 +98,7 @@
                                 <p class="text-xs text-red-400 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <button type="submit" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0">Ingresar</button>
 
 
                 </form>

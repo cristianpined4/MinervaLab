@@ -89,7 +89,7 @@
                         @enderror
                     </div>
 
-                    <button type="button" wire:click="register" class="btn btn-primary">Registrar asistencia</button>
+                    <button type="button" wire:click="register" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0">Registrar asistencia</button>
                 </div>
 
             </div>

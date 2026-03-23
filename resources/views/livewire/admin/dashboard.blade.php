@@ -14,7 +14,7 @@
                         <i class="fas fa-key me-2 text-blue-500"></i>
                         Credenciales de asistencia
                     </h5>
-                    <button type="button" class="btn-close" onclick="closeModal(this.closest('.modal'))">&times;</button>
+                    <button type="button" class="btn-close bg-white/20 hover:bg-white/30 border-0" onclick="closeModal(this.closest('.modal'))">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -31,10 +31,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" wire:click="store_update">
+                    <button type="button" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0" wire:click="store_update">
                         <i class="fas fa-save me-1"></i> Guardar
                     </button>
-                    <button type="button" class="btn btn-secondary" onclick="closeModal(this.closest('.modal'))">Cancelar</button>
+                    <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20" onclick="closeModal(this.closest('.modal'))">Cancelar</button>
                 </div>
             </div>
         </div>

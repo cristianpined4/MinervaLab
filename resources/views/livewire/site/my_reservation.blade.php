@@ -12,7 +12,7 @@
 
                     <div class="modal-header">
                         <h5 class="modal-title">Asistencia registrada</h5>
-                        <button type="button" class="btn-close" onclick="closeModal(this.closest('.modal'))">&times;</button>
+                        <button type="button" class="btn-close bg-white/20 hover:bg-white/30 border-0" onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>
 
                     <div class="modal-body">
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                        <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20" onclick="closeModal(this.closest('.modal'))">Cerrar</button>
                     </div>
 
                 </div>

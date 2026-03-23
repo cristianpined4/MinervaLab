@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="relative z-10 min-h-screen bg-white">
+    <main class="relative z-10 min-h-screen bg-white/5">
         <!-- Funciones del sistema -->
         <section id="noticias" class="bg-white/5 py-12">
             <div class="max-w-7xl mx-auto px-4 md:px-6">

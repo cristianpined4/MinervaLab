@@ -199,10 +199,10 @@ relevantes para la comunidad estudiantil de ingeniería.')
                 </div>
 
                 <div class="modal-actions">
-                    <button class="btn btn-secondary" id="modal-share">
+                    <button class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20" id="modal-share">
                         <span>📤</span> Compartir
                     </button>
-                    <button class="btn btn-primary" id="modal-register">
+                    <button class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0" id="modal-register">
                         <span>📝</span> Registrarse
                     </button>
                 </div>

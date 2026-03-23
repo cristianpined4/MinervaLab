@@ -5,7 +5,7 @@
 <div>
     @include('layouts.components.header-global')
 
-    <main class="relative z-10 min-h-screen bg-white">
+    <main class="relative z-10 min-h-screen bg-white/5">
 
         {{-- ============================================================
         |  BIENVENIDA

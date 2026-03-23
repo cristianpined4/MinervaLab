@@ -13,7 +13,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{ $record_id ? 'Editar escena' : 'Agregar escena' }}</h5>
-                        <button type="button" class="btn-close" aria-label="Cerrar"
+                        <button type="button" class="btn-close bg-white/20 hover:bg-white/30 border-0" aria-label="Cerrar"
                             onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -79,19 +79,19 @@
 
                     <div class="modal-footer">
                         @if ($record_id)
-                            <button type="button" class="btn btn-warning" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                            <button type="button" class="btn btn-warning bg-yellow-600 hover:bg-yellow-700 text-white border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
                                 <span wire:loading.remove wire:target="store_update,resource_demo">Actualizar</span>
                                 <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
                                 <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @else
-                            <button type="button" class="btn btn-primary" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                            <button type="button" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
                                 <span wire:loading.remove wire:target="store_update,resource_demo">Guardar</span>
                                 <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
                                 <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @endif
-                        <button type="button" class="btn btn-secondary"
+                        <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20"
                             onclick="closeModal(this.closest('.modal'))">Cerrar</button>
                     </div>
                 </div>

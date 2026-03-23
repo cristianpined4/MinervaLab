@@ -137,7 +137,7 @@
                     </div>
 
                     {{-- BOTÓN --}}
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    <button type="submit" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0">Iniciar Sesión</button>
 
 
                     {{-- Volver al sitio --}}
