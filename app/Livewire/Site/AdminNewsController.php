@@ -89,6 +89,14 @@ class AdminNewsController extends Component
     $this->dispatch('abrir-modal', ['modal' => 'modal-news', 'fields' => $this->fields]);
   }
 
+  /**
+   * Limpiar archivo cuando cambia el tipo de publicación
+   */
+  public function updatedFieldsResourceType()
+  {
+    $this->upload = null;
+  }
+
   /* ---------------------------------------------------------------
    | GUARDAR / ACTUALIZAR
    --------------------------------------------------------------- */
