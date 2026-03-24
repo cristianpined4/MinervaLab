@@ -145,7 +145,7 @@
                             </button>
                         @endif
                         <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                            onclick="closeModal(this.closest('.modal')); Livewire.dispatch('closeModal');">Cerrar</button>
+                            onclick="closeModal(this.closest('.modal')); @this.call('cerrarModal', false);">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -336,12 +336,10 @@
     <script>
         document.addEventListener('livewire:initialized', function () {
 
-            // Abrir modal cuando openModal sea true
-            Livewire.watch('openModal', function(value) {
-                if (value) {
-                    let modal = document.getElementById('modal-news');
-                    if (modal) openModal(modal);
-                }
+            // Abrir modal cuando se dispare el evento
+            Livewire.on('abrir-modal-noticia', function() {
+                let modal = document.getElementById('modal-news');
+                if (modal) openModal(modal);
             });
 
             Livewire.on('closeModal', function() {

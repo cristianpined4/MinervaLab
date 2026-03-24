@@ -86,8 +86,9 @@ class AdminNewsController extends Component
         'date' => now()->format('Y-m-d'),
       ];
     }
-    
+
     $this->openModal = true;
+    $this->dispatch('abrir-modal-noticia');
   }
 
   /**
