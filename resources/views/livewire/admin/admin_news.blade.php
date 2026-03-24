@@ -26,42 +26,11 @@
                         {{-- Tipo de recurso --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Tipo de recurso</label>
-                            @if($record_id)
-                                {{-- Si está editando, mostrar como texto --}}
-                                <div class="bg-white/5 border border-white/20 rounded px-4 py-3 text-white">
-                                    <span>
-                                        @switch($fields['resource_type'])
-                                            @case('article')
-                                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-blue-600/20 border border-blue-600/30 text-blue-400">
-                                                <i class="fas fa-file-alt"></i>
-                                                Artículo
-                                            </span>
-                                                @break
-                                            @case('image')
-                                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-green-600/20 border border-green-600/30 text-green-400">
-                                                        <i class="fas fa-image"></i>
-                                                        Imagen
-                                                    </span>
-
-                                                @break
-                                            @case('video')
-                                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-red-600/20 border border-red-600/30 text-red-400">
-                                                        <i class="fas fa-play-circle"></i>
-                                                        Video
-                                                    </span>
-                                                @break
-                                        @endswitch
-                                    </span>
-                                </div>
-                                <input type="hidden" wire:model="fields.resource_type">
-                            @else
-                                {{-- Si está creando, mostrar select --}}
-                                <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white">
-                                    <option value="article">Artículo</option>
-                                    <option value="image">Imagen</option>
-                                    <option value="video">Video</option>
-                                </select>
-                            @endif
+                            <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white">
+                                <option value="article">Artículo</option>
+                                <option value="image">Imagen</option>
+                                <option value="video">Video</option>
+                            </select>
                             @error('fields.resource_type')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -70,7 +39,7 @@
                         {{-- Título --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Título</label>
-                            <input wire:model="fields.title" type="text" placeholder="Título de la noticia"
+                            <input wire:model="fields.title" id="title" type="text" placeholder="Título de la noticia"
                                 class="form-control @error('fields.title') is-invalid @enderror">
                             @error('fields.title')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -80,7 +49,7 @@
                         {{-- Descripción --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Descripción</label>
-                            <textarea wire:model="fields.description" rows="3"
+                            <textarea wire:model="fields.description" id="description" rows="3"
                                 placeholder="Descripción breve..."
                                 class="form-control @error('fields.description') is-invalid @enderror"></textarea>
                             @error('fields.description')
@@ -91,7 +60,7 @@
                         {{-- Fecha --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Fecha de publicación</label>
-                            <input wire:model="fields.date" type="date"
+                            <input wire:model="fields.date" id="date" type="date"
                                 class="form-control @error('fields.date') is-invalid @enderror">
                             @error('fields.date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -353,7 +322,13 @@
 
             Livewire.on('abrir-modal', function (modal) {
                 let el = document.getElementById(modal[0].modal);
-                if (el) openModal(el);
+                if (el) {
+                    openModal(el);
+                    document.getElementById('resource_type').value = modal[0].fields.resource_type;
+                    document.getElementById('title').value = modal[0].fields.title;
+                    document.getElementById('description').value = modal[0].fields.description;
+                    document.getElementById('date').value = modal[0].fields.date;
+                }
             });
 
             Livewire.on('swal:notify', e => {

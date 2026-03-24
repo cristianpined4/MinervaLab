@@ -68,7 +68,7 @@ class AdminNewsController extends Component
 
     if ($id) {
       $this->record_id = $id;
-      $reg = News::findOrFail($id);
+      $reg = News::find($id);
       $this->fields['resource_type'] = $reg->resource_type;
       $this->fields['title'] = $reg->title;
       $this->fields['description'] = $reg->description;
@@ -167,7 +167,7 @@ class AdminNewsController extends Component
       }
 
       DB::commit();
-      $this->openModal = false;
+      $this->dispatch('cerrar-modal', ['modal' => 'modal-news']);
       $this->reset('upload');
 
     } catch (\Throwable $th) {
