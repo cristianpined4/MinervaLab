@@ -56,6 +56,24 @@ return [
             'report' => false,
         ],
 
+        'news-videos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/news/videos'),
+            'url' => env('APP_URL') . '/news/videos',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'news-images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/news/images'),
+            'url' => env('APP_URL') . '/news/images',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

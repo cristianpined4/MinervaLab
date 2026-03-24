@@ -69,7 +69,7 @@
 
                         {{-- Archivo (imagen o video) - solo si no es artículo --}}
                         @if ($fields['resource_type'] !== 'article')
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label class="form-label">
                                     @if ($fields['resource_type'] === 'video') Video @else Imagen @endif
                                     <span class="text-white/40 text-xs">(máx. 50 MB)</span>
@@ -81,25 +81,34 @@
                                     <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
 
-                                {{-- Vista previa del archivo actual (edición) --}}
-                                @if ($record_id && !empty($fields['path']))
-                                    <div class="mt-2">
-                                        @if ($fields['resource_type'] === 'video')
-                                            <video controls class="rounded-lg w-full max-h-40">
-                                                <source src="{{ asset($fields['path']) }}" type="video/mp4">
-                                            </video>
-                                        @else
-                                            <img src="{{ asset($fields['path']) }}"
-                                                alt="Preview"
-                                                class="rounded-lg max-h-40 object-cover">
-                                        @endif
-                                    </div>
-                                @endif
-
-                                {{-- Indicador de carga Livewire --}}
-                                <div wire:loading wire:target="upload" class="mt-1 text-sm text-blue-500">
-                                    <i class="fas fa-spinner fa-spin"></i> Subiendo archivo...
+                                <div wire:loading wire:target="upload" class="mt-2 inline-flex items-center gap-2 text-sm text-blue-600">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    Preparando archivo, por favor espera...
                                 </div>
+
+                                {{-- Previsualización archivo recién subido --}}
+                                @if (!empty($upload_preview_url))
+                                    @if ($fields['resource_type'] === 'video')
+                                        <video controls class="mt-3 rounded-lg w-full">
+                                            <source src="{{ $upload_preview_url }}" type="video/mp4">
+                                        </video>
+                                    @else
+                                        <img src="{{ $upload_preview_url }}"
+                                            alt="Preview"
+                                            class="mt-3 rounded-lg w-full">
+                                    @endif
+                                {{-- Previsualización archivo guardado (edición) --}}
+                                @elseif (!empty($current_media_url))
+                                    @if ($fields['resource_type'] === 'video')
+                                        <video controls class="mt-3 rounded-lg w-full">
+                                            <source src="{{ $current_media_url }}" type="video/mp4">
+                                        </video>
+                                    @else
+                                        <img src="{{ $current_media_url }}"
+                                            alt="Preview"
+                                            class="mt-3 rounded-lg w-full">
+                                    @endif
+                                @endif
                             </div>
                         @endif
 
@@ -108,19 +117,17 @@
                     <div class="modal-footer">
                         @if ($record_id)
                             <button type="button" class="btn btn-warning bg-yellow-600 hover:bg-yellow-700 text-white border-0" wire:click="store_update"
-                                wire:loading.attr="disabled">
-                                <span wire:loading.remove wire:target="store_update">Actualizar</span>
-                                <span wire:loading wire:target="store_update">
-                                    <i class="fas fa-spinner fa-spin"></i> Guardando...
-                                </span>
+                                wire:loading.attr="disabled" wire:target="store_update,upload">
+                                <span wire:loading.remove wire:target="store_update,upload">Actualizar</span>
+                                <span wire:loading wire:target="upload"><i class="fas fa-spinner fa-spin"></i> Preparando archivo...</span>
+                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @else
                             <button type="button" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0" wire:click="store_update"
-                                wire:loading.attr="disabled">
-                                <span wire:loading.remove wire:target="store_update">Guardar</span>
-                                <span wire:loading wire:target="store_update">
-                                    <i class="fas fa-spinner fa-spin"></i> Guardando...
-                                </span>
+                                wire:loading.attr="disabled" wire:target="store_update,upload">
+                                <span wire:loading.remove wire:target="store_update,upload">Guardar</span>
+                                <span wire:loading wire:target="upload"><i class="fas fa-spinner fa-spin"></i> Preparando archivo...</span>
+                                <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @endif
                         <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20"
@@ -239,7 +246,7 @@
                                         <td class="px-4 py-3 text-center">
                                             @if ($item->path)
                                                 @if ($item->resource_type === 'image')
-                                                    <img src="{{ asset('storage/' . $item->path) }}"
+                                                    <img src="{{ asset( $item->path) }}"
                                                         alt="{{ $item->title }}"
                                                         class="h-10 w-16 object-cover rounded-lg shadow">
                                                 @elseif ($item->resource_type === 'video')

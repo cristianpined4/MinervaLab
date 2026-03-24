@@ -23,6 +23,8 @@ class AdminNewsController extends Component
     'date' => null,
   ];
   public $upload; // archivo temporal (imagen o video)
+  public $upload_preview_url; // URL de previsualización del archivo subido
+  public $current_media_url; // URL del archivo guardado (edición)
 
   public $search = '';
   public $paginate = 10;
@@ -65,6 +67,7 @@ class AdminNewsController extends Component
   {
     $this->resetErrorBag();
     $this->upload = null;
+    $this->upload_preview_url = null;
 
     if ($id) {
       $this->record_id = $id;
@@ -74,6 +77,16 @@ class AdminNewsController extends Component
       $this->fields['description'] = $reg->description;
       $this->fields['path'] = $reg->path;
       $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
+
+      $folder = match ($this->fields['resource_type']) {
+        'video' => 'news-videos',
+        default => 'news-images',
+      };
+
+      // Asignar URL del media guardado si existe
+      $this->current_media_url = ($reg->path && Storage::disk($folder)->exists($reg->path))
+        ? Storage::disk($folder)->url($reg->path)
+        : null;
     } else {
       $this->record_id = null;
       $this->fields['resource_type'] = 'article';
@@ -81,6 +94,7 @@ class AdminNewsController extends Component
       $this->fields['description'] = null;
       $this->fields['path'] = null;
       $this->fields['date'] = now()->format('Y-m-d');
+      $this->current_media_url = null;
     }
 
     $this->dispatch('abrir-modal', [
@@ -95,6 +109,19 @@ class AdminNewsController extends Component
   public function updatedFieldsResourceType()
   {
     $this->upload = null;
+    $this->upload_preview_url = null;
+  }
+
+  /**
+   * Generar previsualización cuando se sube un archivo
+   */
+  public function updatedUpload()
+  {
+    if ($this->upload) {
+      $this->upload_preview_url = $this->upload->temporaryUrl();
+    } else {
+      $this->upload_preview_url = null;
+    }
   }
 
   /**
@@ -139,19 +166,19 @@ class AdminNewsController extends Component
 
         // Determinar carpeta según tipo
         $folder = match ($this->fields['resource_type']) {
-          'video' => 'news/videos',
-          default => 'news/images',
+          'video' => 'news-videos',
+          default => 'news-images',
         };
 
         // Borrar archivo anterior si existe
         if ($this->record_id) {
           $old = News::find($this->record_id);
-          if ($old && $old->path && Storage::disk('public')->exists($old->path)) {
-            Storage::disk('public')->delete($old->path);
+          if ($old && $old->path && Storage::disk($folder)->exists($old->path)) {
+            Storage::disk($folder)->delete($old->path);
           }
         }
 
-        $storedPath = $this->upload->storeAs($folder, $filename, 'public');
+        $storedPath = $this->upload->storeAs('', $filename, $folder);
         $data['path'] = $storedPath;
       } elseif ($this->record_id) {
         // Conservar path existente
@@ -202,8 +229,12 @@ class AdminNewsController extends Component
   {
     $news = News::find($id);
     if ($news) {
-      if ($news->path && Storage::disk('public')->exists($news->path)) {
-        Storage::disk('public')->delete($news->path);
+      $folder = match ($news->resource_type) {
+        'video' => 'news-videos',
+        default => 'news-images',
+      };
+      if ($news->path && Storage::disk($folder)->exists($news->path)) {
+        Storage::disk($folder)->delete($news->path);
       }
       $news->delete();
     }
