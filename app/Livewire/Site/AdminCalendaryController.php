@@ -54,8 +54,8 @@ class AdminCalendaryController extends Component
         if ($id) {
             $this->record_id = $id;
             $registro = Holiday::find($id);
-            $this->fields['starts_at'] = $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('Y-m-d') : null;
-            $this->fields['ends_at'] = $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('Y-m-d') : null;
+            $this->fields['starts_at'] = $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('Y-m-d\TH:i') : null;
+            $this->fields['ends_at'] = $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('Y-m-d\TH:i') : null;
             $this->fields['description'] = $registro->description;
         } else {
             $this->record_id = null;

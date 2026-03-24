@@ -22,7 +22,7 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha de inicio
                             </label>
-                            <input wire:model="fields.starts_at" type="date" id="starts_at"
+                            <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
                                 class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -31,7 +31,7 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha final
                             </label>
-                            <input wire:model="fields.ends_at" type="date" id="ends_at"
+                            <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
                                 class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -137,7 +137,7 @@
                                                 <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
-                                                <span class="text-sm font-medium text-white">{{ $row->starts_at }}</span>
+                                                <span class="text-sm font-medium text-white">{{ \Carbon\Carbon::parse($row->starts_at)->format('d/m/Y H:i A') }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
@@ -145,7 +145,7 @@
                                                 <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                                 </svg>
-                                                <span class="text-sm font-medium text-white">{{ $row->ends_at }}</span>
+                                                <span class="text-sm font-medium text-white">{{ \Carbon\Carbon::parse($row->ends_at)->format('d/m/Y H:i A') }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
