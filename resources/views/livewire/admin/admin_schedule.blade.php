@@ -145,8 +145,8 @@
                                                                 <td class="px-6 py-4 whitespace-nowrap w-auto text-center align-top">
                                                                     <div class="flex flex-row items-start gap-2">
                                                                         <div class="flex flex-col items-center gap-2">
-                                                                            <span class="text-sm font-medium text-white">{{ $row->starts_at }}</span>
-                                                                            <span class="text-sm font-medium text-white">{{ $row->ends_at }}</span>
+                                                                            <span class="text-sm font-medium text-white">{{ \Carbon\Carbon::parse($row->starts_at)->format('h:i A') }}</span>
+                                                                            <span class="text-sm font-medium text-white">{{ \Carbon\Carbon::parse($row->ends_at)->format('h:i A') }}</span>
                                                                         </div>
                                                                         <div class="flex flex-col items-center gap-2">
                                                                             <button class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors" title="Editar" wire:click="abrirModal({{ $row->id }})">
