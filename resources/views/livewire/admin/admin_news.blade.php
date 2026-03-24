@@ -26,7 +26,7 @@
                         {{-- Tipo de recurso --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Tipo de recurso</label>
-                            <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white">
+                            <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white {{ $record_id ? 'opacity-50 cursor-not-allowed' : '' }}" {{ $record_id ? 'disabled' : '' }}>
                                 <option value="article">Artículo</option>
                                 <option value="image">Imagen</option>
                                 <option value="video">Video</option>

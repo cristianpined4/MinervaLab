@@ -85,7 +85,7 @@ class AdminNewsController extends Component
 
     $this->dispatch('abrir-modal', [
       'modal' => 'modal-news',
-      'fields' => $this->fields
+      'fields' => array_merge($this->fields, ['record_id' => $this->record_id])
     ]);
   }
 
