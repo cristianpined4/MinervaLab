@@ -52,8 +52,8 @@
                         <p class="text-xs text-slate-300">Fecha: <span class="text-white">@dateFormat($reservation->date)</span></p>
                         <p class="text-xs text-slate-300">
                             Horario:
-                            <span class="text-white">{{ $reservation->starts_at }}</span> -
-                            <span class="text-white">{{ $reservation->ends_at }}</span>
+                            <span class="text-white">{{ formatTime($reservation->starts_at) }}</span> -
+                            <span class="text-white">{{ formatTime($reservation->ends_at) }}</span>
                         </p>
                         <p class="text-xs text-slate-300">Estudiantes: <span class="text-white">{{ $reservation->students }}</span></p>
                     </div>

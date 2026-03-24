@@ -55,12 +55,12 @@ class User extends Authenticatable
 
     public function Rol()
     {
-        return $this->belongsTo(Roles::class, 'id');
+        return $this->belongsTo(Roles::class, 'id_rol');
     }
 
     public function Faculty()
     {
-        return $this->belongsTo(Faculty::class, 'id');
+        return $this->belongsTo(Faculty::class, 'id_faculty');
     }
 
     public function notifications(): HasMany

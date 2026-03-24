@@ -59,7 +59,7 @@
             @endif
 
             <button wire:click="$set('showQR', false)"
-                class=" bg-white/5px-6 py-3 rounded-xl shadow-md hover:shadow-lg">
+                class="bg-white text-blue-600 px-6 py-3 rounded-xl shadow-md hover:shadow-lg">
                 Volver
             </button>
 
