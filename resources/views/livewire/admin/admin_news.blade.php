@@ -86,10 +86,10 @@
                                     <div class="mt-2">
                                         @if ($fields['resource_type'] === 'video')
                                             <video controls class="rounded-lg w-full max-h-40">
-                                                <source src="{{ asset('storage/' . $fields['path']) }}" type="video/mp4">
+                                                <source src="{{ asset($fields['path']) }}" type="video/mp4">
                                             </video>
                                         @else
-                                            <img src="{{ asset('storage/' . $fields['path']) }}"
+                                            <img src="{{ asset($fields['path']) }}"
                                                 alt="Preview"
                                                 class="rounded-lg max-h-40 object-cover">
                                         @endif
@@ -143,7 +143,7 @@
                         <p class="text-white/60">Gestiona noticias, imágenes y videos del sitio</p>
                     </div>
                     <button wire:click="abrirModal"
-                        class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
                         <i class="fas fa-plus"></i>
                         Nueva noticia
                     </button>
@@ -153,7 +153,7 @@
                 <div class="bg-white/5 rounded-2xl border border-white/10 shadow-lg overflow-hidden border border-white/10">
 
                     {{-- Header tabla --}}
-                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-600 px-6 py-4">
                         <h2 class="text-xl font-bold text-white flex items-center gap-2">
                             <i class="fas fa-newspaper"></i>
                             Lista de noticias
@@ -205,9 +205,9 @@
                                         <td class="px-4 py-3">
                                             @php
                                                 $badge = match($item->resource_type) {
-                                                    'video'   => ['bg-red-100 text-red-700',   'fa-play-circle',  'Video'],
-                                                    'image'   => ['bg-green-100 text-green-700','fa-image',        'Imagen'],
-                                                    default   => ['bg-blue-100 text-blue-700',  'fa-file-alt',     'Artículo'],
+                                                    'video'   => ['bg-red-600/20 border border-red-600/30 text-red-400',   'fa-play-circle',  'Video'],
+                                                    'image'   => ['bg-green-600/20 border border-green-600/30 text-green-400','fa-image',        'Imagen'],
+                                                    default   => ['bg-blue-600/20 border border-blue-600/30 text-blue-400',  'fa-file-alt',     'Artículo'],
                                                 };
                                             @endphp
                                             <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold {{ $badge[0] }}">
@@ -243,7 +243,7 @@
                                                         alt="{{ $item->title }}"
                                                         class="h-10 w-16 object-cover rounded-lg shadow">
                                                 @elseif ($item->resource_type === 'video')
-                                                    <span class="inline-flex items-center gap-1 text-xs bg-red-600 hover:bg-red-700 text-white font-semibold">
+                                                    <span class="inline-flex items-center gap-1 text-xs bg-red-600/20 border border-red-600/30 text-red-400 font-semibold rounded px-2 py-1">
                                                         <i class="fas fa-film"></i> Video
                                                     </span>
                                                 @else
@@ -258,12 +258,12 @@
                                         <td class="px-4 py-3">
                                             <div class="flex items-center justify-center gap-2">
                                                 <button wire:click="abrirModal({{ $item->id }})"
-                                                    class="p-1.5 bg-yellow-100 hover:bg-yellow-200 text-yellow-700 rounded-lg transition-colors"
+                                                    class="p-2 bg-blue-600 hover:bg-blue-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Editar">
                                                     <i class="fas fa-pencil text-xs"></i>
                                                 </button>
                                                 <button onclick="confirmarEliminar({{ $item->id }})"
-                                                    class="p-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg transition-colors"
+                                                    class="p-2 bg-red-600 hover:bg-red-700 text-white inline-flex items-center justify-center rounded-lg transition-colors"
                                                     title="Eliminar">
                                                     <i class="fas fa-trash text-xs"></i>
                                                 </button>
