@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminNewsController extends Component
 {
@@ -27,7 +28,7 @@ class AdminNewsController extends Component
   public $search = '';
   public $paginate = 10;
 
-  protected $listeners = ['erase' => 'erase', 'updateOpenModal' => 'cerrarModal'];
+  protected $listeners = ['erase' => 'erase', 'updateOpenModal' => 'cerrarModal', 'abrir' => 'abrirModal'];
 
   public function paginationView()
   {
@@ -65,11 +66,12 @@ class AdminNewsController extends Component
   {
     $this->resetErrorBag();
     $this->upload = null;
+    $this->openModal = false; // Forzar re-render
 
     if ($id) {
       $this->record_id = $id;
       $reg = News::findOrFail($id);
-      // Asignar propiedades individualmente para mejor reactividad
+      // Asignar propiedades con valores específicos
       $this->fields['resource_type'] = $reg->resource_type;
       $this->fields['title'] = $reg->title;
       $this->fields['description'] = $reg->description;
@@ -77,16 +79,15 @@ class AdminNewsController extends Component
       $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
     } else {
       $this->record_id = null;
-      // Asignar propiedades individualmente
       $this->fields['resource_type'] = 'article';
       $this->fields['title'] = null;
       $this->fields['description'] = null;
       $this->fields['path'] = null;
       $this->fields['date'] = now()->format('Y-m-d');
     }
-
+    
+    // Abrir el modal después de asignar datos
     $this->openModal = true;
-    $this->dispatch('abrir-modal-noticia');
   }
 
   /**

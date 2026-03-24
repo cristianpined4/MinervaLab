@@ -10,7 +10,7 @@
         {{-- ============================================================
         |  MODAL: Crear / Editar noticia
         ============================================================ --}}
-        <div id="modal-news" class="modal" wire:ignore.self>
+        <div id="modal-news" class="modal" wire:key="modal-{{ $openModal }}">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -32,13 +32,23 @@
                                     <span>
                                         @switch($fields['resource_type'])
                                             @case('article')
+                                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-blue-600/20 border border-blue-600/30 text-blue-400">
+                                                <i class="fas fa-file-alt"></i>
                                                 Artículo
+                                            </span>
                                                 @break
                                             @case('image')
-                                                Imagen
+                                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-green-600/20 border border-green-600/30 text-green-400">
+                                                        <i class="fas fa-image"></i>
+                                                        Imagen
+                                                    </span>
+
                                                 @break
                                             @case('video')
-                                                Video
+                                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-red-600/20 border border-red-600/30 text-red-400">
+                                                        <i class="fas fa-play-circle"></i>
+                                                        Video
+                                                    </span>
                                                 @break
                                         @endswitch
                                     </span>
@@ -336,10 +346,12 @@
     <script>
         document.addEventListener('livewire:initialized', function () {
 
-            // Abrir modal cuando se dispare el evento
-            Livewire.on('abrir-modal-noticia', function() {
-                let modal = document.getElementById('modal-news');
-                if (modal) openModal(modal);
+            // Abrir modal cuando openModal se establezca en true
+            Livewire.watch('openModal', function(value) {
+                if (value) {
+                    let modal = document.getElementById('modal-news');
+                    if (modal) openModal(modal);
+                }
             });
 
             Livewire.on('closeModal', function() {
