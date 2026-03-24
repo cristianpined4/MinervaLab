@@ -14,6 +14,7 @@ class AdminNewsController extends Component
   use WithPagination, WithFileUploads;
 
   public $record_id;
+  public $openModal = false;
   public $fields = [
     'resource_type' => 'article',
     'title' => null,
@@ -26,7 +27,7 @@ class AdminNewsController extends Component
   public $search = '';
   public $paginate = 10;
 
-  protected $listeners = ['erase' => 'erase'];
+  protected $listeners = ['erase' => 'erase', 'updateOpenModal' => 'cerrarModal'];
 
   public function paginationView()
   {
@@ -85,8 +86,8 @@ class AdminNewsController extends Component
         'date' => now()->format('Y-m-d'),
       ];
     }
-
-    $this->dispatch('abrir-modal', ['modal' => 'modal-news', 'fields' => $this->fields]);
+    
+    $this->openModal = true;
   }
 
   /**
@@ -95,6 +96,14 @@ class AdminNewsController extends Component
   public function updatedFieldsResourceType()
   {
     $this->upload = null;
+  }
+
+  /**
+   * Cerrar modal
+   */
+  public function cerrarModal($value = false)
+  {
+    $this->openModal = $value;
   }
 
   /* ---------------------------------------------------------------
@@ -159,7 +168,7 @@ class AdminNewsController extends Component
       }
 
       DB::commit();
-      $this->dispatch('cerrar-modal', ['modal' => 'modal-news']);
+      $this->openModal = false;
       $this->reset('upload');
 
     } catch (\Throwable $th) {

@@ -26,11 +26,32 @@
                         {{-- Tipo de recurso --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Tipo de recurso</label>
-                            <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white" @if($record_id) disabled @endif>
-                                <option value="article">Artículo</option>
-                                <option value="image">Imagen</option>
-                                <option value="video">Video</option>
-                            </select>
+                            @if($record_id)
+                                {{-- Si está editando, mostrar como texto --}}
+                                <div class="bg-white/5 border border-white/20 rounded px-4 py-3 text-white">
+                                    <span>
+                                        @switch($fields['resource_type'])
+                                            @case('article')
+                                                Artículo
+                                                @break
+                                            @case('image')
+                                                Imagen
+                                                @break
+                                            @case('video')
+                                                Video
+                                                @break
+                                        @endswitch
+                                    </span>
+                                </div>
+                                <input type="hidden" wire:model="fields.resource_type">
+                            @else
+                                {{-- Si está creando, mostrar select --}}
+                                <select wire:model.live="fields.resource_type" id="resource_type" class="form-control text-white">
+                                    <option value="article">Artículo</option>
+                                    <option value="image">Imagen</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            @endif
                             @error('fields.resource_type')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -124,7 +145,7 @@
                             </button>
                         @endif
                         <button type="button" class="btn btn-secondary bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                            onclick="closeModal(this.closest('.modal'))">Cerrar</button>
+                            onclick="closeModal(this.closest('.modal')); Livewire.dispatch('closeModal');">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -314,6 +335,18 @@
 
     <script>
         document.addEventListener('livewire:initialized', function () {
+
+            // Abrir modal cuando openModal sea true
+            Livewire.watch('openModal', function(value) {
+                if (value) {
+                    let modal = document.getElementById('modal-news');
+                    if (modal) openModal(modal);
+                }
+            });
+
+            Livewire.on('closeModal', function() {
+                Livewire.dispatch('updateOpenModal', false);
+            });
 
             Livewire.on('cerrar-modal', function (modal) {
                 let el = document.getElementById(modal[0].modal);
