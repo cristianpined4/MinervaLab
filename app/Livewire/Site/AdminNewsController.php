@@ -15,7 +15,6 @@ class AdminNewsController extends Component
   use WithPagination, WithFileUploads;
 
   public $record_id;
-  public $openModal = false;
   public $fields = [
     'resource_type' => 'article',
     'title' => null,
@@ -28,7 +27,7 @@ class AdminNewsController extends Component
   public $search = '';
   public $paginate = 10;
 
-  protected $listeners = ['erase' => 'erase', 'updateOpenModal' => 'cerrarModal', 'abrir' => 'abrirModal'];
+  protected $listeners = ['erase' => 'erase', 'confirmar-eliminar' => 'confirmarEliminar'];
 
   public function paginationView()
   {
@@ -66,12 +65,10 @@ class AdminNewsController extends Component
   {
     $this->resetErrorBag();
     $this->upload = null;
-    $this->openModal = false; // Forzar re-render
 
     if ($id) {
       $this->record_id = $id;
       $reg = News::findOrFail($id);
-      // Asignar propiedades con valores específicos
       $this->fields['resource_type'] = $reg->resource_type;
       $this->fields['title'] = $reg->title;
       $this->fields['description'] = $reg->description;
@@ -85,9 +82,11 @@ class AdminNewsController extends Component
       $this->fields['path'] = null;
       $this->fields['date'] = now()->format('Y-m-d');
     }
-    
-    // Abrir el modal después de asignar datos
-    $this->openModal = true;
+
+    $this->dispatch('abrir-modal', [
+      'modal' => 'modal-news',
+      'fields' => $this->fields
+    ]);
   }
 
   /**
@@ -103,7 +102,7 @@ class AdminNewsController extends Component
    */
   public function cerrarModal($value = false)
   {
-    $this->openModal = $value;
+    // Placeholder
   }
 
   /* ---------------------------------------------------------------
