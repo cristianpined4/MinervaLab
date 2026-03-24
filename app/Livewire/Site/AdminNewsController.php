@@ -158,6 +158,14 @@ class AdminNewsController extends Component
       DB::rollBack();
       $this->dispatch('swal:notify', ['message' => 'Error: ' . $th->getMessage(), 'icon' => 'error']);
     }
+
+    if (File::exists(storage_path('app/private'))) {
+      File::deleteDirectory(storage_path('app/private'));
+    }
+
+    if (File::exists(storage_path('app/public/livewire-tmp'))) {
+      File::deleteDirectory(storage_path('app/public/livewire-tmp'));
+    }
   }
 
   /* ---------------------------------------------------------------

@@ -18,7 +18,9 @@
 /public/videos/*
 /storage/*.key
 /storage/pail
+/storage/app/public/livewire-tmp/*
 /storage/app/public/videos/*
+/storage/app/public/news/*
 /vendor
 Homestead.json
 Homestead.yaml

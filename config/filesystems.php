@@ -84,6 +84,8 @@ return [
 
     'links' => [
         public_path('videos/scenes') => storage_path('app/public/videos/scenes'),
+        public_path('news/videos') => storage_path('app/public/news/videos'),
+        public_path('news/images') => storage_path('app/public/news/images'),
     ],
 
 ];
