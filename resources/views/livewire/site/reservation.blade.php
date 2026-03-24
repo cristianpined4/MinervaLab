@@ -5,8 +5,8 @@
 <div>
     @include('layouts.components.header-global')
 
-    <ma    <main class="min-h-screen py-8 px-4 md:px-8">
-<div class="max-w-7xl">
+    <main class="min-h-screen py-8 px-4 md:px-8">
+        <div class="max-w-7xl">
             {{-- Header --}}
             <div class="mb-8">
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Reservar Aula VR</h1>

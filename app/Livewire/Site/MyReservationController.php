@@ -37,11 +37,11 @@ class MyReservationController extends Component
         $query = Reservation::query();
 
         if (!empty($this->search)) {
-            $query->where(function ($q) {
+            $query->where('id_user', auth()->id())->where(function ($q) {
                 foreach ((new Reservation())->getFillable() as $field) {
                     $q->orWhere($field, 'like', '%' . $this->search . '%');
                 }
-            })->orWhere('id_user', auth()->id());
+            });
         } else {
             $query->where('id_user', auth()->id());
         }
@@ -204,9 +204,18 @@ class MyReservationController extends Component
 
         $data = ReservationAttendance::where('id_reservation', $id)->get()->toArray();
 
+        /* a la data al campo date darle formato de fecha y hora con zona horaria -6 usando carbon */
+        foreach ($data as $key => $value) {
+            $data[$key]['date'] = \Carbon\Carbon::parse($value['created_at'])->timezone('America/El_Salvador')->format('d/m/Y');
+            $data[$key]['attendance'] = \Carbon\Carbon::parse($value['created_at'])->timezone('America/El_Salvador')->format('h:i A');
+        }
+
+        $fechaDeReservacion = Reservation::find($id)->date;
+        $fechaDeReservacion = \Carbon\Carbon::parse($fechaDeReservacion)->timezone('America/El_Salvador')->format('d-m-Y');
+
         $pdf = (new FPDFF())
             ->setTitle('Reporte de Asistencia')
-            ->setSubTitle('Listado de reservacion #' . $id)
+            ->setSubTitle('Listado de estudiantes que asistieron a la reservación del ' . formatDate($fechaDeReservacion))
             ->setDate(now()->format('Y-m-d'))
             ->setModelColumns(['carnet', 'date', 'attendance'])
             ->setColumnLabels([
@@ -219,7 +228,7 @@ class MyReservationController extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'asistencia_' . $id . '.pdf', [
+        }, 'asistencia_' . $fechaDeReservacion . '.pdf', [
             'Content-Type' => 'application/pdf',
         ]);
     }

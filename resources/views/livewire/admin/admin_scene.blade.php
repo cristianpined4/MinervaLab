@@ -20,7 +20,9 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Categoría</label>
-                            <select wire:model="fields.id_scene_category" class="form-control text-white" id="id_scene_category">
+                            <select wire:model="fields.id_scene_category" class="form-control text-black" 
+                            placeholder="Seleccione una categoría"
+                            id="id_scene_category">
                                 <option value="">Seleccione una categoría</option>
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->description }}</option>
@@ -44,7 +46,7 @@
 
                         <div class="form-group mb-3">
                             <label class="form-label">Duración</label>
-                            <input wire:model="fields.duration" type="number" step="0.01"
+                            <input wire:model="fields.duration" type="number" step="0.01" pattern="[0-9]+([.][0-9]+)?"
                                 placeholder="Duración (minutos)" id="duration"
                                 class="form-control @error('fields.duration') was-validated is-invalid @enderror">
                             @error('fields.duration')
@@ -60,7 +62,7 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <div wire:loading wire:target="resource_demo" class="mt-2 inline-flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-700 text-white">
+                            <div wire:loading wire:target="resource_demo" class="mt-2 inline-flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-700 text-black">
                                 <i class="fas fa-spinner fa-spin"></i>
                                 Subiendo video, por favor espera...
                             </div>
@@ -79,13 +81,13 @@
 
                     <div class="modal-footer">
                         @if ($record_id)
-                            <button type="button" class="btn btn-warning bg-yellow-600 hover:bg-yellow-700 text-white border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                            <button type="button" class="btn btn-warning bg-yellow-600 hover:bg-yellow-700 text-black border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
                                 <span wire:loading.remove wire:target="store_update,resource_demo">Actualizar</span>
                                 <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
                                 <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
                             </button>
                         @else
-                            <button type="button" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
+                            <button type="button" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-black border-0" wire:click="store_update" wire:loading.attr="disabled" wire:target="store_update,resource_demo">
                                 <span wire:loading.remove wire:target="store_update,resource_demo">Guardar</span>
                                 <span wire:loading wire:target="resource_demo"><i class="fas fa-spinner fa-spin"></i> Preparando video...</span>
                                 <span wire:loading wire:target="store_update"><i class="fas fa-spinner fa-spin"></i> Guardando...</span>
@@ -100,9 +102,9 @@
         <div id="modal-video" class="modal" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
-                    <div class="modal-header border-b border-gray-700 text-white">
-                        <h2 class="text-xl font-bold text-white flex items-center gap-2" id="video_title">Vista previa</h2>
-                        <button type="button" class="btn btn-close text-white text-3xl" aria-label="Cerrar"
+                    <div class="modal-header border-b border-gray-700 text-black">
+                        <h2 class="text-xl font-bold text-black flex items-center gap-2" id="video_title">Vista previa</h2>
+                        <button type="button" class="btn btn-close text-black text-3xl" aria-label="Cerrar"
                             onclick="closeModal(this.closest('.modal'))">&times;</button>
                     </div>
                     <div class="modal-body p-0">
