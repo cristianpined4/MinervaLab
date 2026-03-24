@@ -16,6 +16,7 @@
 /public/hot
 /public/storage
 /public/videos/*
+/public/news/*
 /storage/*.key
 /storage/pail
 /storage/app/public/livewire-tmp/*
