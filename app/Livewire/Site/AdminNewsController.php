@@ -69,22 +69,20 @@ class AdminNewsController extends Component
     if ($id) {
       $this->record_id = $id;
       $reg = News::findOrFail($id);
-      $this->fields = [
-        'resource_type' => $reg->resource_type,
-        'title' => $reg->title,
-        'description' => $reg->description,
-        'path' => $reg->path,
-        'date' => $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null,
-      ];
+      // Asignar propiedades individualmente para mejor reactividad
+      $this->fields['resource_type'] = $reg->resource_type;
+      $this->fields['title'] = $reg->title;
+      $this->fields['description'] = $reg->description;
+      $this->fields['path'] = $reg->path;
+      $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
     } else {
       $this->record_id = null;
-      $this->fields = [
-        'resource_type' => 'article',
-        'title' => null,
-        'description' => null,
-        'path' => null,
-        'date' => now()->format('Y-m-d'),
-      ];
+      // Asignar propiedades individualmente
+      $this->fields['resource_type'] = 'article';
+      $this->fields['title'] = null;
+      $this->fields['description'] = null;
+      $this->fields['path'] = null;
+      $this->fields['date'] = now()->format('Y-m-d');
     }
 
     $this->openModal = true;

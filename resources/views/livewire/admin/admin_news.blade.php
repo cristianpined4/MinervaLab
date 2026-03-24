@@ -60,7 +60,7 @@
                         {{-- Título --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Título</label>
-                            <input wire:model="fields.title" type="text" placeholder="Título de la noticia"
+                            <input wire:model="fields.title" wire:key="fields.title" type="text" placeholder="Título de la noticia"
                                 class="form-control @error('fields.title') is-invalid @enderror">
                             @error('fields.title')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -70,7 +70,7 @@
                         {{-- Descripción --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Descripción</label>
-                            <textarea wire:model="fields.description" rows="3"
+                            <textarea wire:model="fields.description" wire:key="fields.description" rows="3"
                                 placeholder="Descripción breve..."
                                 class="form-control @error('fields.description') is-invalid @enderror"></textarea>
                             @error('fields.description')
@@ -81,7 +81,7 @@
                         {{-- Fecha --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Fecha de publicación</label>
-                            <input wire:model="fields.date" type="date"
+                            <input wire:model="fields.date" wire:key="fields.date" type="date"
                                 class="form-control @error('fields.date') is-invalid @enderror">
                             @error('fields.date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
