@@ -291,7 +291,7 @@
                                                 <i class="fas fa-newspaper text-4xl"></i>
                                                 <p class="text-sm font-medium">No hay noticias registradas</p>
                                                 <button wire:click="abrirModal"
-                                                    class="text-indigo-600 hover:underline text-sm">
+                                                    class="text-blue-600 hover:underline text-sm">
                                                     Agregar primera noticia
                                                 </button>
                                             </div>
