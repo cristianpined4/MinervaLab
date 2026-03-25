@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', App\Livewire\Site\HomeController::class)->name('home-site');
 Route::get('login', App\Livewire\Site\LoginController::class)->name('login');
 Route::get('access', App\Livewire\Site\AccessController::class)->name('access');
-Route::get('set-attendance', App\Livewire\Site\AttendanceController::class)->name('set-attendance');
+Route::get('set-attendance', App\Livewire\Site\AttendanceController::class)
+    ->middleware(['auth', 'attendance.access'])
+    ->name('set-attendance');
 Route::get('attendance', App\Livewire\Site\AttendanceValidateController::class)->name('attendance');
 Route::get('attendance-success', App\Livewire\Site\AttendanceSuccessController::class)->name('attendance-success');
 Route::get('register', App\Livewire\Site\RegisterController::class)->name('register');
