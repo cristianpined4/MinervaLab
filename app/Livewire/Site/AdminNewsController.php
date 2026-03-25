@@ -70,6 +70,13 @@ class AdminNewsController extends Component
     $this->upload = null;
     $this->upload_preview_url = null;
     $this->media_loading = false;
+    if (File::exists(storage_path('app/private'))) {
+      File::deleteDirectory(storage_path('app/private'));
+    }
+
+    if (File::exists(storage_path('app/public/livewire-tmp'))) {
+      File::deleteDirectory(storage_path('app/public/livewire-tmp'));
+    }
 
     if ($id) {
       $this->record_id = $id;

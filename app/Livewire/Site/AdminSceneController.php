@@ -70,6 +70,13 @@ class AdminSceneController extends Component
     public function abrirModal($id = null)
     {
         $this->resetErrorBag();
+        if (File::exists(storage_path('app/private'))) {
+            File::deleteDirectory(storage_path('app/private'));
+        }
+
+        if (File::exists(storage_path('app/public/livewire-tmp'))) {
+            File::deleteDirectory(storage_path('app/public/livewire-tmp'));
+        }
 
         if ($id) {
             $this->record_id = $id;
