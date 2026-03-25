@@ -360,17 +360,21 @@
             });
 
             // Notificación con toast
-            Livewire.on('swal:notify', (data) => {
-                console.log('📢 Toast:', data);
+            Livewire.on('swal:notify', (payload) => {
+                console.log('📢 Toast recibido:', payload);
                 
-                // Con parámetros nombrados, data es un objeto {icon, title, message}
-                if (data && data.message) {
-                    console.log('✓ Toast mostrado:', data.message);
+                // Livewire 3 con parámetros nombrados envía como objeto
+                const { icon = 'warning', title = '', message = '' } = payload;
+                
+                console.log(`✓ Toast: icon=${icon}, title=${title}, message=${message}`);
+                
+                if (message && message.trim()) {
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
-                        icon: data.icon ?? 'warning',
-                        title: data.title,
+                        icon: icon,
+                        title: String(title),
+                        html: String(message),
                         showConfirmButton: false,
                         timer: 3000,
                         timerProgressBar: true,
@@ -380,7 +384,7 @@
                         }
                     });
                 } else {
-                    console.error('❌ Datos incompletos:', data);
+                    console.error('❌ Mensaje vacío o inválido');
                 }
             });
 

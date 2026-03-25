@@ -386,16 +386,43 @@ class AttendanceController extends Component
 
         // Crear Carbon con FECHA DE HOY + hora de finalización
         $today = now()->format('Y-m-d');
-        $endsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation['ends_at']);
-        $startsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation['starts_at']);
+        $endsAtTime = $reservation['ends_at'];
+        $startsAtTime = $reservation['starts_at'];
+
+        // Verificar si ya contiene la fecha (si tiene más de 8 caracteres o contiene guiones)
+        if (strlen($endsAtTime) > 8 || str_contains($endsAtTime, '-')) {
+            // Ya tiene fecha completa, usar directamente
+            $endsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $endsAtTime);
+        } else {
+            // Solo tiene hora, concatenar con fecha de hoy
+            $endsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $endsAtTime);
+        }
+
+        if (strlen($startsAtTime) > 8 || str_contains($startsAtTime, '-')) {
+            $startsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $startsAtTime);
+        } else {
+            $startsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $startsAtTime);
+        }
+
         $now = now();
 
-        $minutesUntilEnd = (int) $endsAt->diffInMinutes($now);
-        $secondsUntilEnd = $endsAt->diffInSeconds($now);
+        $secondsUntilEnd = $now->diffInSeconds($endsAt);
+        // Calcular minutos redondeados hacia ARRIBA (si hay 4:58, debe contar como 5 minutos)
+        $minutesUntilEnd = $secondsUntilEnd > 0 ? (int) ceil($secondsUntilEnd / 60) : 0;
 
         // Recalcular isPassed e isActive en tiempo real
         $isPassed = $now >= $endsAt; // Ahora > fecha fin
         $isActive = $now >= $startsAt && $now < $endsAt; // Ahora está entre inicio y fin
+
+        \Log::info("✅ COUNTDOWN DEBUG", [
+            'endsAtTime' => $endsAtTime,
+            'endsAt' => $endsAt->format('Y-m-d H:i:s'),
+            'now' => $now->format('Y-m-d H:i:s'),
+            'secondsUntilEnd' => $secondsUntilEnd,
+            'minutesUntilEnd' => $minutesUntilEnd,
+            'isActive' => $isActive,
+            'isPassed' => $isPassed,
+        ]);
 
         // Si la reservación ya pasó, handle deselección
         if ($isPassed) {
