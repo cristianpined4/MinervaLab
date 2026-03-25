@@ -135,7 +135,7 @@
                                         <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        <p class="text-xs text-amber-800">
+                                        <p class="text-xs text-white/50">
                                             La reservacion esta sobrecargada, las escenas deberan reproducirse mas de una vez
                                         </p>
                                     </div>
@@ -186,10 +186,17 @@
                             </h3>
                             <div class="space-y-2 max-h-64 overflow-y-auto">
                                 @foreach ($disponibilidad as $key => $horario)
+                                    @php
+                                        $isSelected = $horarioSeleccionado
+                                            && isset($horarioSeleccionado['key'])
+                                            && (string) $horarioSeleccionado['key'] === (string) $key;
+                                    @endphp
                                     <div wire:click="seleccionarHorario('{{ $key }}')"
-                                         class="flex items-center justify-between border-2 rounded-xl p-3 transition-all cursor-pointer
+                                         class="flex items-start justify-between flex-col border-2 rounded-xl p-3 transition-all cursor-pointer
                                          {{ $horario['disponible']
-                                            ? 'border-white/10 hover:border-indigo-500 hover:bg-indigo-50'
+                                            ? ($isSelected
+                                                ? 'border-white/90 bg-indigo-500 text-green'
+                                                : 'border-white/10 hover:border-indigo-500 hover:bg-indigo-500 hover:text-green')
                                             : 'border-white/10 bg-white/5 cursor-not-allowed opacity-60' }}">
                                         <div class="flex items-center gap-3">
                                             <div class="w-10 h-10 rounded-full flex items-center justify-center
@@ -217,7 +224,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="text-right">
+                                        <div class="text-right mt-2 flex items-center gap-2">
                                             @php
                                                 $slotStarts = \Carbon\Carbon::parse($horario['starts_at']);
                                                 $slotEnds = \Carbon\Carbon::parse($horario['ends_at']);
