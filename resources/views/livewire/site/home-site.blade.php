@@ -118,7 +118,19 @@
                 @else
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($news as $item)
-                            <article class="bg-white/5 border border-white/10 hover:border-blue-500/40 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 group flex flex-col">
+                            <article
+                                role="button"
+                                tabindex="0"
+                                onclick="openNewsPreview(this)"
+                                onkeydown="if(event.key==='Enter'||event.key===' '){ event.preventDefault(); openNewsPreview(this); }"
+                                data-type="{{ $item->resource_type }}"
+                                data-title="{{ $item->title }}"
+                                data-description="{{ $item->description ?? '' }}"
+                                data-date="{{ $item->date ? formatDate($item->date) : '' }}"
+                                data-image-url="{{ $item->resource_type === 'image' && $item->path ? asset('news/images/' . $item->path) : '' }}"
+                                data-video-url="{{ $item->resource_type === 'video' && $item->path ? asset('news/videos/' . $item->path) : '' }}"
+                                class="bg-white/5 border border-white/10 hover:border-blue-500/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/70 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 group flex flex-col cursor-pointer"
+                            >
 
                                 {{-- Miniatura --}}
                                 <div class="relative overflow-hidden h-44 bg-gradient-to-br
@@ -133,7 +145,7 @@
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                                     @elseif ($item->resource_type === 'video' && $item->path)
                                         <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors">
-                                            <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                            <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
                                                 <i class="fas fa-play text-white"></i>
                                             </div>
                                         </div>
@@ -178,6 +190,11 @@
                                             {{ \Str::limit($item->description, 110) }}
                                         </p>
                                     @endif
+
+                                    <span class="mt-4 inline-flex items-center gap-2 self-start text-cyan-300 text-xs font-semibold">
+                                        <i class="fas fa-eye"></i>
+                                        Click para previsualizar
+                                    </span>
                                 </div>
 
                             </article>
@@ -189,5 +206,89 @@
         </div>
     </main>
 
+    <div id="modal-news-preview" class="modal" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered modal-xl" style="background-color: var(--color-slate-900);">
+            <div class="modal-content bg-slate-900 text-white">
+                <div class="modal-header border-b border-white/10">
+                    <div>
+                        <h2 id="news_preview_title" class="text-xl font-bold">Previsualización</h2>
+                        <p id="news_preview_date" class="text-xs text-blue-200/60 mt-1"></p>
+                    </div>
+                    <button type="button" class="btn btn-close text-white text-3xl" aria-label="Cerrar"
+                        onclick="closeModal(this.closest('.modal'))">&times;</button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <div id="news_preview_media_wrap" class="w-full h-[280px] md:h-[420px] bg-black/40 flex items-center justify-center">
+                        <img id="news_preview_image" src="" alt="Previsualización"
+                            class="hidden w-full h-full object-contain">
+
+                        <video id="news_preview_video" class="hidden w-full h-full" controls>
+                            <source id="news_preview_video_source" src="" type="video/mp4">
+                            Tu navegador no soporta reproducción de video.
+                        </video>
+
+                        <div id="news_preview_article" class="hidden text-center px-6">
+                            <i class="fas fa-file-alt text-indigo-400/70 text-6xl mb-3"></i>
+                            <p class="text-white/70 text-sm">Este contenido es de tipo artículo.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-5 md:p-6">
+                        <p id="news_preview_desc" class="text-blue-100/80 text-sm md:text-base leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @include('layouts.components.footer-global')
+
+    <script>
+        const openNewsPreview = (trigger) => {
+            const modal = document.getElementById('modal-news-preview');
+            const title = document.getElementById('news_preview_title');
+            const date = document.getElementById('news_preview_date');
+            const desc = document.getElementById('news_preview_desc');
+
+            const image = document.getElementById('news_preview_image');
+            const video = document.getElementById('news_preview_video');
+            const videoSource = document.getElementById('news_preview_video_source');
+            const article = document.getElementById('news_preview_article');
+
+            const type = trigger.dataset.type || 'article';
+            const itemTitle = trigger.dataset.title || 'Previsualización';
+            const itemDate = trigger.dataset.date || '';
+            const itemDesc = trigger.dataset.description || 'Sin descripción.';
+            const imageUrl = trigger.dataset.imageUrl || '';
+            const videoUrl = trigger.dataset.videoUrl || '';
+
+            title.textContent = itemTitle;
+            date.textContent = itemDate;
+            desc.textContent = itemDesc;
+
+            image.classList.add('hidden');
+            video.classList.add('hidden');
+            article.classList.add('hidden');
+
+            video.pause();
+            videoSource.src = '';
+            video.load();
+
+            if (type === 'image' && imageUrl) {
+                image.src = imageUrl;
+                image.classList.remove('hidden');
+            } else if (type === 'video' && videoUrl) {
+                videoSource.src = videoUrl;
+                video.load();
+                video.classList.remove('hidden');
+            } else {
+                article.classList.remove('hidden');
+            }
+
+            openModal(modal);
+        };
+
+        window.openNewsPreview = openNewsPreview;
+    </script>
 </div>
