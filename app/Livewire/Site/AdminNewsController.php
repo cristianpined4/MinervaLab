@@ -80,9 +80,13 @@ class AdminNewsController extends Component
       $this->fields['path'] = $reg->path;
       $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
 
+      $subfolder = match ($this->fields['resource_type']) {
+        'video' => 'news-videos',
+        default => 'news-images',
+      };
       // Asignar URL del media guardado si existe (usar siempre disco 'public')
-      if ($reg->path && Storage::disk('public')->exists($reg->path)) {
-        $this->current_media_url = Storage::disk('public')->url($reg->path);
+      if ($reg->path && Storage::disk($subfolder)->exists($reg->path)) {
+        $this->current_media_url = Storage::disk($subfolder)->url($reg->path);
         $this->media_loading = true; // Indicator que la URL está lista
       } else {
         $this->current_media_url = null;
@@ -168,19 +172,19 @@ class AdminNewsController extends Component
 
         // Determinar carpeta según tipo (usar siempre disco 'public')
         $subfolder = match ($this->fields['resource_type']) {
-          'video' => 'news/videos',
-          default => 'news/images',
+          'video' => 'news-videos',
+          default => 'news-images',
         };
 
         // Borrar archivo anterior si existe
         if ($this->record_id) {
           $old = News::find($this->record_id);
-          if ($old && $old->path && Storage::disk('public')->exists($old->path)) {
-            Storage::disk('public')->delete($old->path);
+          if ($old && $old->path && Storage::disk($subfolder)->exists($old->path)) {
+            Storage::disk($subfolder)->delete($old->path);
           }
         }
 
-        $storedPath = $this->upload->storeAs($subfolder, $filename, 'public');
+        $storedPath = $this->upload->storeAs('', $filename, $subfolder);
         $data['path'] = $storedPath;
       } elseif ($this->record_id) {
         // Conservar path existente
@@ -231,8 +235,12 @@ class AdminNewsController extends Component
   {
     $news = News::find($id);
     if ($news) {
-      if ($news->path && Storage::disk('public')->exists($news->path)) {
-        Storage::disk('public')->delete($news->path);
+      $subfolder = match ($news->resource_type) {
+        'video' => 'news-videos',
+        default => 'news-images',
+      };
+      if ($news->path && Storage::disk($subfolder)->exists($news->path)) {
+        Storage::disk($subfolder)->delete($news->path);
       }
       $news->delete();
     }
