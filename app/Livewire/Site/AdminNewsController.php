@@ -25,6 +25,7 @@ class AdminNewsController extends Component
   public $upload; // archivo temporal (imagen o video)
   public $upload_preview_url; // URL de previsualización del archivo subido
   public $current_media_url; // URL del archivo guardado (edición)
+  public $media_loading = false; // Estado de carga del media en modal
 
   public $search = '';
   public $paginate = 10;
@@ -68,6 +69,7 @@ class AdminNewsController extends Component
     $this->resetErrorBag();
     $this->upload = null;
     $this->upload_preview_url = null;
+    $this->media_loading = false;
 
     if ($id) {
       $this->record_id = $id;
@@ -78,15 +80,14 @@ class AdminNewsController extends Component
       $this->fields['path'] = $reg->path;
       $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
 
-      $folder = match ($this->fields['resource_type']) {
-        'video' => 'news-videos',
-        default => 'news-images',
-      };
-
-      // Asignar URL del media guardado si existe
-      $this->current_media_url = ($reg->path && Storage::disk($folder)->exists($reg->path))
-        ? Storage::disk($folder)->url($reg->path)
-        : null;
+      // Asignar URL del media guardado si existe (usar siempre disco 'public')
+      if ($reg->path && Storage::disk('public')->exists($reg->path)) {
+        $this->current_media_url = Storage::disk('public')->url($reg->path);
+        $this->media_loading = true; // Indicator que la URL está lista
+      } else {
+        $this->current_media_url = null;
+        $this->media_loading = false;
+      }
     } else {
       $this->record_id = null;
       $this->fields['resource_type'] = 'article';
@@ -95,6 +96,7 @@ class AdminNewsController extends Component
       $this->fields['path'] = null;
       $this->fields['date'] = now()->format('Y-m-d');
       $this->current_media_url = null;
+      $this->media_loading = false;
     }
 
     $this->dispatch('abrir-modal', [
@@ -164,21 +166,21 @@ class AdminNewsController extends Component
         $ext = $this->upload->getClientOriginalExtension();
         $filename = time() . '_' . \Str::slug($this->fields['title'] ?? 'news') . '.' . $ext;
 
-        // Determinar carpeta según tipo
-        $folder = match ($this->fields['resource_type']) {
-          'video' => 'news-videos',
-          default => 'news-images',
+        // Determinar carpeta según tipo (usar siempre disco 'public')
+        $subfolder = match ($this->fields['resource_type']) {
+          'video' => 'news/videos',
+          default => 'news/images',
         };
 
         // Borrar archivo anterior si existe
         if ($this->record_id) {
           $old = News::find($this->record_id);
-          if ($old && $old->path && Storage::disk($folder)->exists($old->path)) {
-            Storage::disk($folder)->delete($old->path);
+          if ($old && $old->path && Storage::disk('public')->exists($old->path)) {
+            Storage::disk('public')->delete($old->path);
           }
         }
 
-        $storedPath = $this->upload->storeAs('', $filename, $folder);
+        $storedPath = $this->upload->storeAs($subfolder, $filename, 'public');
         $data['path'] = $storedPath;
       } elseif ($this->record_id) {
         // Conservar path existente
@@ -229,12 +231,8 @@ class AdminNewsController extends Component
   {
     $news = News::find($id);
     if ($news) {
-      $folder = match ($news->resource_type) {
-        'video' => 'news-videos',
-        default => 'news-images',
-      };
-      if ($news->path && Storage::disk($folder)->exists($news->path)) {
-        Storage::disk($folder)->delete($news->path);
+      if ($news->path && Storage::disk('public')->exists($news->path)) {
+        Storage::disk('public')->delete($news->path);
       }
       $news->delete();
     }

@@ -127,7 +127,7 @@
                                     @else from-indigo-900/40 to-indigo-950/60 @endif">
 
                                     @if ($item->resource_type === 'image' && $item->path)
-                                        <img src="{{ asset('storage/' . $item->path) }}"
+                                        <img src="{{ asset('news/images/' . $item->path) }}"
                                             alt="{{ $item->title }}"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>

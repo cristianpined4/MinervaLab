@@ -89,20 +89,26 @@
                                 {{-- Previsualización archivo recién subido --}}
                                 @if (!empty($upload_preview_url))
                                     @if ($fields['resource_type'] === 'video')
-                                        <video controls class="mt-3 rounded-lg w-full">
-                                            <source src="{{ $upload_preview_url }}" type="video/mp4">
-                                        </video>
+                                        <div class="mt-3 relative bg-black/50 rounded-lg overflow-hidden">
+                                            <video controls preload="metadata" class="w-full" onloadstart="this.parentElement.classList.add('animate-pulse')" oncanplay="this.parentElement.classList.remove('animate-pulse')">
+                                                <source src="{{ $upload_preview_url }}" type="video/mp4">
+                                                Tu navegador no soporta video HTML5
+                                            </video>
+                                        </div>
                                     @else
                                         <img src="{{ $upload_preview_url }}"
                                             alt="Preview"
                                             class="mt-3 rounded-lg w-full">
                                     @endif
                                 {{-- Previsualización archivo guardado (edición) --}}
-                                @elseif (!empty($current_media_url))
+                                @elseif (!empty($current_media_url) && $media_loading)
                                     @if ($fields['resource_type'] === 'video')
-                                        <video controls class="mt-3 rounded-lg w-full">
-                                            <source src="{{ $current_media_url }}" type="video/mp4">
-                                        </video>
+                                        <div class="mt-3 relative bg-black/50 rounded-lg overflow-hidden">
+                                            <video controls preload="metadata" class="w-full" onloadstart="this.parentElement.classList.add('animate-pulse')" oncanplay="this.parentElement.classList.remove('animate-pulse')">
+                                                <source src="{{ $current_media_url }}" type="video/mp4">
+                                                Tu navegador no soporta video HTML5
+                                            </video>
+                                        </div>
                                     @else
                                         <img src="{{ $current_media_url }}"
                                             alt="Preview"
@@ -246,7 +252,7 @@
                                         <td class="px-4 py-3 text-center">
                                             @if ($item->path)
                                                 @if ($item->resource_type === 'image')
-                                                    <img src="{{ asset( $item->path) }}"
+                                                    <img src="{{ asset('news/images/' . $item->path) }}"
                                                         alt="{{ $item->title }}"
                                                         class="h-10 w-16 object-cover rounded-lg shadow">
                                                 @elseif ($item->resource_type === 'video')
