@@ -461,7 +461,7 @@ class AttendanceController extends Component
                 $this->dispatch('playCountdownSound');
                 \Log::info("📣 Despachando: swal:notify - Faltan {$minutesUntilEnd} minuto(s)");
                 $minutosText = "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!';
-                $this->dispatch('swal:notify', icon: 'warning', title: $minutosText, message: $minutosText);
+                $this->dispatch('swal:notify', icon: 'warning', title: '⚠️ Se está acabando la reservación', message: $minutosText);
             }
         } elseif ($minutesUntilEnd > 5) {
             // Resetear si pasan más de 5 minutos
