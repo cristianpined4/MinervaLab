@@ -341,6 +341,12 @@
                 setTimeout(() => playBeep(600, 400, 0.35), 700);
             });
 
+            // Observer para sonidos de cuenta regresiva (cada minuto)
+            Livewire.on('playCountdownSound', () => {
+                playBeep(1200, 500, 0.5); // Beep más agudo y audible
+                setTimeout(() => playBeep(1200, 300, 0.4), 600);
+            });
+
             // Notificación cuando falta 5 minutos
             Livewire.on('swal:notify', e => {
                 Swal.fire({

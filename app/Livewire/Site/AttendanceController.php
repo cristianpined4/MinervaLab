@@ -21,6 +21,7 @@ class AttendanceController extends Component
     public $playActivationSound = false;
     public $playEndingSound = false;
     public $lastAutoSelectedId = null;
+    public $lastEndingMinute = null; // Rastrear el último minuto de sonido de finalización
 
     protected $listeners = ['refreshReservations' => 'loadReservations'];
 
@@ -112,6 +113,9 @@ class AttendanceController extends Component
             // Si no hay manualmente seleccionada, intentar auto-seleccionar
             $this->autoSelectCurrentReservation();
         }
+
+        // Verificar tiempo restante de la reservación seleccionada
+        $this->checkEndingTimeMinute();
     }
 
     /**
@@ -273,6 +277,47 @@ class AttendanceController extends Component
                     @unlink($file);
                 }
             }
+        }
+    }
+
+    /**
+     * Verificar cada minuto si la reservación está próxima a finalizar (5 minutos o menos)
+     */
+    private function checkEndingTimeMinute()
+    {
+        if (!$this->selectedReservationId) {
+            return;
+        }
+
+        $reservation = null;
+        foreach ($this->reservations as $res) {
+            if ($res['id'] == $this->selectedReservationId) {
+                $reservation = $res;
+                break;
+            }
+        }
+
+        if (!$reservation || !$reservation['isActive']) {
+            return;
+        }
+
+        $endsAt = \Carbon\Carbon::createFromFormat('H:i:s', $reservation['ends_at']);
+        $now = now();
+        $minutesUntilEnd = (int) $endsAt->diffInMinutes($now);
+
+        // Si faltan 5 minutos o menos
+        if ($minutesUntilEnd <= 5 && $minutesUntilEnd >= 0) {
+            // Rastrear el minuto actual (sin segundos)
+            $currentMinute = $now->format('H:i');
+
+            // Solo reproducir sonido si es un minuto diferente al anterior
+            if ($this->lastEndingMinute !== $currentMinute) {
+                $this->lastEndingMinute = $currentMinute;
+                $this->dispatch('playCountdownSound');
+            }
+        } elseif ($minutesUntilEnd > 5) {
+            // Resetear si pasan más de 5 minutos
+            $this->lastEndingMinute = null;
         }
     }
 }
