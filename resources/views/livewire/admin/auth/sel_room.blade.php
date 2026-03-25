@@ -1,5 +1,3 @@
-@extends('layouts.loginAndRegister')
-
 @section('title', 'Seleccionar Sala')
 
 {{-- Ocultar menú / header / footer en login --}}
@@ -7,7 +5,6 @@
 @section('hide_header', true)
 @section('hide_footer', true)
 
-@section('content')
 <div class="h-screen w-screen flex flex-col bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative" id="loginForm">
 
     {{-- SELECCIÓN DE SALA --}}
@@ -255,6 +252,5 @@
         });
     </script>
 </div>
-@endsection
 
 

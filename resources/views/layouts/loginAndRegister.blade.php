@@ -18,10 +18,7 @@
 
 <body class="min-h-screen w-full" style="background: linear-gradient(to bottom right, #0a0f2c, #0c1c3f, #091325);">
 
-    {{-- Contenedor centrado (SIN romper Livewire) --}}
-    <div class="flex min-h-screen items-center justify-center px-4 ">
-        @yield('content')
-    </div>
+    @yield('content')
 
     @livewireScripts
 </body>
