@@ -355,14 +355,16 @@
             Livewire.on('swal:notify', (data) => {
                 console.log('📢 Notificación recibida:', data);
                 
-                // Data es un objeto con {icon, title, message}
-                if (data && data.message) {
-                    console.log('✓ Toast mostrado:', data.message);
+                // Data es un array, acceder al primer elemento que contiene {icon, title, message}
+                const notif = Array.isArray(data) ? data[0] : data;
+                
+                if (notif && notif.message) {
+                    console.log('✓ Toast mostrado:', notif.message);
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
-                        icon: data.icon ?? 'warning',
-                        title: String(data.title ?? data.message),
+                        icon: notif.icon ?? 'warning',
+                        title: String(notif.title ?? notif.message),
                         showConfirmButton: false,
                         timer: 3000,
                         timerProgressBar: true,
@@ -372,7 +374,7 @@
                         }
                     });
                 } else {
-                    console.warn('⚠️ Estructura de datos inesperada:', data);
+                    console.warn('⚠️ Error: datos mal formados o vacíos', notif);
                 }
             });
 

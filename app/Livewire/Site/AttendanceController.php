@@ -123,18 +123,20 @@ class AttendanceController extends Component
 
             // Si la reservación no existe en esta sala, deseleccionar
             if (!$reservationStillExists) {
+                \Log::info("❌ Reservación {$this->selectedReservationId} no existe en la sala");
                 $this->selectedReservationId = null;
                 $this->showQR = false;
                 $this->lastEndingMinute = null;
+                $this->lastReservationEndedAt = null;
             }
         }
 
-        // Auto-seleccionar siempre si no hay selección manual
-        if ($this->autoSelectOnce && $this->selectedReservationId === null) {
-            $this->autoSelectCurrentReservation();
-            $this->autoSelectOnce = false;
-        } elseif ($this->selectedReservationId === null) {
-            // Si no hay manualmente seleccionada, intentar auto-seleccionar
+        // Validar que la selección actual sigue siendo válida
+        $this->validateCurrentSelection();
+
+        // Si NO hay selección manual, intentar auto-seleccionar la activa
+        if ($this->selectedReservationId === null) {
+            \Log::info("🔄 Intentando auto-seleccionar (selectedReservationId es null)");
             $this->autoSelectCurrentReservation();
         }
 
@@ -178,67 +180,82 @@ class AttendanceController extends Component
     }
 
     /**
-     * Auto-seleccionar la reservación que está actualmente en progreso
+     * Validar que la reservación actualmente seleccionada aún sea válida y no esté pasada
      */
-    private function autoSelectCurrentReservation()
+    private function validateCurrentSelection()
     {
-        // Validar que hay sala seleccionada
-        if (!$this->selectedRoomId) {
-            $this->selectedReservationId = null;
-            $this->showQR = false;
+        if (!$this->selectedReservationId) {
             return;
         }
 
-        $currentTimeStr = now()->format('H:i:s');
+        // Buscar la reservación seleccionada
+        $selected = null;
+        foreach ($this->reservations as $res) {
+            if ($res['id'] == $this->selectedReservationId) {
+                $selected = $res;
+                break;
+            }
+        }
 
-        // Buscar la reservación activa actualmente (SOLO en la sala seleccionada)
+        // Si no existe, deseleccionar
+        if (!$selected) {
+            \Log::info("❌ Reservación {$this->selectedReservationId} no existe - deseleccionando");
+            $this->selectedReservationId = null;
+            $this->showQR = false;
+            $this->lastEndingMinute = null;
+            return;
+        }
+
+        // Si está pasada, deseleccionar PERO no aquí (se hace en checkEndingTimeMinute)
+        if ($selected['isPassed']) {
+            \Log::info("⏳ Reservación {$this->selectedReservationId} está pasada");
+        }
+    }
+
+    /**
+     * Auto-seleccionar la reservación que está actualmente en progreso
+     * SOLO ejecutar si NO hay selección manual
+     */
+    private function autoSelectCurrentReservation()
+    {
+        // IMPORTANTE: Este método SOLO se llama si selectedReservationId === null
+        // No debe sobrescribir selecciones manuales del usuario
+
+        if (!$this->selectedRoomId) {
+            \Log::info("❌ Sin sala seleccionada");
+            return;
+        }
+
+        // Buscar la reservación activa actualmente
         foreach ($this->reservations as $res) {
             if ($res['isActive']) {
                 // Si es diferente de la última autoseleccionada, reproducir sonido
                 if ($res['id'] != $this->lastAutoSelectedId) {
                     $this->lastAutoSelectedId = $res['id'];
-                    $this->lastEndingMinute = null; // Resetear contador de minutos
-                    $this->lastReservationEndedAt = null; // Resetear fin de reservación anterior
-                    // Emitir evento para reproducir sonido
-                    \Log::info("✅ Auto-seleccionando reservación {$res['id']} - Despachando playActivationSound");
+                    $this->lastEndingMinute = null;
+                    $this->lastReservationEndedAt = null;
+                    \Log::info("✅ Auto-seleccionando {$res['id']} - playActivationSound");
                     $this->dispatch('playActivationSound');
                 }
 
                 $this->selectedReservationId = $res['id'];
-                $this->notificationShown = false; // Resetear notificación de finalización
+                $this->notificationShown = false;
                 $this->generateQR();
-                // Verificar inmediatamente el tiempo restante
                 $this->checkEndingTimeMinute();
                 return;
             }
         }
 
-        // Si no hay reservación actual, verificar si la anterior terminó
-        if ($this->selectedReservationId !== null) {
-            $wasActive = false;
-            foreach ($this->reservations as $res) {
-                if ($res['id'] == $this->selectedReservationId && $res['isPassed']) {
-                    $wasActive = true;
-                    break;
-                }
-            }
-            // Si la reservación que estaba seleccionada ya pasó, deseleccionar
-            if ($wasActive) {
-                \Log::info("🗑️ Auto-deseleccionando reservación {$this->selectedReservationId}");
-                $this->selectedReservationId = null;
-                $this->showQR = false;
-                $this->notificationShown = false;
-                $this->lastEndingMinute = null;
-                $this->lastReservationEndedAt = null; // Resetear para no disparar eventos múltiples
-            }
-        }
+        \Log::info("ℹ️ No hay reservación activa para auto-seleccionar");
     }
 
     /**
-     * Seleccionar una reservación y generar QR
+     * Seleccionar una reservación manualmente y generar QR
      */
     public function selectReservation($reservationId)
     {
+        \Log::info("👆 Usuario click en reservación {$reservationId}");
+
         // Validar que la reservación pertenece a la sala seleccionada
         $isValidReservation = false;
         foreach ($this->reservations as $res) {
@@ -249,17 +266,24 @@ class AttendanceController extends Component
         }
 
         if (!$isValidReservation) {
-            // Reservación no pertenece a la sala seleccionada
+            \Log::warning("⚠️ Reservación {$reservationId} no válida para esta sala");
             return;
         }
 
+        // Si es la misma y QR ya está generado, no hacer nada
         if ($this->selectedReservationId === $reservationId && !empty($this->qrImage)) {
-            return; // Ya está seleccionada y QR generado
+            \Log::info("ℹ️ Reservación {$reservationId} ya está seleccionada");
+            return;
         }
 
+        // Seleccionar la nueva reservación
         $this->selectedReservationId = $reservationId;
+        \Log::info("✅ Seleccionada reservación {$reservationId}");
+
+        // Resetear contadores SOLO si cambió de reservación
         $this->notificationShown = false;
-        $this->lastEndingMinute = null; // Resetear contador de minutos
+        $this->lastEndingMinute = null; // Permite sonido al cambiar de res
+        $this->lastReservationEndedAt = null; // Resetea el contador de finalización
         $this->qrImage = ''; // Limpiar QR anterior
         $this->showQR = false; // Ocultar QR mientras se genera
 
