@@ -103,10 +103,14 @@ class AttendanceController extends Component
         // Ordenar: próximas, activas, pasadas
         $this->reservations = $this->sortReservations($this->reservations);
 
-        // Solo auto-seleccionar en la primera carga de esta sala
+        // Auto-seleccionar siempre si no hay selección manual
+        // solo en la primera carga, pero verificar si hay cambios de reservación activa
         if ($this->autoSelectOnce && $this->selectedReservationId === null) {
             $this->autoSelectCurrentReservation();
             $this->autoSelectOnce = false;
+        } elseif ($this->selectedReservationId === null) {
+            // Si no hay manualmente seleccionada, intentar auto-seleccionar
+            $this->autoSelectCurrentReservation();
         }
     }
 

@@ -328,17 +328,17 @@
                 Livewire.dispatch('refreshReservations');
             }, 5000);
 
-            // Observer para sonidos de activación
+            // Observer para sonidos de activación (más largos)
             Livewire.on('playActivationSound', () => {
-                playBeep(800, 300, 0.4); // Beep ascendente
-                setTimeout(() => playBeep(1000, 200, 0.3), 150);
+                playBeep(800, 500, 0.4); // Beep ascendente más largo
+                setTimeout(() => playBeep(1000, 400, 0.35), 200);
             });
 
-            // Observer para sonidos de finalización
+            // Observer para sonidos de finalización (más largos)
             Livewire.on('playEndingSound', () => {
-                playBeep(600, 200, 0.3);
-                setTimeout(() => playBeep(600, 200, 0.3), 250);
-                setTimeout(() => playBeep(600, 200, 0.3), 500);
+                playBeep(600, 400, 0.35);
+                setTimeout(() => playBeep(600, 400, 0.35), 350);
+                setTimeout(() => playBeep(600, 400, 0.35), 700);
             });
 
             // Notificación cuando falta 5 minutos
@@ -353,7 +353,7 @@
                     timerProgressBar: true,
                 });
                 // Reproducir sonido de advertencia
-                playBeep(400, 150, 0.3);
+                playBeep(400, 300, 0.35);
             });
 
         });
