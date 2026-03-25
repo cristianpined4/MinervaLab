@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class checkUser
+class CheckUser
 {
     /**
      * Permite el acceso solo a usuarios con permissions = 1 (Administrador).
@@ -33,4 +33,3 @@ class checkUser
         return $next($request);
     }
 }
-
