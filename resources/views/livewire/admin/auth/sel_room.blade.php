@@ -120,15 +120,23 @@
                 <div class="flex-1 overflow-y-auto px-4 py-4 space-y-3 scrollbar-thin scrollbar-thumb-cyan-500/30 scrollbar-track-transparent">
                     @forelse ($reservations as $res)
                         @php
+                            // Comparar solo horas (H:i:s format)
+                            $currentTime = now()->format('H:i:s');
+                            $isActive = $res['starts_at'] <= $currentTime && $res['ends_at'] >= $currentTime;
+                            $isPassed = $res['ends_at'] < $currentTime;
+                            
+                            // Para mostrar bonito
                             $startsAt = \Carbon\Carbon::createFromFormat('H:i:s', $res['starts_at']);
                             $endsAt = \Carbon\Carbon::createFromFormat('H:i:s', $res['ends_at']);
-                            $now = now();
-                            $isActive = $startsAt <= $now && $endsAt >= $now;
-                            $isPassed = $endsAt < $now;
-                            $minutesUntilEnd = $isActive ? $endsAt->diffInMinutes($now) : null;
-                            $isEndingSoon = $isActive && $minutesUntilEnd <= 5 && $minutesUntilEnd >= 0;
                             $startsAtFormatted = $startsAt->format('h:i A');
                             $endsAtFormatted = $endsAt->format('h:i A');
+                            
+                            // Minutos hasta fin
+                            $minutesUntilEnd = null;
+                            if ($isActive) {
+                                $minutesUntilEnd = $endsAt->diffInMinutes($startsAt->setTimeFromTimeString($currentTime));
+                            }
+                            $isEndingSoon = $isActive && $minutesUntilEnd !== null && $minutesUntilEnd <= 5 && $minutesUntilEnd >= 0;
                         @endphp
 
                         <button wire:click="selectReservation({{ $res['id'] }})"
@@ -353,18 +361,16 @@
 
             // Notificación con toast
             Livewire.on('swal:notify', (data) => {
-                console.log('📢 Notificación recibida:', data);
+                console.log('📢 Toast:', data);
                 
-                // Data es un array, acceder al primer elemento que contiene {icon, title, message}
-                const notif = Array.isArray(data) ? data[0] : data;
-                
-                if (notif && notif.message) {
-                    console.log('✓ Toast mostrado:', notif.message);
+                // Con parámetros nombrados, data es un objeto {icon, title, message}
+                if (data && data.message) {
+                    console.log('✓ Toast mostrado:', data.message);
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
-                        icon: notif.icon ?? 'warning',
-                        title: String(notif.title ?? notif.message),
+                        icon: data.icon ?? 'warning',
+                        title: data.title,
                         showConfirmButton: false,
                         timer: 3000,
                         timerProgressBar: true,
@@ -374,7 +380,7 @@
                         }
                     });
                 } else {
-                    console.warn('⚠️ Error: datos mal formados o vacíos', notif);
+                    console.error('❌ Datos incompletos:', data);
                 }
             });
 

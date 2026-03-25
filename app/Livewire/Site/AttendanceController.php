@@ -384,14 +384,18 @@ class AttendanceController extends Component
             return;
         }
 
-        $endsAt = \Carbon\Carbon::createFromFormat('H:i:s', $reservation['ends_at']);
+        // Crear Carbon con FECHA DE HOY + hora de finalización
+        $today = now()->format('Y-m-d');
+        $endsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation['ends_at']);
+        $startsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation['starts_at']);
         $now = now();
+
         $minutesUntilEnd = (int) $endsAt->diffInMinutes($now);
         $secondsUntilEnd = $endsAt->diffInSeconds($now);
 
-        // Recalcular isPassed en tiempo real (no usar el valor cacheado)
-        $isPassed = $secondsUntilEnd < 0;
-        $isActive = !$isPassed && $secondsUntilEnd >= 0;
+        // Recalcular isPassed e isActive en tiempo real
+        $isPassed = $now >= $endsAt; // Ahora > fecha fin
+        $isActive = $now >= $startsAt && $now < $endsAt; // Ahora está entre inicio y fin
 
         // Si la reservación ya pasó, handle deselección
         if ($isPassed) {
@@ -405,7 +409,7 @@ class AttendanceController extends Component
                 \Log::info("🔊 Despachando: playEndingSound para reservación {$currentResId}");
                 $this->dispatch('playEndingSound');
                 \Log::info('📢 Despachando: swal:notify - Finalizada');
-                $this->dispatch('swal:notify', ['icon' => 'info', 'title' => '✓ Reservación Finalizada', 'message' => '✓ Reservación Finalizada']);
+                $this->dispatch('swal:notify', icon: 'success', title: '✓ Reservación Finalizada', message: '✓ Reservación Finalizada');
             }
 
             // Deseleccionar inmediatamente (no esperar a que sea < -1)
@@ -429,7 +433,8 @@ class AttendanceController extends Component
                 \Log::info("🔔 Despachando: playCountdownSound ({$minutesUntilEnd} min)");
                 $this->dispatch('playCountdownSound');
                 \Log::info("📣 Despachando: swal:notify - Faltan {$minutesUntilEnd} minuto(s)");
-                $this->dispatch('swal:notify', ['icon' => 'warning', 'title' => "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!', 'message' => "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!']);
+                $minutosText = "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!';
+                $this->dispatch('swal:notify', icon: 'warning', title: $minutosText, message: $minutosText);
             }
         } elseif ($minutesUntilEnd > 5) {
             // Resetear si pasan más de 5 minutos
