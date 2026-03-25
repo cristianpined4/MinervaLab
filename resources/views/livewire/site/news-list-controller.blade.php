@@ -252,10 +252,7 @@ function shareEvent() {
         navigator.share({
             title: title,
             url: url
-        }).then(() => {
-            console.log('Evento compartido exitosamente');
         }).catch(err => {
-            console.log('Error al compartir:', err);
             fallbackShare(title, url);
         });
     } else {

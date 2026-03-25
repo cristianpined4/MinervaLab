@@ -290,8 +290,6 @@
                         title.textContent = data[0].description || 'Vista previa';
                         video.load();
                         openModal(modal);
-                    } else {
-                        console.warn('No se encontró el modal o los elementos del video.');
                     }
                 }, 200);
             });

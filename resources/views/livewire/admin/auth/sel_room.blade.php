@@ -330,7 +330,6 @@
         }
 
         document.addEventListener('livewire:initialized', function () {
-            console.log('✓ Livewire inicializado');
 
             // Actualizar cada segundo para capturar cambios de minuto
             setInterval(() => {
@@ -339,14 +338,12 @@
 
             // Observer para sonidos de activación (más largos)
             Livewire.on('playActivationSound', () => {
-                console.log('🔊 Sonido de ACTIVACIÓN');
                 playBeep(800, 500, 0.4); // Beep ascendente más largo
                 setTimeout(() => playBeep(1000, 400, 0.35), 200);
             });
 
             // Observer para sonidos de finalización (más largos)
             Livewire.on('playEndingSound', () => {
-                console.log('🔊 Sonido de FINALIZACIÓN');
                 playBeep(600, 400, 0.35);
                 setTimeout(() => playBeep(600, 400, 0.35), 350);
                 setTimeout(() => playBeep(600, 400, 0.35), 700);
@@ -354,19 +351,14 @@
 
             // Observer para sonidos de cuenta regresiva (cada minuto)
             Livewire.on('playCountdownSound', () => {
-                console.log('🔊 Sonido de CUENTA REGRESIVA');
                 playBeep(1200, 500, 0.5); // Beep más agudo y audible
                 setTimeout(() => playBeep(1200, 300, 0.4), 600);
             });
 
             // Notificación con toast
             Livewire.on('swal:notify', (payload) => {
-                console.log('📢 Toast recibido:', payload);
-                
                 // Livewire 3 con parámetros nombrados envía como objeto
                 const { icon = 'warning', title = '', message = '' } = payload;
-                
-                console.log(`✓ Toast: icon=${icon}, title=${title}, message=${message}`);
                 
                 if (message && message.trim()) {
                     Swal.fire({
@@ -383,8 +375,6 @@
                             toast.addEventListener('mouseleave', Swal.resumeTimer);
                         }
                     });
-                } else {
-                    console.error('❌ Mensaje vacío o inválido');
                 }
             });
 
