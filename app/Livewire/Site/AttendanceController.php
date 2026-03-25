@@ -229,6 +229,7 @@ class AttendanceController extends Component
                 $this->showQR = false;
                 $this->notificationShown = false;
                 $this->lastEndingMinute = null;
+                $this->lastReservationEndedAt = null; // Resetear para no disparar eventos múltiples
             }
         }
     }
@@ -355,6 +356,7 @@ class AttendanceController extends Component
             $this->selectedReservationId = null;
             $this->showQR = false;
             $this->lastEndingMinute = null;
+            $this->lastReservationEndedAt = null;
             return;
         }
 
@@ -367,24 +369,28 @@ class AttendanceController extends Component
         $isPassed = $secondsUntilEnd < 0;
         $isActive = !$isPassed && $secondsUntilEnd >= 0;
 
-        // Si la reservación ya pasó, deseleccionar
+        // Si la reservación ya pasó, handle deselección
         if ($isPassed) {
-            if ($this->selectedReservationId != $this->lastReservationEndedAt) {
+            // Solo disparar el evento una sola vez usando el ID como identificador
+            $currentResId = (int) ($this->selectedReservationId ?? 0);
+            $lastResId = (int) ($this->lastReservationEndedAt ?? 0);
+
+            if ($currentResId !== 0 && $currentResId !== $lastResId) {
+                // Disparar evento solo una vez
                 $this->lastReservationEndedAt = $this->selectedReservationId;
-                \Log::info('🔊 Despachando: playEndingSound');
+                \Log::info("🔊 Despachando: playEndingSound para reservación {$currentResId}");
                 $this->dispatch('playEndingSound');
                 \Log::info('📢 Despachando: swal:notify - Finalizada');
-                $this->dispatch('swal:notify', [['icon' => 'info', 'message' => '✓ Reservación Finalizada']]);
+                $this->dispatch('swal:notify', ['icon' => 'info', 'title' => '✓ Reservación Finalizada', 'message' => '✓ Reservación Finalizada']);
             }
-            // Deseleccionar después de un segundo
-            if ($secondsUntilEnd < -1) {
-                \Log::info('🗑️ Deseleccionando reservación (ya pasó)');
-                $this->selectedReservationId = null;
-                $this->showQR = false;
-                $this->notificationShown = false;
-                $this->lastEndingMinute = null;
-                $this->lastReservationEndedAt = null;
-            }
+
+            // Deseleccionar inmediatamente (no esperar a que sea < -1)
+            \Log::info("🗑️ Deseleccionando reservación {$currentResId} (ya pasó - {$secondsUntilEnd}s)");
+            $this->selectedReservationId = null;
+            $this->showQR = false;
+            $this->notificationShown = false;
+            $this->lastEndingMinute = null;
+            // NO resetear lastReservationEndedAt aquí - mantenerlo para evitar duplicados en próximo ciclo
             return;
         }
 
@@ -396,10 +402,10 @@ class AttendanceController extends Component
             // Solo reproducir sonido si es un minuto diferente al anterior
             if ($this->lastEndingMinute !== $currentMinute) {
                 $this->lastEndingMinute = $currentMinute;
-                \Log::info("🔊 Despachando: playCountdownSound ($minutesUntilEnd min)");
+                \Log::info("🔔 Despachando: playCountdownSound ({$minutesUntilEnd} min)");
                 $this->dispatch('playCountdownSound');
-                \Log::info("📢 Despachando: swal:notify - Faltan $minutesUntilEnd minuto(s)");
-                $this->dispatch('swal:notify', [['icon' => 'warning', 'message' => '⏰ ¡Faltan ' . $minutesUntilEnd . ' minuto' . ($minutesUntilEnd != 1 ? 's' : '') . '!']]);
+                \Log::info("📣 Despachando: swal:notify - Faltan {$minutesUntilEnd} minuto(s)");
+                $this->dispatch('swal:notify', ['icon' => 'warning', 'title' => "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!', 'message' => "⏰ ¡Faltan {$minutesUntilEnd} minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!']);
             }
         } elseif ($minutesUntilEnd > 5) {
             // Resetear si pasan más de 5 minutos

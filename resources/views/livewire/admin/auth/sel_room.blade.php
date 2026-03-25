@@ -353,13 +353,16 @@
 
             // Notificación con toast
             Livewire.on('swal:notify', (data) => {
-                console.log('📢 Notificación:', data);
-                if (data && data[0] && data[0].message) {
+                console.log('📢 Notificación recibida:', data);
+                
+                // Data es un objeto con {icon, title, message}
+                if (data && data.message) {
+                    console.log('✓ Toast mostrado:', data.message);
                     Swal.fire({
                         toast: true,
                         position: 'top-end',
-                        icon: data[0].icon ?? 'warning',
-                        title: String(data[0].message),
+                        icon: data.icon ?? 'warning',
+                        title: String(data.title ?? data.message),
                         showConfirmButton: false,
                         timer: 3000,
                         timerProgressBar: true,
@@ -368,6 +371,8 @@
                             toast.addEventListener('mouseleave', Swal.resumeTimer);
                         }
                     });
+                } else {
+                    console.warn('⚠️ Estructura de datos inesperada:', data);
                 }
             });
 
