@@ -50,7 +50,10 @@ class AttendanceController extends Component
         $this->selectedReservationId = null;
         $this->showQR = false;
         $this->notificationShown = false;
-        $this->autoSelectOnce = true; // Permitir auto-selección en esta nueva sala
+        $this->autoSelectOnce = true;
+        $this->lastAutoSelectedId = null; // Resetear autoselección
+        $this->lastEndingMinute = null; // Resetear contador de minutos
+        $this->lastReservationEndedAt = null; // Resetear fin de reservación anterior
 
         $this->loadReservations();
     }
@@ -62,6 +65,9 @@ class AttendanceController extends Component
     {
         if (!$this->selectedRoomId) {
             $this->reservations = [];
+            $this->selectedReservationId = null;
+            $this->showQR = false;
+            $this->lastEndingMinute = null;
             return;
         }
 
@@ -105,8 +111,25 @@ class AttendanceController extends Component
         // Ordenar: próximas, activas, pasadas
         $this->reservations = $this->sortReservations($this->reservations);
 
+        // Validar que la reservación seleccionada aún pertenece a esta sala
+        if ($this->selectedReservationId !== null) {
+            $reservationStillExists = false;
+            foreach ($this->reservations as $res) {
+                if ($res['id'] == $this->selectedReservationId) {
+                    $reservationStillExists = true;
+                    break;
+                }
+            }
+            
+            // Si la reservación no existe en esta sala, deseleccionar
+            if (!$reservationStillExists) {
+                $this->selectedReservationId = null;
+                $this->showQR = false;
+                $this->lastEndingMinute = null;
+            }
+        }
+
         // Auto-seleccionar siempre si no hay selección manual
-        // solo en la primera carga, pero verificar si hay cambios de reservación activa
         if ($this->autoSelectOnce && $this->selectedReservationId === null) {
             $this->autoSelectCurrentReservation();
             $this->autoSelectOnce = false;
@@ -159,9 +182,16 @@ class AttendanceController extends Component
      */
     private function autoSelectCurrentReservation()
     {
+        // Validar que hay sala seleccionada
+        if (!$this->selectedRoomId) {
+            $this->selectedReservationId = null;
+            $this->showQR = false;
+            return;
+        }
+
         $currentTimeStr = now()->format('H:i:s');
 
-        // Buscar la reservación activa actualmente
+        // Buscar la reservación activa actualmente (SOLO en la sala seleccionada)
         foreach ($this->reservations as $res) {
             if ($res['isActive']) {
                 // Si es diferente de la última autoseleccionada, reproducir sonido
@@ -174,7 +204,7 @@ class AttendanceController extends Component
                 }
 
                 $this->selectedReservationId = $res['id'];
-                $this->notificationShown = false; // Resetear notificación de finalizacion
+                $this->notificationShown = false; // Resetear notificación de finalización
                 $this->generateQR();
                 // Verificar inmediatamente el tiempo restante
                 $this->checkEndingTimeMinute();
@@ -206,6 +236,20 @@ class AttendanceController extends Component
      */
     public function selectReservation($reservationId)
     {
+        // Validar que la reservación pertenece a la sala seleccionada
+        $isValidReservation = false;
+        foreach ($this->reservations as $res) {
+            if ($res['id'] == $reservationId) {
+                $isValidReservation = true;
+                break;
+            }
+        }
+
+        if (!$isValidReservation) {
+            // Reservación no pertenece a la sala seleccionada
+            return;
+        }
+
         if ($this->selectedReservationId === $reservationId && !empty($this->qrImage)) {
             return; // Ya está seleccionada y QR generado
         }
@@ -290,10 +334,12 @@ class AttendanceController extends Component
      */
     private function checkEndingTimeMinute()
     {
-        if (!$this->selectedReservationId) {
+        // Validar que hay sala y reservación selec
+        if (!$this->selectedRoomId || !$this->selectedReservationId) {
             return;
         }
 
+        // Buscar la reservación SOLO en las reservaciones de la sala seleccionada
         $reservation = null;
         foreach ($this->reservations as $res) {
             if ($res['id'] == $this->selectedReservationId) {
@@ -302,7 +348,11 @@ class AttendanceController extends Component
             }
         }
 
+        // Si no encontró la reservación en la sala actual, deseleccionar
         if (!$reservation) {
+            $this->selectedReservationId = null;
+            $this->showQR = false;
+            $this->lastEndingMinute = null;
             return;
         }
 
