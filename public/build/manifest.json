@@ -8,7 +8,7 @@
     ]
   },
   "resources/css/app-site.css": {
-    "file": "assets/app-site-CrtBp_-8.css",
+    "file": "assets/app-site-CUQ_1PgE.css",
     "src": "resources/css/app-site.css",
     "isEntry": true,
     "names": [
@@ -16,7 +16,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "assets/app-C7LHu6dM.css",
+    "file": "assets/app-G1X1WPIQ.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
@@ -36,7 +36,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-ChMy9Pw8.js",
+    "file": "assets/app-BuvkOQP_.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

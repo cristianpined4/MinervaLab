@@ -105,6 +105,11 @@ const openModal = (modal) => {
 window.openModal = openModal;
 
 const closeModal = (modal) => {
+    const videos = modal.querySelectorAll("video");
+    videos.forEach((video) => {
+        video.pause();
+    });
+
     modal.style.display = "none";
     clearForm(modal);
 };

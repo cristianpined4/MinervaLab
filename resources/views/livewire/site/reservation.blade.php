@@ -288,8 +288,8 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header border-b border-gray-700 text-white">
-                    <h2 class="text-xl font-bold text-white flex items-center gap-2" id="video_title">Vista previa</h2>
-                    <button type="button" class="btn btn-close text-white text-3xl" aria-label="Cerrar"
+                    <h2 class="text-xl font-bold text-black flex items-center gap-2" id="video_title">Vista previa</h2>
+                    <button type="button" class="btn btn-close text-black text-3xl" aria-label="Cerrar"
                         onclick="closeModal(this.closest('.modal'))">&times;</button>
                 </div>
                 <div class="modal-body p-0">
