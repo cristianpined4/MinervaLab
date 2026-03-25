@@ -322,6 +322,7 @@
         }
 
         document.addEventListener('livewire:initialized', function () {
+            console.log('✓ Livewire inicializado');
 
             // Actualizar cada segundo para capturar cambios de minuto
             setInterval(() => {
@@ -330,12 +331,14 @@
 
             // Observer para sonidos de activación (más largos)
             Livewire.on('playActivationSound', () => {
+                console.log('🔊 Sonido de ACTIVACIÓN');
                 playBeep(800, 500, 0.4); // Beep ascendente más largo
                 setTimeout(() => playBeep(1000, 400, 0.35), 200);
             });
 
             // Observer para sonidos de finalización (más largos)
             Livewire.on('playEndingSound', () => {
+                console.log('🔊 Sonido de FINALIZACIÓN');
                 playBeep(600, 400, 0.35);
                 setTimeout(() => playBeep(600, 400, 0.35), 350);
                 setTimeout(() => playBeep(600, 400, 0.35), 700);
@@ -343,23 +346,29 @@
 
             // Observer para sonidos de cuenta regresiva (cada minuto)
             Livewire.on('playCountdownSound', () => {
+                console.log('🔊 Sonido de CUENTA REGRESIVA');
                 playBeep(1200, 500, 0.5); // Beep más agudo y audible
                 setTimeout(() => playBeep(1200, 300, 0.4), 600);
             });
 
-            // Notificación cuando falta 5 minutos
-            Livewire.on('swal:notify', e => {
-                Swal.fire({
-                    toast: true,
-                    position: 'top-end',
-                    icon: e[0].icon ?? 'warning',
-                    title: e[0].message,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-                // Reproducir sonido de advertencia
-                playBeep(400, 300, 0.35);
+            // Notificación con toast
+            Livewire.on('swal:notify', (data) => {
+                console.log('📢 Notificación:', data);
+                if (data && data[0] && data[0].message) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: data[0].icon ?? 'warning',
+                        title: String(data[0].message),
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
+                    });
+                }
             });
 
         });

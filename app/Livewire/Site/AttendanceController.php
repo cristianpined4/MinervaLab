@@ -120,7 +120,7 @@ class AttendanceController extends Component
                     break;
                 }
             }
-            
+
             // Si la reservación no existe en esta sala, deseleccionar
             if (!$reservationStillExists) {
                 $this->selectedReservationId = null;
@@ -200,6 +200,7 @@ class AttendanceController extends Component
                     $this->lastEndingMinute = null; // Resetear contador de minutos
                     $this->lastReservationEndedAt = null; // Resetear fin de reservación anterior
                     // Emitir evento para reproducir sonido
+                    \Log::info("✅ Auto-seleccionando reservación {$res['id']} - Despachando playActivationSound");
                     $this->dispatch('playActivationSound');
                 }
 
@@ -223,6 +224,7 @@ class AttendanceController extends Component
             }
             // Si la reservación que estaba seleccionada ya pasó, deseleccionar
             if ($wasActive) {
+                \Log::info("🗑️ Auto-deseleccionando reservación {$this->selectedReservationId}");
                 $this->selectedReservationId = null;
                 $this->showQR = false;
                 $this->notificationShown = false;
@@ -334,7 +336,7 @@ class AttendanceController extends Component
      */
     private function checkEndingTimeMinute()
     {
-        // Validar que hay sala y reservación selec
+        // Validar que hay sala y reservación seleccionada
         if (!$this->selectedRoomId || !$this->selectedReservationId) {
             return;
         }
@@ -361,30 +363,42 @@ class AttendanceController extends Component
         $minutesUntilEnd = (int) $endsAt->diffInMinutes($now);
         $secondsUntilEnd = $endsAt->diffInSeconds($now);
 
+        // Recalcular isPassed en tiempo real (no usar el valor cacheado)
+        $isPassed = $secondsUntilEnd < 0;
+        $isActive = !$isPassed && $secondsUntilEnd >= 0;
+
         // Si la reservación ya pasó, deseleccionar
-        if ($reservation['isPassed']) {
+        if ($isPassed) {
             if ($this->selectedReservationId != $this->lastReservationEndedAt) {
                 $this->lastReservationEndedAt = $this->selectedReservationId;
+                \Log::info('🔊 Despachando: playEndingSound');
                 $this->dispatch('playEndingSound');
+                \Log::info('📢 Despachando: swal:notify - Finalizada');
                 $this->dispatch('swal:notify', [['icon' => 'info', 'message' => '✓ Reservación Finalizada']]);
             }
             // Deseleccionar después de un segundo
             if ($secondsUntilEnd < -1) {
+                \Log::info('🗑️ Deseleccionando reservación (ya pasó)');
                 $this->selectedReservationId = null;
                 $this->showQR = false;
+                $this->notificationShown = false;
+                $this->lastEndingMinute = null;
+                $this->lastReservationEndedAt = null;
             }
             return;
         }
 
         // Si está activa y faltan 5 minutos o menos
-        if ($reservation['isActive'] && $minutesUntilEnd <= 5 && $minutesUntilEnd >= 0) {
+        if ($isActive && $minutesUntilEnd <= 5 && $minutesUntilEnd >= 0) {
             // Rastrear el minuto actual (sin segundos)
             $currentMinute = $now->format('H:i');
 
             // Solo reproducir sonido si es un minuto diferente al anterior
             if ($this->lastEndingMinute !== $currentMinute) {
                 $this->lastEndingMinute = $currentMinute;
+                \Log::info("🔊 Despachando: playCountdownSound ($minutesUntilEnd min)");
                 $this->dispatch('playCountdownSound');
+                \Log::info("📢 Despachando: swal:notify - Faltan $minutesUntilEnd minuto(s)");
                 $this->dispatch('swal:notify', [['icon' => 'warning', 'message' => '⏰ ¡Faltan ' . $minutesUntilEnd . ' minuto' . ($minutesUntilEnd != 1 ? 's' : '') . '!']]);
             }
         } elseif ($minutesUntilEnd > 5) {
