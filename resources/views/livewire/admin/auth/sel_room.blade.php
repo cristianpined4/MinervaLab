@@ -5,15 +5,15 @@
 @section('hide_header', true)
 @section('hide_footer', true)
 
-{{-- Elementos de audio para sonidos --}}
-<audio id="activationSound" preload="auto">
-    <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
-</audio>
-<audio id="endingSound" preload="auto">
-    <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
-</audio>
 
 <div class="h-screen w-screen flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden" id="loginForm">
+    {{-- Elementos de audio para sonidos --}}
+    <audio id="activationSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="endingSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
     {{-- Fondo decorativo --}}
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
@@ -182,7 +182,7 @@
 
                                     {{-- Usuario destacado --}}
                                     <div class="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-4 border border-cyan-500/40">
-                                        <div class="text-cyan-300 text-xs uppercase tracking-widest font-semibold mb-1.5">Estudiante</div>
+                                        <div class="text-cyan-300 text-xs uppercase tracking-widest font-semibold mb-1.5">{{ $res['rol_user'] ?? 'Sin Rol' }}</div>
                                         <div class="flex items-start gap-3">
                                             <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-cyan-500/30">
                                                 {{ substr($res['user'], 0, 1) }}

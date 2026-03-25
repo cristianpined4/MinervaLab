@@ -78,8 +78,9 @@ class AttendanceController extends Component
         $this->reservations = $reservations->map(function ($res) use ($currentTimeStr) {
             // Acceder a la relación precargada
             $user = $res->HasUser;
-            $userName = $user ? $user->name : 'Sin usuario';
+            $userName = $user ? $user->first_name . ' ' . $user->last_name : 'Sin Nombre';
             $userUsername = $user ? $user->username : '-';
+            $rol_user = $user ? $user->Rol->name : 'Sin Rol';
 
             // Determinar estado
             $isActive = $res->starts_at <= $currentTimeStr && $res->ends_at >= $currentTimeStr;
@@ -90,6 +91,7 @@ class AttendanceController extends Component
                 'starts_at' => $res->starts_at,
                 'ends_at' => $res->ends_at,
                 'user' => $userName,
+                'rol_user' => $rol_user,
                 'username' => $userUsername,
                 'students' => $res->students ?? 0,
                 'status' => 'pending',
