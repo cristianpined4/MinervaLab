@@ -21,7 +21,8 @@ class AttendanceController extends Component
     public $playActivationSound = false;
     public $playEndingSound = false;
     public $lastAutoSelectedId = null;
-    public $lastEndingMinute = null; // Rastrear el último minuto de sonido de finalización
+    public $lastEndingMinute = null;
+    public $lastReservationEndedAt = null; // Rastrear cuándo pasó la última reservación
 
     protected $listeners = ['refreshReservations' => 'loadReservations'];
 
@@ -166,19 +167,38 @@ class AttendanceController extends Component
                 // Si es diferente de la última autoseleccionada, reproducir sonido
                 if ($res['id'] != $this->lastAutoSelectedId) {
                     $this->lastAutoSelectedId = $res['id'];
+                    $this->lastEndingMinute = null; // Resetear contador de minutos
+                    $this->lastReservationEndedAt = null; // Resetear fin de reservación anterior
                     // Emitir evento para reproducir sonido
                     $this->dispatch('playActivationSound');
                 }
 
                 $this->selectedReservationId = $res['id'];
+                $this->notificationShown = false; // Resetear notificación de finalizacion
                 $this->generateQR();
+                // Verificar inmediatamente el tiempo restante
+                $this->checkEndingTimeMinute();
                 return;
             }
         }
 
-        // Si no hay reservación actual, no mostrar QR
-        $this->showQR = false;
-        $this->selectedReservationId = null;
+        // Si no hay reservación actual, verificar si la anterior terminó
+        if ($this->selectedReservationId !== null) {
+            $wasActive = false;
+            foreach ($this->reservations as $res) {
+                if ($res['id'] == $this->selectedReservationId && $res['isPassed']) {
+                    $wasActive = true;
+                    break;
+                }
+            }
+            // Si la reservación que estaba seleccionada ya pasó, deseleccionar
+            if ($wasActive) {
+                $this->selectedReservationId = null;
+                $this->showQR = false;
+                $this->notificationShown = false;
+                $this->lastEndingMinute = null;
+            }
+        }
     }
 
     /**
@@ -192,39 +212,24 @@ class AttendanceController extends Component
 
         $this->selectedReservationId = $reservationId;
         $this->notificationShown = false;
+        $this->lastEndingMinute = null; // Resetear contador de minutos
         $this->qrImage = ''; // Limpiar QR anterior
         $this->showQR = false; // Ocultar QR mientras se genera
 
         // Generar QR de inmediato
         $this->generateQR();
 
-        // Verificar si está próxima a finalizar
-        $this->checkEndingTime();
+        // Verificar tiempo restante
+        $this->checkEndingTimeMinute();
     }
 
     /**
-     * Verificar si la reservación está próxima a finalizar (5 minutos)
+     * Verificar si la reservación está próxima a finalizar (5 minutos) - Antigua versión (no usar)
      */
     private function checkEndingTime()
     {
-        $reservation = null;
-        foreach ($this->reservations as $res) {
-            if ($res['id'] == $this->selectedReservationId) {
-                $reservation = $res;
-                break;
-            }
-        }
-
-        if ($reservation && $reservation['isActive']) {
-            $endsAt = \Carbon\Carbon::createFromFormat('H:i:s', $reservation['ends_at']);
-            $minutesUntilEnd = $endsAt->diffInMinutes(now());
-
-            if ($minutesUntilEnd <= 5 && $minutesUntilEnd >= 0 && !$this->notificationShown) {
-                $this->notificationShown = true;
-                $this->dispatch('playEndingSound');
-                $this->dispatch('swal:notify', [['icon' => 'warning', 'message' => "⏰ ¡Reservación finaliza en $minutesUntilEnd minuto" . ($minutesUntilEnd != 1 ? 's' : '') . '!']]);
-            }
-        }
+        // Esta función ha sido reemplazada por checkEndingTimeMinute()
+        // Se mantiene solo por compatibilidad
     }
 
     /**
@@ -297,16 +302,32 @@ class AttendanceController extends Component
             }
         }
 
-        if (!$reservation || !$reservation['isActive']) {
+        if (!$reservation) {
             return;
         }
 
         $endsAt = \Carbon\Carbon::createFromFormat('H:i:s', $reservation['ends_at']);
         $now = now();
         $minutesUntilEnd = (int) $endsAt->diffInMinutes($now);
+        $secondsUntilEnd = $endsAt->diffInSeconds($now);
 
-        // Si faltan 5 minutos o menos
-        if ($minutesUntilEnd <= 5 && $minutesUntilEnd >= 0) {
+        // Si la reservación ya pasó, deseleccionar
+        if ($reservation['isPassed']) {
+            if ($this->selectedReservationId != $this->lastReservationEndedAt) {
+                $this->lastReservationEndedAt = $this->selectedReservationId;
+                $this->dispatch('playEndingSound');
+                $this->dispatch('swal:notify', [['icon' => 'info', 'message' => '✓ Reservación Finalizada']]);
+            }
+            // Deseleccionar después de un segundo
+            if ($secondsUntilEnd < -1) {
+                $this->selectedReservationId = null;
+                $this->showQR = false;
+            }
+            return;
+        }
+
+        // Si está activa y faltan 5 minutos o menos
+        if ($reservation['isActive'] && $minutesUntilEnd <= 5 && $minutesUntilEnd >= 0) {
             // Rastrear el minuto actual (sin segundos)
             $currentMinute = $now->format('H:i');
 
@@ -314,10 +335,12 @@ class AttendanceController extends Component
             if ($this->lastEndingMinute !== $currentMinute) {
                 $this->lastEndingMinute = $currentMinute;
                 $this->dispatch('playCountdownSound');
+                $this->dispatch('swal:notify', [['icon' => 'warning', 'message' => '⏰ ¡Faltan ' . $minutesUntilEnd . ' minuto' . ($minutesUntilEnd != 1 ? 's' : '') . '!']]);
             }
         } elseif ($minutesUntilEnd > 5) {
             // Resetear si pasan más de 5 minutos
             $this->lastEndingMinute = null;
+            $this->notificationShown = false;
         }
     }
 }

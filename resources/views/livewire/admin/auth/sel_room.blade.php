@@ -323,10 +323,10 @@
 
         document.addEventListener('livewire:initialized', function () {
 
-            // Actualizar cada 5 segundos para mejor reactividad
+            // Actualizar cada segundo para capturar cambios de minuto
             setInterval(() => {
                 Livewire.dispatch('refreshReservations');
-            }, 5000);
+            }, 1000);
 
             // Observer para sonidos de activación (más largos)
             Livewire.on('playActivationSound', () => {
