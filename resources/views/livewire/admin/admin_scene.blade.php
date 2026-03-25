@@ -62,7 +62,7 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
 
-                            <div wire:loading wire:target="resource_demo" class="mt-2 inline-flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-700 text-black">
+                            <div wire:loading wire:target="resource_demo" class="mt-2 inline-flex items-center gap-2 text-sm text-blue-600">
                                 <i class="fas fa-spinner fa-spin"></i>
                                 Subiendo video, por favor espera...
                             </div>
