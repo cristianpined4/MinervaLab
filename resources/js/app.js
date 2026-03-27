@@ -283,7 +283,7 @@ document.addEventListener("Livewire:initialized", () => {
     // Monitorear cambios de Livewire en campos de fecha
     if (window.Livewire && typeof window.Livewire.hook === "function") {
         window.Livewire.hook("effect", () => {
-            // Después de cada update de Livewire, revalidar rangos de fechas
+            // Después de cada update de Livewire, revalidar rangos de fechas en modales
             setTimeout(() => {
                 const modals = document.querySelectorAll(
                     ".modal[style*='display: flex']",
@@ -297,8 +297,26 @@ document.addEventListener("Livewire:initialized", () => {
                     });
                 });
             }, 50);
+
+            // Reinicializar pickers en vistas normales que fueron limpiados
+            setTimeout(() => {
+                initDatePickers();
+            }, 100);
         });
     }
+
+    // Listener para cambios en selects de Livewire que afecten pickers
+    document.addEventListener("change", (event) => {
+        const select = event.target;
+        if (
+            select.tagName === "SELECT" &&
+            (select.name === "room_id" || select.getAttribute("wire:model"))
+        ) {
+            setTimeout(() => {
+                initDatePickers();
+            }, 150);
+        }
+    });
 
     // No cerrar al hacer clic fuera del modal
 });
@@ -496,6 +514,12 @@ function ensureFlatpickrTheme() {
         .flatpickr-calendar.static.open {
             position: relative;
         }
+        .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover {
+            background: transparent !important;
+            border-color: rgba(255,255,255,.1) !important;
+            color: rgba(255,255,255,.3) !important;
+            cursor: not-allowed !important;
+        }
     `;
 
     document.head.appendChild(style);
@@ -511,9 +535,15 @@ function initDatePickers(scope = document) {
     const ensurePicker = (input, isDateTime) => {
         const dateFormat = isDateTime ? "Y-m-d\\TH:i" : "Y-m-d";
 
-        // Si el picker ya existe, destruirlo para recrear con valores nuevos
+        // Si el picker ya existe, guardar minDate antes de destruir
         if (input._flatpickr) {
             try {
+                if (
+                    input._flatpickr.config &&
+                    input._flatpickr.config.minDate
+                ) {
+                    input._prevMinDate = input._flatpickr.config.minDate;
+                }
                 input._flatpickr.destroy();
             } catch (e) {}
             delete input._flatpickr;

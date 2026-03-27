@@ -165,7 +165,7 @@
                         </h2>
 
                         {{-- Selector de fecha --}}
-                        <div class="mb-6">
+                        <div class="mb-6" id="reservation-date-field">
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha
                             </label>
@@ -313,6 +313,24 @@
 
     <script>
         document.addEventListener('livewire:initialized', function () {
+            const reinitReservationDatePicker = () => {
+                const dateField = document.getElementById('reservation-date-field');
+                if (!dateField || !window.initDatePickers) return;
+                window.initDatePickers(dateField.closest('main') || document);
+            };
+
+            Livewire.on('reservation-room-changed', () => {
+                setTimeout(() => {
+                    reinitReservationDatePicker();
+                }, 120);
+            });
+
+            Livewire.on('reservation-date-changed', () => {
+                setTimeout(() => {
+                    reinitReservationDatePicker();
+                }, 120);
+            });
+
             Livewire.on('abrir-video', data => {
                 const modalId = data[0].modal;
                 const videoUrl = data[0].videoUrl;
