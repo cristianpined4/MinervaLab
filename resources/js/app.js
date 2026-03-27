@@ -283,8 +283,24 @@ document.addEventListener("Livewire:initialized", () => {
     // Monitorear cambios de Livewire en campos de fecha
     if (window.Livewire && typeof window.Livewire.hook === "function") {
         window.Livewire.hook("effect", () => {
-            // Después de cada update de Livewire, revalidar rangos de fechas en modales
-            setTimeout(() => {
+            requestAnimationFrame(() => {
+                const visibleDateInputs = Array.from(
+                    document.querySelectorAll(
+                        "input.js-picker-date, input.js-picker-datetime",
+                    ),
+                ).filter(
+                    (input) =>
+                        input.offsetParent !== null && !input.closest(".modal"),
+                );
+
+                const hasMissingPicker = visibleDateInputs.some(
+                    (input) => !input._flatpickr,
+                );
+
+                if (hasMissingPicker) {
+                    scheduleInitDatePickers();
+                }
+
                 const modals = document.querySelectorAll(
                     ".modal[style*='display: flex']",
                 );
@@ -296,27 +312,9 @@ document.addEventListener("Livewire:initialized", () => {
                         revalidateDateRange(input, modal);
                     });
                 });
-            }, 50);
-
-            // Reinicializar pickers en vistas normales que fueron limpiados
-            setTimeout(() => {
-                initDatePickers();
-            }, 100);
+            });
         });
     }
-
-    // Listener para cambios en selects de Livewire que afecten pickers
-    document.addEventListener("change", (event) => {
-        const select = event.target;
-        if (
-            select.tagName === "SELECT" &&
-            (select.name === "room_id" || select.getAttribute("wire:model"))
-        ) {
-            setTimeout(() => {
-                initDatePickers();
-            }, 150);
-        }
-    });
 
     // No cerrar al hacer clic fuera del modal
 });
@@ -520,6 +518,15 @@ function ensureFlatpickrTheme() {
             color: rgba(255,255,255,.3) !important;
             cursor: not-allowed !important;
         }
+        .numInputWrapper span {
+            border: 1px solid rgb(207 207 207 / 71%) !important;
+        }
+        .flatpickr-time .numInputWrapper span.arrowDown:after {
+            border-top-color: #DBDADA !important;
+        }
+        .flatpickr-time .numInputWrapper span.arrowUp:after {
+            border-bottom-color: #DBDADA !important;
+        }
     `;
 
     document.head.appendChild(style);
@@ -535,7 +542,61 @@ function initDatePickers(scope = document) {
     const ensurePicker = (input, isDateTime) => {
         const dateFormat = isDateTime ? "Y-m-d\\TH:i" : "Y-m-d";
 
-        // Si el picker ya existe, guardar minDate antes de destruir
+        // Si ya existe y sigue conectado, solo sincronizar valor/opciones (sin recrear)
+        if (input._flatpickr) {
+            const instance = input._flatpickr;
+            const altInputConnected =
+                !instance.altInput || instance.altInput.isConnected;
+
+            if (altInputConnected) {
+                const incomingValue = input.value || "";
+                const currentValue = instance.input.value || "";
+
+                if (incomingValue !== currentValue) {
+                    if (incomingValue) {
+                        instance.setDate(incomingValue, false, dateFormat);
+                    } else {
+                        instance.clear(false);
+                    }
+                }
+
+                const id = (input.id || "").toLowerCase();
+                const name = (input.name || "").toLowerCase();
+                const isEndInput = id.includes("ends") || name.includes("ends");
+
+                const htmlMinDate = input.getAttribute("min");
+                if (htmlMinDate) {
+                    instance.set("minDate", htmlMinDate);
+                }
+
+                if (isEndInput) {
+                    const allInputs = Array.from(
+                        scope.querySelectorAll(
+                            "input.js-picker-date, input.js-picker-datetime",
+                        ),
+                    );
+                    const startInput = allInputs.find((inp) => {
+                        const startId = (inp.id || "").toLowerCase();
+                        const startName = (inp.name || "").toLowerCase();
+                        return (
+                            startId.includes("starts") ||
+                            startName.includes("starts")
+                        );
+                    });
+
+                    if (startInput && startInput.value) {
+                        const startDate = new Date(startInput.value);
+                        if (!isNaN(startDate.getTime())) {
+                            instance.set("minDate", startDate);
+                        }
+                    }
+                }
+
+                return;
+            }
+        }
+
+        // Si el picker existe pero quedó desconectado, recrear
         if (input._flatpickr) {
             try {
                 if (
@@ -551,6 +612,11 @@ function initDatePickers(scope = document) {
 
         // CREAR NUEVO PICKER
         let config = buildPickerConfig(isDateTime);
+
+        const htmlMinDate = input.getAttribute("min");
+        if (htmlMinDate) {
+            config.minDate = htmlMinDate;
+        }
 
         // Detectar si es inicio o fin
         const isStart = (inp) => {
@@ -651,87 +717,14 @@ window.initDatePickers = initDatePickers;
 function refreshDatePickersInModal(modal) {
     if (!modal) return;
 
-    // Destruir todos los pickers existentes en el modal para evitar que queden con valores viejos
-    const allDateInputs = modal.querySelectorAll(
-        "input.js-picker-date, input.js-picker-datetime",
-    );
-    allDateInputs.forEach((input) => {
-        if (input._flatpickr) {
-            try {
-                input._flatpickr.destroy();
-            } catch (e) {}
-            delete input._flatpickr;
-        }
+    scheduleInitDatePickers(modal);
+
+    requestAnimationFrame(() => {
+        const dateInputs = modal.querySelectorAll(
+            "input.js-picker-date, input.js-picker-datetime",
+        );
+        dateInputs.forEach((input) => revalidateDateRange(input, modal));
     });
-
-    // Esperar a que Livewire actualice completamente el DOM
-    setTimeout(() => {
-        // Ahora inicializar pickers frescos con los nuevos valores de Livewire
-        initDatePickers(modal);
-
-        // Después de crear los pickers, validar el rango
-        setTimeout(() => {
-            const inputs = Array.from(
-                modal.querySelectorAll(
-                    "input.js-picker-date, input.js-picker-datetime",
-                ),
-            );
-
-            const isStart = (inp) => {
-                const id = (inp.id || "").toLowerCase();
-                const name = (inp.name || "").toLowerCase();
-                return id.includes("starts") || name.includes("starts");
-            };
-
-            const isEnd = (inp) => {
-                const id = (inp.id || "").toLowerCase();
-                const name = (inp.name || "").toLowerCase();
-                return id.includes("ends") || name.includes("ends");
-            };
-
-            const startInput = inputs.find(isStart);
-            const endInput = inputs.find(isEnd);
-
-            // Validar y corregir si es necesario
-            if (
-                startInput &&
-                endInput &&
-                startInput._flatpickr &&
-                endInput._flatpickr &&
-                startInput.value &&
-                endInput.value
-            ) {
-                try {
-                    const startDate = new Date(startInput.value);
-                    const endDate = new Date(endInput.value);
-                    if (
-                        !isNaN(startDate.getTime()) &&
-                        !isNaN(endDate.getTime())
-                    ) {
-                        if (endDate < startDate) {
-                            const dateFormat = endInput.classList.contains(
-                                "js-picker-datetime",
-                            )
-                                ? "Y-m-d\\TH:i"
-                                : "Y-m-d";
-                            endInput._flatpickr.setDate(
-                                startDate,
-                                true,
-                                dateFormat,
-                            );
-                            endInput.value = startInput.value;
-                            endInput.dispatchEvent(
-                                new Event("input", { bubbles: true }),
-                            );
-                            endInput.dispatchEvent(
-                                new Event("change", { bubbles: true }),
-                            );
-                        }
-                    }
-                } catch (e) {}
-            }
-        }, 50);
-    }, 150);
 }
 
 window.refreshDatePickersInModal = refreshDatePickersInModal;
@@ -747,6 +740,8 @@ const scheduleInitDatePickers = (scope = document) => {
         datePickerRaf = null;
     });
 };
+
+window.scheduleInitDatePickers = scheduleInitDatePickers;
 
 document.addEventListener("DOMContentLoaded", () => scheduleInitDatePickers());
 document.addEventListener("livewire:initialized", () =>

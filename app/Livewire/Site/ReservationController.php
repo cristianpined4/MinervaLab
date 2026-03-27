@@ -64,36 +64,32 @@ class ReservationController extends Component
 
     public function updatedFecha(): void
     {
-        try {
-            if ($this->fecha) {
-                $normalizedDate = parseDateInput($this->fecha);
+        if ($this->fecha) {
+            $normalizedDate = parseDateInput($this->fecha);
 
-                if (!$normalizedDate) {
-                    $this->dispatch('swal:notify', [
-                        'message' => 'Formato de fecha inválido. Usa DD/MM/AAAA',
-                        'icon' => 'error'
-                    ]);
-                    $this->fecha = null;
-                    $this->disponibilidad = [];
-                    return;
-                }
-
-                $this->fecha = $normalizedDate;
-
-                // Validar que no sea una fecha pasada
-                if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
-                    $this->dispatch('swal:notify', [
-                        'message' => 'No puedes seleccionar una fecha pasada',
-                        'icon' => 'error'
-                    ]);
-                    $this->fecha = null;
-                    $this->disponibilidad = [];
-                    return;
-                }
-                $this->getDispose();
+            if (!$normalizedDate) {
+                $this->dispatch('swal:notify', [
+                    'message' => 'Formato de fecha inválido. Usa DD/MM/AAAA',
+                    'icon' => 'error'
+                ]);
+                $this->fecha = null;
+                $this->disponibilidad = [];
+                return;
             }
-        } finally {
-            $this->dispatch('reservation-date-changed');
+
+            $this->fecha = $normalizedDate;
+
+            // Validar que no sea una fecha pasada
+            if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
+                $this->dispatch('swal:notify', [
+                    'message' => 'No puedes seleccionar una fecha pasada',
+                    'icon' => 'error'
+                ]);
+                $this->fecha = null;
+                $this->disponibilidad = [];
+                return;
+            }
+            $this->getDispose();
         }
     }
 
@@ -104,11 +100,6 @@ class ReservationController extends Component
         $minDate = $this->getMinDateProperty();
         return view('livewire.site.reservation', compact('scenes', 'rooms', 'minDate'))
             ->extends('layouts.site')->section('content');
-    }
-
-    public function updatedRoomId(): void
-    {
-        $this->dispatch('reservation-room-changed');
     }
 
     public function addScene($id)

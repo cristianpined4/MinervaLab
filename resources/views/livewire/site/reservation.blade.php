@@ -43,7 +43,7 @@
 
                         {{-- INPUT BUSCAR --}}
                         <div class="relative w-full border-b-2 mb-6">
-                            <input wire:model.live="search" type="text" placeholder="Buscar escena..."
+                            <input wire:model.live.debounce.300ms="search" type="text" placeholder="Buscar escena..."
                                 class="w-full rounded-lg bg-white/5 text-white placeholder-white/40 px-4 py-2 text-sm focus:outline-none">
                             <svg class="absolute right-3 top-2.5 w-5 h-5 text-white/40" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -165,13 +165,13 @@
                         </h2>
 
                         {{-- Selector de fecha --}}
-                        <div class="mb-6" id="reservation-date-field">
+                        <div class="mb-6">
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha
                             </label>
                             <input wire:model="fecha" wire:change='getDispose' type="date"
                                 min="{{ $minDate }}"
-                                class="js-picker-date w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-white/5 cursor-not-allowed opacity-60 @endif"
+                                class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-white/5 cursor-not-allowed opacity-60 @endif"
                                 @if(!$room_id) disabled @endif
                                 >
                             @if (!$room_id)
@@ -313,24 +313,6 @@
 
     <script>
         document.addEventListener('livewire:initialized', function () {
-            const reinitReservationDatePicker = () => {
-                const dateField = document.getElementById('reservation-date-field');
-                if (!dateField || !window.initDatePickers) return;
-                window.initDatePickers(dateField.closest('main') || document);
-            };
-
-            Livewire.on('reservation-room-changed', () => {
-                setTimeout(() => {
-                    reinitReservationDatePicker();
-                }, 120);
-            });
-
-            Livewire.on('reservation-date-changed', () => {
-                setTimeout(() => {
-                    reinitReservationDatePicker();
-                }, 120);
-            });
-
             Livewire.on('abrir-video', data => {
                 const modalId = data[0].modal;
                 const videoUrl = data[0].videoUrl;
