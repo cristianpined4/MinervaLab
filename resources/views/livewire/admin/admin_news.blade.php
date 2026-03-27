@@ -61,7 +61,7 @@
                         <div class="form-group mb-3">
                             <label class="form-label">Fecha de publicación</label>
                             <input wire:model="fields.date" id="date" type="date"
-                                class="form-control @error('fields.date') is-invalid @enderror">
+                                class="js-picker-date form-control @error('fields.date') is-invalid @enderror">
                             @error('fields.date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -341,6 +341,9 @@
                     document.getElementById('title').value = modal[0].fields.title;
                     document.getElementById('description').value = modal[0].fields.description;
                     document.getElementById('date').value = modal[0].fields.date;
+                        if (window.refreshDatePickersInModal) {
+                            window.refreshDatePickersInModal(el);
+                    }
                 }
             });
 

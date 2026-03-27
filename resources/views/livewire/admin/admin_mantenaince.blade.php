@@ -23,7 +23,7 @@
                                 Selecciona una fecha de inicio
                             </label>
                             <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="js-picker-datetime w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -35,7 +35,7 @@
                                 Selecciona una fecha final
                             </label>
                             <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
-                                class="w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                                class="js-picker-datetime w-full border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -223,6 +223,9 @@
                     document.getElementById('ends_at').value = modal[0].fields.ends_at;
                     document.getElementById('id_room').value = modal[0].fields.id_room;
                     document.getElementById('description').value = modal[0].fields.description;
+                    if (window.refreshDatePickersInModal) {
+                        window.refreshDatePickersInModal(modalElement);
+                    }
                 }
             });
 

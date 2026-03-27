@@ -31,7 +31,7 @@
                                 Fecha de ingreso
                             </label>
                             <input wire:model="fields.entry_date" type="date" id="entry_date"
-                                class="w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-white/40 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
+                                class="js-picker-date w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-white/40 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.entry_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -205,6 +205,9 @@
                     entry_date.value = modal[0].fields.entry_date;
                     life_hours.value = modal[0].fields.life_hours;
                     usefull_years.value = modal[0].fields.usefull_years;
+                    if (window.refreshDatePickersInModal) {
+                        window.refreshDatePickersInModal(modalElement);
+                    }
                 }
             });
 

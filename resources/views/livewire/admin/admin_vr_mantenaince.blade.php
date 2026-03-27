@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label class="form-label">Inicio</label>
                             <input wire:model="fields.starts_at" type="date" id="starts_at"
-                                class="form-control @error('fields.starts_at') was-validated is-invalid @enderror">
+                                class="js-picker-date form-control @error('fields.starts_at') was-validated is-invalid @enderror">
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -27,7 +27,7 @@
                         <div class="form-group mt-3">
                             <label class="form-label">Fin</label>
                             <input wire:model="fields.ends_at" type="date" id="ends_at"
-                                class="form-control @error('fields.ends_at') was-validated is-invalid @enderror">
+                                class="js-picker-date form-control @error('fields.ends_at') was-validated is-invalid @enderror">
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -217,6 +217,9 @@
                     description.value = modal[0].fields.description;
                     if (room && modal[0].room !== undefined) room.value = modal[0].room;
                     id_vr.value = modal[0].fields.id_vr;
+                    if (window.refreshDatePickersInModal) {
+                        window.refreshDatePickersInModal(modalElement);
+                    }
                 }
             });
 
