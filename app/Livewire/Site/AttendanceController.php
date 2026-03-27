@@ -257,16 +257,26 @@ class AttendanceController extends Component
         \Log::info("👆 Usuario click en reservación {$reservationId}");
 
         // Validar que la reservación pertenece a la sala seleccionada
-        $isValidReservation = false;
+        $selectedReservation = null;
         foreach ($this->reservations as $res) {
             if ($res['id'] == $reservationId) {
-                $isValidReservation = true;
+                $selectedReservation = $res;
                 break;
             }
         }
 
-        if (!$isValidReservation) {
+        if (!$selectedReservation) {
             \Log::warning("⚠️ Reservación {$reservationId} no válida para esta sala");
+            return;
+        }
+
+        if (empty($selectedReservation['isActive'])) {
+            $this->dispatch(
+                'swal:notify',
+                icon: 'warning',
+                title: 'Reservación no disponible',
+                message: 'Solo puedes acceder a reservaciones que estén en curso.'
+            );
             return;
         }
 
@@ -316,6 +326,28 @@ class AttendanceController extends Component
 
         try {
             $reservation = Reservation::findOrFail($this->selectedReservationId);
+
+            $now = now();
+            $today = $now->format('Y-m-d');
+            $startsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation->starts_at);
+            $endsAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $today . ' ' . $reservation->ends_at);
+            $isActive =
+                (string) $reservation->date === $today
+                && (int) $reservation->status === 1
+                && $now->gte($startsAt)
+                && $now->lt($endsAt);
+
+            if (!$isActive) {
+                $this->showQR = false;
+                $this->qrImage = '';
+                $this->dispatch(
+                    'swal:notify',
+                    icon: 'warning',
+                    title: 'Reservación no disponible',
+                    message: 'Solo puedes generar QR para reservaciones en curso.'
+                );
+                return;
+            }
 
             // Valor QR: URL + ID de la reserva actual
             $qrData = url('/') . '/attendance?session=' . $reservation->id;

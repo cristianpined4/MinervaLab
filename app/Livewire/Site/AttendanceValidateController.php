@@ -4,6 +4,7 @@ namespace App\Livewire\Site;
 use App\Models\Reservation;
 use App\Models\ReservationAttendance;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class AttendanceValidateController extends Component
 {
@@ -22,6 +23,30 @@ class AttendanceValidateController extends Component
         if ($this->reservation_id) {
             $this->reservation = Reservation::find($this->reservation_id);
         }
+
+        if ($this->reservation && !$this->isReservationActive()) {
+            $this->error = 'Esta reservación no está en curso. No se permite registrar asistencia.';
+            $this->reservation = null;
+        }
+    }
+
+    private function isReservationActive(): bool
+    {
+        if (!$this->reservation) {
+            return false;
+        }
+
+        $now = now();
+        $reservationDate = Carbon::parse($this->reservation->date)->format('Y-m-d');
+        $today = $now->format('Y-m-d');
+        $startsAt = Carbon::createFromFormat('Y-m-d H:i:s', $reservationDate . ' ' . $this->reservation->starts_at);
+        $endsAt = Carbon::createFromFormat('Y-m-d H:i:s', $reservationDate . ' ' . $this->reservation->ends_at);
+
+        return
+            (int) $this->reservation->status === 1
+            && $reservationDate === $today
+            && $now->gte($startsAt)
+            && $now->lt($endsAt);
     }
 
     public function render()
@@ -46,12 +71,17 @@ class AttendanceValidateController extends Component
             return;
         }
 
+        if (!$this->isReservationActive()) {
+            $this->error = 'Esta reservación no está en curso. No se permite registrar asistencia.';
+            return;
+        }
+
         // Registrar asistencia
         ReservationAttendance::create([
             'id_reservation' => $this->reservation->id,
-            'carnet'         => $this->carnet,
-            'date'           => now(),
-            'attendance'     => now()->format('H:i:s'),
+            'carnet' => $this->carnet,
+            'date' => now(),
+            'attendance' => now()->format('H:i:s'),
         ]);
 
         $this->dispatch('swal:notify', ['message' => 'Asistencia registrada', 'type' => 'success', 'url' => url('/') . '/attendance-success']);
