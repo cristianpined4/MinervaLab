@@ -63,6 +63,66 @@ class DateHelper
     }
   }
 
+  public static function parseDateInput($value): ?string
+  {
+    if (!$value) {
+      return null;
+    }
+
+    $value = trim((string) $value);
+    $formats = ['d/m/Y', 'Y-m-d', 'd-m-Y', 'd.m.Y'];
+
+    foreach ($formats as $format) {
+      try {
+        $parsed = Carbon::createFromFormat($format, $value);
+        if ($parsed !== false) {
+          return $parsed->format('Y-m-d');
+        }
+      } catch (\Exception $e) {
+      }
+    }
+
+    try {
+      return Carbon::parse($value)->format('Y-m-d');
+    } catch (\Exception $e) {
+      return null;
+    }
+  }
+
+  public static function parseDateTimeInput($value): ?string
+  {
+    if (!$value) {
+      return null;
+    }
+
+    $value = trim((string) $value);
+    $formats = [
+      'd/m/Y h:i A',
+      'd/m/Y h:i:s A',
+      'Y-m-d\\TH:i',
+      'Y-m-d\\TH:i:s',
+      'Y-m-d H:i',
+      'Y-m-d H:i:s',
+      'd-m-Y h:i A',
+    ];
+
+    foreach ($formats as $format) {
+      try {
+        $parsed = Carbon::createFromFormat($format, $value);
+        if ($parsed !== false) {
+          return $parsed->format('Y-m-d H:i:s');
+        }
+      } catch (\Exception $e) {
+      }
+    }
+
+    try {
+      return Carbon::parse($value)->format('Y-m-d H:i:s');
+    } catch (\Exception $e) {
+      return null;
+    }
+  }
+
   /**
    * Obtener fecha mínima seleccionable (hoy)
    * 

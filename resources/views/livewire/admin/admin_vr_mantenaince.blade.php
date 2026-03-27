@@ -18,16 +18,18 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="form-label">Inicio</label>
-                            <input wire:model="fields.starts_at" type="date" id="starts_at"
-                                class="form-control @error('fields.starts_at') was-validated is-invalid @enderror">
+                            <input wire:model="fields.starts_at" type="text" id="starts_at" maxlength="10" placeholder="DD/MM/AAAA"
+                                class="js-date-input form-control @error('fields.starts_at') was-validated is-invalid @enderror"
+                                >
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label class="form-label">Fin</label>
-                            <input wire:model="fields.ends_at" type="date" id="ends_at"
-                                class="form-control @error('fields.ends_at') was-validated is-invalid @enderror">
+                            <input wire:model="fields.ends_at" type="text" id="ends_at" maxlength="10" placeholder="DD/MM/AAAA"
+                                class="js-date-input form-control @error('fields.ends_at') was-validated is-invalid @enderror"
+                                >
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -139,10 +141,10 @@
                                 @foreach ($data as $row)
                                     <tr class="hover:bg-white/5 transition-colors">
                                         <td class="px-6 py-4">
-                                            <span class="text-sm font-medium text-white">{{ $row->starts_at }}</span>
+                                            <span class="text-sm font-medium text-white">@dateFormat($row->starts_at)</span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="text-sm font-medium text-white">{{ $row->ends_at }}</span>
+                                            <span class="text-sm font-medium text-white">@dateFormat($row->ends_at)</span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="text-sm font-medium text-white">{{ $row->description }}</span>

@@ -58,8 +58,8 @@ class AdminMantenainceController extends Component
             $this->record_id = $id;
             $registro = RoomMantenaince::find($id);
             $this->fields = [
-                'starts_at' => $registro->starts_at,
-                'ends_at' => $registro->ends_at,
+                'starts_at' => $registro->starts_at ? formatDateTime($registro->starts_at) : null,
+                'ends_at' => $registro->ends_at ? formatDateTime($registro->ends_at) : null,
                 'id_room' => $registro->id_room,
                 'description' => $registro->description
             ];
@@ -98,9 +98,12 @@ class AdminMantenainceController extends Component
 
     public function store_update()
     {
+        $this->fields['starts_at'] = parseDateTimeInput($this->fields['starts_at']);
+        $this->fields['ends_at'] = parseDateTimeInput($this->fields['ends_at']);
+
         $this->validate([
-            'fields.starts_at' => 'required',
-            'fields.ends_at' => 'required',
+            'fields.starts_at' => 'required|date',
+            'fields.ends_at' => 'required|date|after_or_equal:fields.starts_at',
             'fields.id_room' => 'required|exists:room,id',
             'fields.description' => 'required|string|max:80',
         ], [

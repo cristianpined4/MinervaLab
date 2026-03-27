@@ -23,6 +23,7 @@ class NotificationController extends Controller
         'id' => $item->id,
         'title' => $item->title ?: 'Notificación',
         'description' => $item->description,
+        'date_formatted' => formatDateTime($item->date),
         'date_human' => optional($item->date)->diffForHumans(),
         'is_unread' => is_null($item->read_at),
       ]);

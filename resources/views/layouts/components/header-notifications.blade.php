@@ -47,7 +47,7 @@
                         <div class="min-w-0">
                             <p class="text-sm font-semibold text-white truncate" x-text="notification.title || 'Notificación'"></p>
                             <p class="text-xs text-slate-300 mt-1" x-text="notification.description || ''"></p>
-                            <p class="text-[11px] text-slate-400 mt-1" x-text="notification.date_human || ''"></p>
+                            <p class="text-[11px] text-slate-400 mt-1" x-text="notification.date_formatted || notification.date_human || ''"></p>
                         </div>
                         <template x-if="notification.is_unread">
                             <span class="w-2 h-2 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0"></span>

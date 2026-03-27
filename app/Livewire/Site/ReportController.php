@@ -77,7 +77,7 @@ class ReportController extends Component
         $pdf = (new FPDFF())
             ->setTitle('Reporte de Reservaciones')
             ->setSubTitle('Reporte general')
-            ->setDate(now()->format('Y-m-d'))
+            ->setDate(formatDateTime(now()))
             ->setModelColumns(['usuario', 'sala', 'fecha', 'inicio', 'fin', 'estado'])
             ->setColumnLabels([
                 'usuario' => 'Usuario',
@@ -114,7 +114,7 @@ class ReportController extends Component
         $pdf = (new FPDFF())
             ->setTitle('Reporte de Usuarios')
             ->setSubTitle('Usuarios por estado y rol')
-            ->setDate(now()->format('Y-m-d'))
+            ->setDate(formatDateTime(now()))
             ->setModelColumns(['usuario', 'telefono', 'rol', 'facultad', 'estado'])
             ->setColumnLabels([
                 'usuario' => 'Usuario',

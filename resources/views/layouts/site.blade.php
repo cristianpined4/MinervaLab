@@ -103,5 +103,106 @@
     });
   </script>
 
+  <script>
+    (function () {
+      const DATE_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+      const DATETIME_REGEX = /^(\d{2})\/(\d{2})\/(\d{4})\s(\d{2}):(\d{2})\s(AM|PM)$/i;
+
+      function pad(number) {
+        return String(number).padStart(2, '0');
+      }
+
+      function to12Hour(hour24) {
+        const period = hour24 >= 12 ? 'PM' : 'AM';
+        const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+        return { hour: pad(hour12), period };
+      }
+
+      function normalizeDateValue(value) {
+        if (!value) return '';
+        const trimmed = value.trim();
+
+        const direct = trimmed.match(DATE_REGEX);
+        if (direct) {
+          return `${direct[1]}/${direct[2]}/${direct[3]}`;
+        }
+
+        const iso = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (iso) {
+          return `${iso[3]}/${iso[2]}/${iso[1]}`;
+        }
+
+        const compact = trimmed.replace(/\D/g, '');
+        if (compact.length === 8) {
+          return `${compact.slice(0, 2)}/${compact.slice(2, 4)}/${compact.slice(4, 8)}`;
+        }
+
+        return trimmed;
+      }
+
+      function normalizeDateTimeValue(value) {
+        if (!value) return '';
+        const trimmed = value.trim().toUpperCase();
+
+        const direct = trimmed.match(DATETIME_REGEX);
+        if (direct) {
+          return `${direct[1]}/${direct[2]}/${direct[3]} ${direct[4]}:${direct[5]} ${direct[6]}`;
+        }
+
+        const isoLocal = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::\d{2})?$/);
+        if (isoLocal) {
+          const hour24 = Number(isoLocal[4]);
+          const { hour, period } = to12Hour(hour24);
+          return `${isoLocal[3]}/${isoLocal[2]}/${isoLocal[1]} ${hour}:${isoLocal[5]} ${period}`;
+        }
+
+        const sqlDateTime = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2})(?::\d{2})?$/);
+        if (sqlDateTime) {
+          const hour24 = Number(sqlDateTime[4]);
+          const { hour, period } = to12Hour(hour24);
+          return `${sqlDateTime[3]}/${sqlDateTime[2]}/${sqlDateTime[1]} ${hour}:${sqlDateTime[5]} ${period}`;
+        }
+
+        return trimmed;
+      }
+
+      function bindDateInput(input) {
+        if (input.dataset.formatBound === '1') return;
+        input.dataset.formatBound = '1';
+        input.setAttribute('placeholder', input.getAttribute('placeholder') || 'DD/MM/AAAA');
+        input.setAttribute('inputmode', 'numeric');
+        input.addEventListener('blur', function () {
+          input.value = normalizeDateValue(input.value);
+          const isValid = !input.value || DATE_REGEX.test(input.value);
+          input.setCustomValidity(isValid ? '' : 'Formato requerido: DD/MM/AAAA');
+        });
+      }
+
+      function bindDateTimeInput(input) {
+        if (input.dataset.formatBound === '1') return;
+        input.dataset.formatBound = '1';
+        input.setAttribute('placeholder', input.getAttribute('placeholder') || 'DD/MM/AAAA 01:01 AM');
+        input.addEventListener('input', function () {
+          input.value = input.value.toUpperCase();
+        });
+        input.addEventListener('blur', function () {
+          input.value = normalizeDateTimeValue(input.value);
+          const isValid = !input.value || DATETIME_REGEX.test(input.value);
+          input.setCustomValidity(isValid ? '' : 'Formato requerido: DD/MM/AAAA 01:01 AM/PM');
+        });
+      }
+
+      function initFormattedInputs() {
+        document.querySelectorAll('.js-date-input').forEach(bindDateInput);
+        document.querySelectorAll('.js-datetime-input').forEach(bindDateTimeInput);
+      }
+
+      document.addEventListener('DOMContentLoaded', initFormattedInputs);
+      document.addEventListener('livewire:initialized', initFormattedInputs);
+      document.addEventListener('livewire:navigated', initFormattedInputs);
+      setTimeout(initFormattedInputs, 250);
+    })();
+  </script>
+
 </body>
 </html>

@@ -85,7 +85,7 @@ class AdminNewsController extends Component
       $this->fields['title'] = $reg->title;
       $this->fields['description'] = $reg->description;
       $this->fields['path'] = $reg->path;
-      $this->fields['date'] = $reg->date ? \Carbon\Carbon::parse($reg->date)->format('Y-m-d') : null;
+      $this->fields['date'] = $reg->date ? formatDate($reg->date) : null;
 
       $subfolder = match ($this->fields['resource_type']) {
         'video' => 'news-videos',
@@ -105,7 +105,7 @@ class AdminNewsController extends Component
       $this->fields['title'] = null;
       $this->fields['description'] = null;
       $this->fields['path'] = null;
-      $this->fields['date'] = now()->format('Y-m-d');
+      $this->fields['date'] = formatDate(now());
       $this->current_media_url = null;
       $this->media_loading = false;
     }
@@ -150,6 +150,8 @@ class AdminNewsController extends Component
    --------------------------------------------------------------- */
   public function store_update()
   {
+    $this->fields['date'] = parseDateInput($this->fields['date']);
+
     $this->validate([
       'fields.resource_type' => 'required|in:video,image,article',
       'fields.title' => 'required|string|max:255',

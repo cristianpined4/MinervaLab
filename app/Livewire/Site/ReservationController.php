@@ -65,6 +65,20 @@ class ReservationController extends Component
     public function updatedFecha(): void
     {
         if ($this->fecha) {
+            $normalizedDate = parseDateInput($this->fecha);
+
+            if (!$normalizedDate) {
+                $this->dispatch('swal:notify', [
+                    'message' => 'Formato de fecha inválido. Usa DD/MM/AAAA',
+                    'icon' => 'error'
+                ]);
+                $this->fecha = null;
+                $this->disponibilidad = [];
+                return;
+            }
+
+            $this->fecha = $normalizedDate;
+
             // Validar que no sea una fecha pasada
             if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
                 $this->dispatch('swal:notify', [
@@ -232,6 +246,12 @@ class ReservationController extends Component
         if (!$this->fecha || !$this->room_id) {
             return;
         }
+
+        $normalizedDate = parseDateInput($this->fecha);
+        if (!$normalizedDate) {
+            return;
+        }
+        $this->fecha = $normalizedDate;
 
         // Validar que la fecha no sea pasada
         if (Carbon::parse($this->fecha)->startOfDay()->lt(Carbon::today())) {
@@ -505,16 +525,15 @@ class ReservationController extends Component
             // Obtener información adicional para la notificación
             $room = Room::find($this->room_id);
             $usuario = auth()->user();
-            $fechaFormato = formatDate($this->fecha);
-            $horaInicio = formatTime($start->format('H:i:s'));
-            $horaFin = formatTime($start->copy()->addMinutes($this->total_time)->format('H:i:s'));
+            $inicioFormato = formatDateTime($start);
+            $finFormato = formatDateTime($start->copy()->addMinutes($this->total_time));
             $salaName = $room ? $room->name : 'Sala';
             $nombreUsuario = $usuario->first_name . ' ' . $usuario->last_name . ' - ' . $usuario->username;
 
             $this->notificationService->notifyByRolePermissions(
                 [1, 2],
                 'Nueva reservación pendiente',
-                'El usuario ' . $nombreUsuario . ' ha registrado una reservación en ' . $salaName . ' para el ' . $fechaFormato . ' de ' . $horaInicio . ' a ' . $horaFin . ' con ' . $this->numeroEstudiantes . ' estudiantes.',
+                'El usuario ' . $nombreUsuario . ' ha registrado una reservación en ' . $salaName . ' desde ' . $inicioFormato . ' hasta ' . $finFormato . ' con ' . $this->numeroEstudiantes . ' estudiantes.',
                 route('admin-reservation')
             );
         } catch (\Throwable $th) {

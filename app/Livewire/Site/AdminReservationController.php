@@ -135,14 +135,13 @@ class AdminReservationController extends Component
 
         $reservation->update(['status' => 2]);
 
-        $fechaFormato = formatDate($reservation->date);
-        $horaFormato = formatTime($reservation->starts_at);
+        $fechaHoraFormato = formatDateTime("{$reservation->date} {$reservation->starts_at}");
         $sala = $reservation->HasRoom ? $reservation->HasRoom->name : 'Sala';
 
         $this->notificationService->notifyUser(
             (int) $reservation->id_user,
             'Reservación rechazada',
-            'Tu reservación en ' . $sala . ' para el ' . $fechaFormato . ' a las ' . $horaFormato . ' fue rechazada por administración.',
+            'Tu reservación en ' . $sala . ' para ' . $fechaHoraFormato . ' fue rechazada por administración.',
             route('my-reservations')
         );
 
@@ -159,14 +158,13 @@ class AdminReservationController extends Component
 
         $reservation->update(['status' => 1]);
 
-        $fechaFormato = formatDate($reservation->date);
-        $horaFormato = formatTime($reservation->starts_at);
+        $fechaHoraFormato = formatDateTime("{$reservation->date} {$reservation->starts_at}");
         $sala = $reservation->HasRoom ? $reservation->HasRoom->name : 'Sala';
 
         $this->notificationService->notifyUser(
             (int) $reservation->id_user,
             'Reservación autorizada',
-            'Tu reservación en ' . $sala . ' para el ' . $fechaFormato . ' a las ' . $horaFormato . ' fue autorizada exitosamente.',
+            'Tu reservación en ' . $sala . ' para ' . $fechaHoraFormato . ' fue autorizada exitosamente.',
             route('my-reservations')
         );
 
@@ -183,14 +181,13 @@ class AdminReservationController extends Component
 
         $reservation->update(['status' => 3]);
 
-        $fechaFormato = formatDate($reservation->date);
-        $horaFormato = formatTime($reservation->starts_at);
+        $fechaHoraFormato = formatDateTime("{$reservation->date} {$reservation->starts_at}");
         $sala = $reservation->HasRoom ? $reservation->HasRoom->name : 'Sala';
 
         $this->notificationService->notifyUser(
             (int) $reservation->id_user,
             'Reservación cancelada',
-            'Tu reservación en ' . $sala . ' para el ' . $fechaFormato . ' a las ' . $horaFormato . ' fue cancelada por administración.',
+            'Tu reservación en ' . $sala . ' para ' . $fechaHoraFormato . ' fue cancelada por administración.',
             route('my-reservations')
         );
 

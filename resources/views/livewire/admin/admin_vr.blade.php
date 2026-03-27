@@ -30,8 +30,8 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Fecha de ingreso
                             </label>
-                            <input wire:model="fields.entry_date" type="date" id="entry_date"
-                                class="w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-white/40 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
+                            <input wire:model="fields.entry_date" type="text" id="entry_date" maxlength="10" placeholder="DD/MM/AAAA"
+                                class="js-date-input w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-white/40 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.entry_date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -131,7 +131,7 @@
                                             <span class="text-sm font-medium text-white">{{ $row->code }}</span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="text-sm font-medium text-white">{{ $row->entry_date }}</span>
+                                            <span class="text-sm font-medium text-white">@dateFormat($row->entry_date)</span>
                                         </td>
                                         <td class="px-6 py-4">
                                             <span class="text-sm font-medium text-white">{{ $row->life_hours }}</span>

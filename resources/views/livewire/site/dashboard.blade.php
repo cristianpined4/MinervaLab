@@ -213,10 +213,10 @@
                                                 {{ $res->HasRoom?->description ?? '—' }}
                                             </td>
                                             <td class="px-4 py-3 text-blue-200/70">
-                                                {{ $res->date ? \Carbon\Carbon::parse($res->date)->format('d/m/Y') : '—' }}
+                                                {{ $res->date ? formatDate($res->date) : '—' }}
                                             </td>
                                             <td class="px-4 py-3 text-blue-200/70 hidden sm:table-cell">
-                                                {{ substr($res->starts_at, 0, 5) }} – {{ substr($res->ends_at, 0, 5) }}
+                                                {{ formatTime($res->starts_at) }} – {{ formatTime($res->ends_at) }}
                                             </td>
                                             <td class="px-4 py-3 text-blue-200/70 hidden md:table-cell">
                                                 {{ $res->students }}

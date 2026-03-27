@@ -107,7 +107,7 @@ relevantes para la comunidad estudiantil de ingeniería.')
                                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                                     <path d="M3 10h18"></path>
                                 </svg>
-                                {{ $news['date'] }}
+                                {{ formatDate($news['date']) }}
                             </div>
                         </div>
 

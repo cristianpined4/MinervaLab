@@ -54,8 +54,8 @@ class AdminCalendaryController extends Component
         if ($id) {
             $this->record_id = $id;
             $registro = Holiday::find($id);
-            $this->fields['starts_at'] = $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('Y-m-d\TH:i') : null;
-            $this->fields['ends_at'] = $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('Y-m-d\TH:i') : null;
+            $this->fields['starts_at'] = $registro->starts_at ? formatDateTime($registro->starts_at) : null;
+            $this->fields['ends_at'] = $registro->ends_at ? formatDateTime($registro->ends_at) : null;
             $this->fields['description'] = $registro->description;
         } else {
             $this->record_id = null;
@@ -90,10 +90,13 @@ class AdminCalendaryController extends Component
 
     public function store_update()
     {
+        $this->fields['starts_at'] = parseDateTimeInput($this->fields['starts_at']);
+        $this->fields['ends_at'] = parseDateTimeInput($this->fields['ends_at']);
+
         $this->validate(
             [
-                'fields.starts_at' => 'required',
-                'fields.ends_at' => 'required',
+                'fields.starts_at' => 'required|date',
+                'fields.ends_at' => 'required|date|after_or_equal:fields.starts_at',
                 'fields.description' => 'required|string|max:80',
             ],
             [

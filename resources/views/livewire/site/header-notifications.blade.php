@@ -38,7 +38,7 @@
                         <div class="min-w-0">
                             <p class="text-sm font-semibold text-white truncate">{{ $notification->title ?: 'Notificación' }}</p>
                             <p class="text-xs text-slate-300 mt-1">{{ \Illuminate\Support\Str::limit($notification->description, 90) }}</p>
-                            <p class="text-[11px] text-slate-400 mt-1">{{ optional($notification->date)->diffForHumans() }}</p>
+                            <p class="text-[11px] text-slate-400 mt-1">{{ formatDateTime($notification->date) }}</p>
                         </div>
                         @if (is_null($notification->read_at))
                             <span class="w-2 h-2 rounded-full bg-cyan-400 mt-1.5 flex-shrink-0"></span>
