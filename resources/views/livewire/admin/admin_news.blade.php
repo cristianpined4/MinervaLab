@@ -60,8 +60,8 @@
                         {{-- Fecha --}}
                         <div class="form-group mb-3">
                             <label class="form-label">Fecha de publicación</label>
-                            <input wire:model="fields.date" id="date" type="text" maxlength="10" placeholder="DD/MM/AAAA"
-                                class="js-date-input form-control @error('fields.date') is-invalid @enderror">
+                            <input wire:model="fields.date" id="date" type="date"
+                                class="form-control @error('fields.date') is-invalid @enderror">
                             @error('fields.date')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror

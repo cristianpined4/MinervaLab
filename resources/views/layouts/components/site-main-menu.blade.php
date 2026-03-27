@@ -77,7 +77,7 @@
             class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                    {{ request()->routeIs('home') ? 'bg-blue-600/70 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
             <i class="fas fa-home w-4 text-center {{ request()->routeIs('home') ? 'text-cyan-300' : 'text-blue-300' }}"></i>
-            Home
+            Inicio
         </a>
 
         {{-- Mis Reservaciones --}}

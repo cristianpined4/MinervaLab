@@ -106,8 +106,8 @@ class AdminVrMantenainceController extends Component
         if ($id) {
             $this->record_id = $id;
             $registro = VrMantenaince::find($id);
-            $this->fields['starts_at'] = $registro->starts_at ? formatDate($registro->starts_at) : null;
-            $this->fields['ends_at'] = $registro->ends_at ? formatDate($registro->ends_at) : null;
+            $this->fields['starts_at'] = $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('Y-m-d') : null;
+            $this->fields['ends_at'] = $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('Y-m-d') : null;
             $this->fields['description'] = $registro->description;
             $this->fields['id_vr'] = $registro->id_vr;
             $this->room = $registro->vrGlasses?->id_room ?? $this->room;

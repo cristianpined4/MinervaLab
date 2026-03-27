@@ -22,9 +22,8 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha de inicio
                             </label>
-                            <input wire:model="fields.starts_at" type="text" id="starts_at" maxlength="19" placeholder="DD/MM/AAAA 01:01 AM"
-                                class="js-datetime-input w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
-                                >
+                            <input wire:model="fields.starts_at" type="datetime-local" id="starts_at"
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.starts_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror                        </div>
@@ -32,9 +31,8 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha final
                             </label>
-                            <input wire:model="fields.ends_at" type="text" id="ends_at" maxlength="19" placeholder="DD/MM/AAAA 01:01 AM"
-                                class="js-datetime-input w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition"
-                                >
+                            <input wire:model="fields.ends_at" type="datetime-local" id="ends_at"
+                                class="w-full bg-white/5 text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition">
                             @error('fields.ends_at')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror                        </div>

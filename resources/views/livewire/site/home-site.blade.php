@@ -1,4 +1,4 @@
-@section('title', 'Home')
+@section('title', 'Inicio')
 @section('hide_header', true)
 @section('hide_footer', true)
 

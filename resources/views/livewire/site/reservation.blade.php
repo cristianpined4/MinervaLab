@@ -169,11 +169,9 @@
                             <label class="block text-sm font-semibold text-white mb-2">
                                 Selecciona una fecha
                             </label>
-                            <input wire:model.blur="fecha" type="text"
-                                placeholder="DD/MM/AAAA"
-                                data-min-date="{{ formatDate($minDate) }}"
-                                maxlength="10"
-                                class="js-date-input w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-white/5 cursor-not-allowed opacity-60 @endif"
+                            <input wire:model="fecha" wire:change='getDispose' type="date"
+                                min="{{ $minDate }}"
+                                class="w-full text-white border-2 border-white/20 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition @if(!$room_id) bg-white/5 cursor-not-allowed opacity-60 @endif"
                                 @if(!$room_id) disabled @endif
                                 >
                             @if (!$room_id)

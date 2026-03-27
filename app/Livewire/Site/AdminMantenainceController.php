@@ -58,8 +58,8 @@ class AdminMantenainceController extends Component
             $this->record_id = $id;
             $registro = RoomMantenaince::find($id);
             $this->fields = [
-                'starts_at' => $registro->starts_at ? formatDateTime($registro->starts_at) : null,
-                'ends_at' => $registro->ends_at ? formatDateTime($registro->ends_at) : null,
+                'starts_at' => $registro->starts_at ? \Carbon\Carbon::parse($registro->starts_at)->format('Y-m-d\TH:i') : null,
+                'ends_at' => $registro->ends_at ? \Carbon\Carbon::parse($registro->ends_at)->format('Y-m-d\TH:i') : null,
                 'id_room' => $registro->id_room,
                 'description' => $registro->description
             ];

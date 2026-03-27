@@ -3,7 +3,7 @@
     // Detecta la sección actual según la URL
     $tituloSeccion = match (true) {
         Request::is('dashboard') => 'MinervaLab',
-        Request::is('home') => 'Home',
+        Request::is('home') => 'Inicio',
         Request::is('reservaciones*') => 'Mis Reservaciones',
         Request::is('escena*') => 'Escena / Multimedia',
         default => 'MinervaLab',
