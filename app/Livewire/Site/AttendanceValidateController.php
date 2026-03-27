@@ -10,6 +10,7 @@ class AttendanceValidateController extends Component
 {
     public $reservation_id;
     public $reservation;
+    public $canRegister = false;
 
     public $carnet;
     public $error = null;
@@ -24,7 +25,9 @@ class AttendanceValidateController extends Component
             $this->reservation = Reservation::find($this->reservation_id);
         }
 
-        if ($this->reservation && !$this->isReservationActive()) {
+        $this->canRegister = $this->isReservationActive();
+
+        if ($this->reservation && !$this->canRegister) {
             $this->error = 'Esta reservación no está en curso. No se permite registrar asistencia.';
             $this->reservation = null;
         }
@@ -59,6 +62,11 @@ class AttendanceValidateController extends Component
     public function register()
     {
         $this->error = null;
+
+        if (!$this->canRegister) {
+            $this->error = 'Esta reservación no está en curso. No se permite registrar asistencia.';
+            return;
+        }
 
         $this->validate([
             'carnet' => 'required'

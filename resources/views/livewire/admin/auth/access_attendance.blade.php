@@ -74,23 +74,24 @@
                 @endif
 
                 {{-- FORMULARIO --}}
-                <div class="space-y-5">
+                @if ($canRegister)
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Carnet del estudiante</label>
+                            <input wire:model="carnet" type="text"
+                                   placeholder="Ej: AB12345"
+                                   class="w-full h-11 rounded-xl border border-slate-700/70 bg-[#020617]/80 px-4
+                                   text-sm text-black placeholder-slate-500 outline-none
+                                   focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
+                                   @error('carnet') border-red-500/70 @enderror">
+                            @error('carnet')
+                            <p class="text-xs text-red-400 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-2">Carnet del estudiante</label>
-                        <input wire:model="carnet" type="text"
-                               placeholder="Ej: AB12345"
-                               class="w-full h-11 rounded-xl border border-slate-700/70 bg-[#020617]/80 px-4
-                               text-sm text-black placeholder-slate-500 outline-none
-                               focus:border-sky-500 focus:ring-2 focus:ring-sky-500/40
-                               @error('carnet') border-red-500/70 @enderror">
-                        @error('carnet')
-                        <p class="text-xs text-red-400 mt-1">{{ $message }}</p>
-                        @enderror
+                        <button type="button" wire:click="register" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0">Registrar asistencia</button>
                     </div>
-
-                    <button type="button" wire:click="register" class="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white border-0">Registrar asistencia</button>
-                </div>
+                @endif
 
             </div>
         </div>
