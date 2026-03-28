@@ -19,7 +19,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @foreach($opciones as $option)
                     <a type="button" wire:click="{{ $option['fn'] }} )"
-                    class="block bg-white/5 rounded-2xl border border-white/10 shadow-md overflow-hidden hover:shadow-xl transition-all group">
+                    class="block bg-white/5 rounded-2xl border border-white/10 shadow-md overflow-hidden hover:shadow-xl transition-all group" style="cursor: pointer">
                         <div class="flex flex-col sm:flex-row">
                             <div class="sm:w-1/4 flex items-center justify-center h-48 sm:h-auto bg-gradient-to-br from-{{ $option['color'] }}-400 to-{{ $option['color'] }}-600">
                                 <i class="fa-solid {{ $option['icono'] }} text-white text-3xl"></i>

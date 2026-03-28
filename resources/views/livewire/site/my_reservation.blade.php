@@ -35,7 +35,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-black">@dateFormat($item->date)</span>
+                                                <span class="text-sm font-medium text-black">@dateFormat($item->date) {{ formatTime($item->attendance) }}</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">

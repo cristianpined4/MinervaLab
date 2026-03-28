@@ -206,22 +206,18 @@ class MyReservationController extends Component
 
         /* a la data al campo date darle formato de fecha y hora con zona horaria -6 usando carbon */
         foreach ($data as $key => $value) {
-            $data[$key]['date'] = formatDateTime(\Carbon\Carbon::parse($value['created_at'])->timezone('America/El_Salvador'));
+            $data[$key]['date'] = formatDate(\Carbon\Carbon::parse($value['created_at'])->timezone('America/El_Salvador'));
             $data[$key]['attendance'] = formatTime(\Carbon\Carbon::parse($value['created_at'])->timezone('America/El_Salvador'));
         }
 
         $reservation = Reservation::find($id);
         $fechaDeReservacion = $reservation?->date;
-        $fechaArchivo = $fechaDeReservacion
-            ? \Carbon\Carbon::parse($fechaDeReservacion)->timezone('America/El_Salvador')->format('d-m-Y')
-            : now()->format('d-m-Y');
-        $inicioReservacion = $reservation
-            ? formatDateTime("{$reservation->date} {$reservation->starts_at}")
-            : '';
+        $fechaArchivo = \Carbon\Carbon::parse($fechaDeReservacion)->format('d-m-Y');
+        $inicioReservacion = formatTime(\Carbon\Carbon::parse($reservation?->starts_at)->timezone('America/El_Salvador'));
 
         $pdf = (new FPDFF())
             ->setTitle('Reporte de Asistencia')
-            ->setSubTitle('Listado de estudiantes que asistieron a la reservación de ' . $inicioReservacion)
+            ->setSubTitle('Listado de estudiantes que asistieron a la reservación de ' . \Carbon\Carbon::parse($fechaDeReservacion)->format('d/m/Y') . ' a las ' . $inicioReservacion)
             ->setDate(formatDateTime(now()))
             ->setModelColumns(['carnet', 'date', 'attendance'])
             ->setColumnLabels([
@@ -234,7 +230,7 @@ class MyReservationController extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'asistencia_' . $fechaArchivo . '.pdf', [
+        }, 'asistencia_' . $fechaArchivo . ' ' . $inicioReservacion . '.pdf', [
             'Content-Type' => 'application/pdf',
         ]);
     }

@@ -76,7 +76,7 @@ class ReportController extends Component
 
         $pdf = (new FPDFF())
             ->setTitle('Reporte de Reservaciones')
-            ->setSubTitle('Reporte general')
+            ->setSubTitle('Reporte general de reservaciones realizadas en el mes de ' . ucfirst(now()->locale('es')->translatedFormat('F Y')))
             ->setDate(formatDateTime(now()))
             ->setModelColumns(['usuario', 'sala', 'fecha', 'inicio', 'fin', 'estado'])
             ->setColumnLabels([
@@ -92,7 +92,7 @@ class ReportController extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'reservaciones_' . now()->format('Y-m-d') . '.pdf', [
+        }, 'reservaciones_' . now()->format('Y-m-d h_i_s A') . '.pdf', [
             'Content-Type' => 'application/pdf',
         ]);
     }
@@ -128,7 +128,7 @@ class ReportController extends Component
 
         return response()->streamDownload(function () use ($pdf) {
             echo $pdf;
-        }, 'usuarios_' . now()->format('Y-m-d') . '.pdf', [
+        }, 'usuarios_' . now()->format('Y-m-d h_i_s A') . '.pdf', [
             'Content-Type' => 'application/pdf',
         ]);
     }
